@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,9 +31,9 @@ extern crate serde_derive;
 extern crate log;
 
 use failure;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 
 mod chain;
 mod error;

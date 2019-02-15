@@ -1,11 +1,11 @@
 [package]
-name = "grin_util"
+name = "kepler_util"
 version = "1.0.1"
-authors = ["Grin Developers <mimblewimble@lists.launchpad.net>"]
+authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
-repository = "https://github.com/mimblewimble/grin"
-keywords = [ "crypto", "grin", "mimblewimble" ]
+repository = "https://github.com/keplernetwork/kepler"
+keywords = [ "crypto", "kepler", "keplernetwork" ]
 workspace = ".."
 edition = "2018"
 
@@ -25,8 +25,8 @@ parking_lot = {version = "0.6"}
 zeroize = "0.5.2"
 
 [dependencies.grin_secp256k1zkp]
-#git = "https://github.com/mimblewimble/rust-secp256k1-zkp"
-#tag = "grin_integration_29"
+#git = "https://github.com/keplernetwork/rust-secp256k1-zkp"
+#tag = "kepler_integration_29"
 #path = "../../rust-secp256k1-zkp"
 version = "0.7.4"
 features = ["bullet-proof-sizing"]
