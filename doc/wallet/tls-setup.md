@@ -32,7 +32,7 @@ api_listen_interface = "0.0.0.0"
 If you have Stratum server enabled (you run a miner) make sure that wallet listener URL starts with `https` in node config (by default `~/.kepler/kepler-server.toml`):
 
 ```toml
-wallet_listener_url = "https://kepler1.example.com:13415"
+wallet_listener_url = "https://kepler1.example.com:17415"
 ```
 
 Make sure your user has read access to the files (see below for how to do it). Restart wallet. If you changed your node configuration restart `kepler` too. When you (or someone else) send keplers to this wallet the destination (`-d` option) must start with `https://`, not with `http://`.
