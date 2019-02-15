@@ -20,7 +20,9 @@ use clap::ArgMatches;
 use failure::Fail;
 use kepler_core as core;
 use kepler_keychain as keychain;
-use kepler_wallet::{command, instantiate_wallet, NodeClient, WalletConfig, WalletInst, WalletSeed};
+use kepler_wallet::{
+	command, instantiate_wallet, NodeClient, WalletConfig, WalletInst, WalletSeed,
+};
 use kepler_wallet::{Error, ErrorKind};
 use linefeed::terminal::Signal;
 use linefeed::{Interface, ReadResult};
