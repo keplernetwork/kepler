@@ -42,7 +42,7 @@ RUN kepler server config && \
 
 VOLUME ["/root/.kepler"]
 
-EXPOSE 3413 3414 3415 3416
+EXPOSE 7413 7414 7415 7416
 
 ENTRYPOINT ["kepler"]
 
