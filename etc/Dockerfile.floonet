@@ -42,7 +42,7 @@ RUN kepler --floonet server config && \
 
 VOLUME ["/root/.kepler"]
 
-EXPOSE 13413 13414 13415 13416
+EXPOSE 17413 17414 17415 17416
 
 ENTRYPOINT ["kepler", "--floonet"]
 
