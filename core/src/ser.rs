@@ -615,7 +615,7 @@ where
 			match elem {
 				Ok(e) => buf.push(e),
 				Err(Error::IOErr(ref _d, ref kind)) if *kind == io::ErrorKind::UnexpectedEof => {
-					break
+					break;
 				}
 				Err(e) => return Err(e),
 			}

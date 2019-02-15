@@ -193,7 +193,7 @@ macro_rules! impl_array_newtype_encodable {
 							*item = match seq.next_element()? {
 								Some(c) => c,
 								None => {
-									return Err($crate::serde::de::Error::custom("end of stream"))
+									return Err($crate::serde::de::Error::custom("end of stream"));
 								}
 							};
 						}
