@@ -54,7 +54,7 @@ pub fn client_command(client_args: &ArgMatches<'_>, global_config: GlobalConfig)
 				panic!("Invalid peer address format");
 			}
 		}
-		_ => panic!("Unknown client command, use 'grin help client' for details"),
+		_ => panic!("Unknown client command, use 'kepler help client' for details"),
 	}
 	0
 }
@@ -80,7 +80,7 @@ pub fn show_status(config: &ServerConfig, api_secret: Option<String>) {
 		}
 		Err(_) => writeln!(
 			e,
-			"WARNING: Client failed to get data. Is your `grin server` offline or broken?"
+			"WARNING: Client failed to get data. Is your `kepler server` offline or broken?"
 		)
 		.unwrap(),
 	};

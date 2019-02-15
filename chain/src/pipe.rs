@@ -29,7 +29,7 @@ use crate::types::{Options, Tip};
 use crate::util::RwLock;
 use chrono::prelude::Utc;
 use chrono::Duration;
-use grin_store;
+use kepler_store;
 use std::sync::Arc;
 
 /// Contextual information required to process a new block and either reject or
@@ -324,7 +324,7 @@ fn prev_header_store(
 	batch: &mut store::Batch<'_>,
 ) -> Result<BlockHeader, Error> {
 	let prev = batch.get_previous_header(&header).map_err(|e| match e {
-		grin_store::Error::NotFoundErr(_) => ErrorKind::Orphan,
+		kepler_store::Error::NotFoundErr(_) => ErrorKind::Orphan,
 		_ => ErrorKind::StoreErr(e, "check prev header".into()),
 	})?;
 	Ok(prev)

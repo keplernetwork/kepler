@@ -22,8 +22,8 @@ use crate::lmdb;
 use crate::types::Tip;
 use crate::util::secp::pedersen::Commitment;
 use croaring::Bitmap;
-use grin_store as store;
-use grin_store::{option_to_not_found, to_key, Error};
+use kepler_store as store;
+use kepler_store::{option_to_not_found, to_key, Error};
 use std::sync::Arc;
 
 const STORE_SUBPATH: &'static str = "chain";

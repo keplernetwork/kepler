@@ -29,9 +29,9 @@ use self::keychain::{BlindingFactor, ExtKeychain, Keychain};
 use self::util::static_secp_instance;
 use self::util::RwLock;
 use crate::common::{new_block, tx1i1o, tx1i2o, tx2i1o};
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 use std::sync::Arc;
 
 #[test]

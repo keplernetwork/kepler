@@ -14,7 +14,7 @@
 
 use env_logger;
 
-use grin_store as store;
+use kepler_store as store;
 
 use chrono::prelude::Utc;
 use std::fs;

@@ -23,11 +23,11 @@ use crate::lmdb_wallet::LMDBBackend;
 use crate::{controller, libwallet, WalletSeed};
 use crate::{WalletBackend, WalletConfig};
 use chrono::Duration;
-use grin_api as api;
-use grin_chain as chain;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_api as api;
+use kepler_chain as chain;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 use std::sync::Arc;
 
 mod testclient;

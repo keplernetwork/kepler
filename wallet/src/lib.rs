@@ -24,11 +24,11 @@ extern crate serde_derive;
 #[macro_use]
 extern crate log;
 use failure;
-use grin_api as api;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_store as store;
-use grin_util as util;
+use kepler_api as api;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_store as store;
+use kepler_util as util;
 
 mod adapters;
 pub mod command;

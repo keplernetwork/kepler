@@ -24,8 +24,8 @@
 use blake2_rfc as blake2;
 #[macro_use]
 extern crate enum_primitive;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_keychain as keychain;
+use kepler_util as util;
 #[macro_use]
 extern crate lazy_static;
 #[macro_use]

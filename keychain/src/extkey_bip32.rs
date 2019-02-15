@@ -27,7 +27,7 @@
 
 //! Implementation of BIP32 hierarchical deterministic wallets, as defined
 //! at https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
-//! Modified from above to integrate into grin and allow for different
+//! Modified from above to integrate into kepler and allow for different
 //! hashing algorithms if desired
 
 #[cfg(feature = "serde")]

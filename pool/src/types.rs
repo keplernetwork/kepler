@@ -24,8 +24,8 @@ use self::core::core::transaction::{self, Transaction};
 use self::core::core::{BlockHeader, BlockSums};
 use self::core::{consensus, global};
 use failure::Fail;
-use grin_core as core;
-use grin_keychain as keychain;
+use kepler_core as core;
+use kepler_keychain as keychain;
 
 /// Dandelion relay timer
 const DANDELION_RELAY_SECS: u64 = 600;

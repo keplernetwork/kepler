@@ -15,16 +15,16 @@
 //! Common test functions
 
 use crate::keychain::{Identifier, Keychain};
-use grin_core::core::{
+use kepler_core::core::{
 	block::{Block, BlockHeader},
 	Transaction,
 };
-use grin_core::libtx::{
+use kepler_core::libtx::{
 	build::{self, input, output, with_fee},
 	reward,
 };
-use grin_core::pow::Difficulty;
-use grin_keychain as keychain;
+use kepler_core::pow::Difficulty;
+use kepler_keychain as keychain;
 
 // utility producing a transaction with 2 inputs and a single outputs
 pub fn tx2i1o() -> Transaction {

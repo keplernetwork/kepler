@@ -15,23 +15,23 @@
 #[cfg(test)]
 mod wallet_tests {
 	use clap;
-	use grin_util as util;
-	use grin_wallet;
+	use kepler_util as util;
+	use kepler_wallet;
 
-	use grin_wallet::test_framework::{self, LocalWalletClient, WalletProxy};
+	use kepler_wallet::test_framework::{self, LocalWalletClient, WalletProxy};
 
 	use clap::{App, ArgMatches};
-	use grin_util::Mutex;
+	use kepler_util::Mutex;
 	use std::sync::Arc;
 	use std::thread;
 	use std::time::Duration;
 	use std::{env, fs};
 
-	use grin_config::GlobalWalletConfig;
-	use grin_core::global;
-	use grin_core::global::ChainTypes;
-	use grin_keychain::ExtKeychain;
-	use grin_wallet::{LMDBBackend, WalletBackend, WalletConfig, WalletInst, WalletSeed};
+	use kepler_config::GlobalWalletConfig;
+	use kepler_core::global;
+	use kepler_core::global::ChainTypes;
+	use kepler_keychain::ExtKeychain;
+	use kepler_wallet::{LMDBBackend, WalletBackend, WalletConfig, WalletInst, WalletSeed};
 
 	use super::super::wallet_args;
 
@@ -49,7 +49,7 @@ mod wallet_tests {
 	pub fn config_command_wallet(
 		dir_name: &str,
 		wallet_name: &str,
-	) -> Result<(), grin_wallet::Error> {
+	) -> Result<(), kepler_wallet::Error> {
 		let mut current_dir;
 		let mut default_config = GlobalWalletConfig::default();
 		current_dir = env::current_dir().unwrap_or_else(|e| {
@@ -59,10 +59,10 @@ mod wallet_tests {
 		current_dir.push(wallet_name);
 		let _ = fs::create_dir_all(current_dir.clone());
 		let mut config_file_name = current_dir.clone();
-		config_file_name.push("grin-wallet.toml");
+		config_file_name.push("kepler-wallet.toml");
 		if config_file_name.exists() {
-			return Err(grin_wallet::ErrorKind::ArgumentError(
-				"grin-wallet.toml already exists in the target directory. Please remove it first"
+			return Err(kepler_wallet::ErrorKind::ArgumentError(
+				"kepler-wallet.toml already exists in the target directory. Please remove it first"
 					.to_owned(),
 			))?;
 		}
@@ -90,7 +90,7 @@ mod wallet_tests {
 		current_dir.push(wallet_name);
 		let _ = fs::create_dir_all(current_dir.clone());
 		let mut config_file_name = current_dir.clone();
-		config_file_name.push("grin-wallet.toml");
+		config_file_name.push("kepler-wallet.toml");
 		GlobalWalletConfig::new(config_file_name.to_str().unwrap())
 			.unwrap()
 			.members
@@ -124,7 +124,7 @@ mod wallet_tests {
 		node_client: LocalWalletClient,
 		passphrase: &str,
 		account: &str,
-	) -> Result<Arc<Mutex<WalletInst<LocalWalletClient, ExtKeychain>>>, grin_wallet::Error> {
+	) -> Result<Arc<Mutex<WalletInst<LocalWalletClient, ExtKeychain>>>, kepler_wallet::Error> {
 		wallet_config.chain_type = None;
 		// First test decryption, so we can abort early if we have the wrong password
 		let _ = WalletSeed::from_file(&wallet_config, passphrase)?;
@@ -140,7 +140,7 @@ mod wallet_tests {
 		wallet_name: &str,
 		client: &LocalWalletClient,
 		arg_vec: Vec<&str>,
-	) -> Result<String, grin_wallet::Error> {
+	) -> Result<String, kepler_wallet::Error> {
 		let args = app.clone().get_matches_from(arg_vec);
 		let args = get_wallet_subcommand(test_dir, wallet_name, args.clone());
 		let mut config = initial_setup_wallet(test_dir, wallet_name);
@@ -150,7 +150,7 @@ mod wallet_tests {
 	}
 
 	/// command line tests
-	fn command_line_test_impl(test_dir: &str) -> Result<(), grin_wallet::Error> {
+	fn command_line_test_impl(test_dir: &str) -> Result<(), kepler_wallet::Error> {
 		setup(test_dir);
 		// Create a new proxy to simulate server and wallet responses
 		let mut wallet_proxy: WalletProxy<LocalWalletClient, ExtKeychain> =
@@ -158,11 +158,11 @@ mod wallet_tests {
 		let chain = wallet_proxy.chain.clone();
 
 		// load app yaml. If it don't exist, just say so and exit
-		let yml = load_yaml!("../grin.yml");
+		let yml = load_yaml!("../kepler.yml");
 		let app = App::from_yaml(yml);
 
 		// wallet init
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "init", "-h"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "init", "-h"];
 		// should create new wallet file
 		let client1 = LocalWalletClient::new("wallet1", wallet_proxy.tx.clone());
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec.clone())?;
@@ -194,12 +194,12 @@ mod wallet_tests {
 
 		// Create some accounts in wallet 1
 		let arg_vec = vec![
-			"grin", "wallet", "-p", "password", "account", "-c", "mining",
+			"kepler", "wallet", "-p", "password", "account", "-c", "mining",
 		];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -211,7 +211,7 @@ mod wallet_tests {
 
 		// Create some accounts in wallet 2
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -224,7 +224,7 @@ mod wallet_tests {
 		assert!(execute_command(&app, test_dir, "wallet2", &client2, arg_vec).is_err());
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -235,17 +235,17 @@ mod wallet_tests {
 		execute_command(&app, test_dir, "wallet2", &client2, arg_vec)?;
 
 		// let's see those accounts
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "account"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "account"];
 		execute_command(&app, test_dir, "wallet2", &client2, arg_vec)?;
 
 		// let's see those accounts
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "account"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "account"];
 		execute_command(&app, test_dir, "wallet2", &client2, arg_vec)?;
 
 		// Mine a bit into wallet 1 so we have something to send
 		// (TODO: Be able to stop listeners so we can test this better)
 		let wallet1 = instantiate_wallet(config1.clone(), client1.clone(), "password", "default")?;
-		grin_wallet::controller::owner_single_use(wallet1.clone(), |api| {
+		kepler_wallet::controller::owner_single_use(wallet1.clone(), |api| {
 			api.set_active_account("mining")?;
 			Ok(())
 		})?;
@@ -264,14 +264,14 @@ mod wallet_tests {
 		                         This part should all be truncated";
 
 		// Update info and check
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "-a", "mining", "info"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "-a", "mining", "info"];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		// try a file exchange
 		let file_name = format!("{}/tx1.part_tx", test_dir);
 		let response_file_name = format!("{}/tx1.part_tx.response", test_dir);
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -289,7 +289,7 @@ mod wallet_tests {
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -307,7 +307,7 @@ mod wallet_tests {
 		assert!(execute_command(&app, test_dir, "wallet2", &client2, arg_vec).is_err());
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -321,7 +321,7 @@ mod wallet_tests {
 		let wallet1 = instantiate_wallet(config1.clone(), client1.clone(), "password", "default")?;
 
 		// Check our transaction log, should have 10 entries
-		grin_wallet::controller::owner_single_use(wallet1.clone(), |api| {
+		kepler_wallet::controller::owner_single_use(wallet1.clone(), |api| {
 			api.set_active_account("mining")?;
 			let (refreshed, txs) = api.retrieve_txs(true, None, None)?;
 			assert!(refreshed);
@@ -333,11 +333,11 @@ mod wallet_tests {
 		bh += 10;
 
 		// update info for each
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "-a", "mining", "info"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "-a", "mining", "info"];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -349,7 +349,7 @@ mod wallet_tests {
 
 		// check results in wallet 2
 		let wallet2 = instantiate_wallet(config2.clone(), client2.clone(), "password", "default")?;
-		grin_wallet::controller::owner_single_use(wallet2.clone(), |api| {
+		kepler_wallet::controller::owner_single_use(wallet2.clone(), |api| {
 			api.set_active_account("account_1")?;
 			let (_, wallet1_info) = api.retrieve_summary_info(true, 1)?;
 			assert_eq!(wallet1_info.last_confirmed_height, bh);
@@ -359,7 +359,7 @@ mod wallet_tests {
 
 		// Self-send to same account, using smallest strategy
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -379,7 +379,7 @@ mod wallet_tests {
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -394,7 +394,7 @@ mod wallet_tests {
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec.clone())?;
 
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -408,7 +408,7 @@ mod wallet_tests {
 		// Check our transaction log, should have bh entries + one for the self receive
 		let wallet1 = instantiate_wallet(config1.clone(), client1.clone(), "password", "default")?;
 
-		grin_wallet::controller::owner_single_use(wallet1.clone(), |api| {
+		kepler_wallet::controller::owner_single_use(wallet1.clone(), |api| {
 			api.set_active_account("mining")?;
 			let (refreshed, txs) = api.retrieve_txs(true, None, None)?;
 			assert!(refreshed);
@@ -418,7 +418,7 @@ mod wallet_tests {
 
 		// Try using the self-send method, splitting up outputs for the fun of it
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -443,7 +443,7 @@ mod wallet_tests {
 		// Check our transaction log, should have bh entries + 2 for the self receives
 		let wallet1 = instantiate_wallet(config1.clone(), client1.clone(), "password", "default")?;
 
-		grin_wallet::controller::owner_single_use(wallet1.clone(), |api| {
+		kepler_wallet::controller::owner_single_use(wallet1.clone(), |api| {
 			api.set_active_account("mining")?;
 			let (refreshed, txs) = api.retrieve_txs(true, None, None)?;
 			assert!(refreshed);
@@ -453,7 +453,7 @@ mod wallet_tests {
 
 		// Another file exchange, don't send, but unlock with repair command
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -470,12 +470,12 @@ mod wallet_tests {
 		];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "check"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "check"];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		// Another file exchange, cancel this time
 		let arg_vec = vec![
-			"grin",
+			"kepler",
 			"wallet",
 			"-p",
 			"password",
@@ -493,23 +493,23 @@ mod wallet_tests {
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		let arg_vec = vec![
-			"grin", "wallet", "-p", "password", "-a", "mining", "cancel", "-i", "26",
+			"kepler", "wallet", "-p", "password", "-a", "mining", "cancel", "-i", "26",
 		];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		// txs and outputs (mostly spit out for a visual in test logs)
-		let arg_vec = vec!["grin", "wallet", "-p", "password", "-a", "mining", "txs"];
+		let arg_vec = vec!["kepler", "wallet", "-p", "password", "-a", "mining", "txs"];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		// message output (mostly spit out for a visual in test logs)
 		let arg_vec = vec![
-			"grin", "wallet", "-p", "password", "-a", "mining", "txs", "-i", "10",
+			"kepler", "wallet", "-p", "password", "-a", "mining", "txs", "-i", "10",
 		];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 
 		// txs and outputs (mostly spit out for a visual in test logs)
 		let arg_vec = vec![
-			"grin", "wallet", "-p", "password", "-a", "mining", "outputs",
+			"kepler", "wallet", "-p", "password", "-a", "mining", "outputs",
 		];
 		execute_command(&app, test_dir, "wallet1", &client1, arg_vec)?;
 

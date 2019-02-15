@@ -13,8 +13,8 @@
 // limitations under the License.
 
 use env_logger;
-use grin_core as core;
-use grin_store as store;
+use kepler_core as core;
+use kepler_store as store;
 
 use std::fs;
 

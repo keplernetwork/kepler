@@ -56,7 +56,7 @@ lazy_static! {
 
 const LOGGING_PATTERN: &str = "{d(%Y%m%d %H:%M:%S%.3f)} {h({l})} {M} - {m}{n}";
 
-/// This filter is rejecting messages that doesn't start with "grin"
+/// This filter is rejecting messages that doesn't start with "kepler"
 /// in order to save log space for only Kepler-related records
 #[derive(Debug)]
 struct KeplerFilter;
@@ -64,7 +64,7 @@ struct KeplerFilter;
 impl Filter for KeplerFilter {
 	fn filter(&self, record: &Record<'_>) -> Response {
 		if let Some(module_path) = record.module_path() {
-			if module_path.starts_with("grin") {
+			if module_path.starts_with("kepler") {
 				return Response::Neutral;
 			}
 		}

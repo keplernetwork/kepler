@@ -19,10 +19,10 @@ use self::util::secp;
 use self::util::secp::key::{PublicKey, SecretKey};
 use self::wallet::libwallet::types::Context;
 use self::wallet::{EncryptedWalletSeed, WalletSeed};
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
+use kepler_wallet as wallet;
 use rand::thread_rng;
 
 fn kernel_sig_msg() -> secp::Message {

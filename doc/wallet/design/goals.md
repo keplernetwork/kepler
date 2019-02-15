@@ -73,7 +73,7 @@ public key that can be derived similarly to Hierarchical Deterministic wallets
 would provide the best security and privacy.
 
 TODO figure out what's needed for the bulletproof. Maybe pre-compute multiple
-of them for ranges of receiving amounts (i.e. 1-10 grins, 10-100 grins, etc).
+of them for ranges of receiving amounts (i.e. 1-10 keplers, 10-100 keplers, etc).
 
 Offline Wallet
 --------------

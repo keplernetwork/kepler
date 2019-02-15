@@ -23,12 +23,12 @@ fn comments() -> HashMap<String, String> {
 		"
 # Generated Server Configuration File for Kepler
 #
-# When running the grin executable without specifying any command line
+# When running the kepler executable without specifying any command line
 # arguments, it will look for this file in two places, in the following
 # order:
 #
 # -The working directory
-# -[user home]/.grin
+# -[user home]/.kepler
 #
 
 #########################################
@@ -65,7 +65,7 @@ fn comments() -> HashMap<String, String> {
 	retval.insert(
 		"db_root".to_string(),
 		"
-#the directory, relative to current, in which the grin blockchain
+#the directory, relative to current, in which the kepler blockchain
 #is stored
 "
 		.to_string(),
@@ -125,7 +125,7 @@ fn comments() -> HashMap<String, String> {
 		"
 #Whether to run a test miner. This is only for developer testing (chaintype
 #usertesting) at cuckoo 16, and will only mine into the default wallet port.
-#real mining should use the standalone grin-miner
+#real mining should use the standalone kepler-miner
 "
 		.to_string(),
 	);
@@ -358,7 +358,7 @@ fn comments() -> HashMap<String, String> {
 	retval.insert(
 		"api_listen_interface".to_string(),
 		"
-#host IP for wallet listener, change to \"0.0.0.0\" to receive grins
+#host IP for wallet listener, change to \"0.0.0.0\" to receive keplers
 "
 		.to_string(),
 	);

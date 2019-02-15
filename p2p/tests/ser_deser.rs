@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use grin_p2p as p2p;
+use kepler_p2p as p2p;
 
 use num::FromPrimitive;
 

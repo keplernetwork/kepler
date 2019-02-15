@@ -31,9 +31,9 @@ extern crate serde_derive;
 extern crate log;
 
 use failure;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 
 mod chain;
 mod error;

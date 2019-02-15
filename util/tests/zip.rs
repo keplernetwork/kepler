@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use grin_util as util;
+use kepler_util as util;
 
 use crate::util::zip;
 use std::fs::{self, File};

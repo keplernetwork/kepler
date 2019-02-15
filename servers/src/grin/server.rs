@@ -31,7 +31,7 @@ use crate::common::types::{Error, ServerConfig, StratumServerConfig, SyncState, 
 use crate::core::core::hash::{Hashed, ZERO_HASH};
 use crate::core::core::verifier_cache::{LruVerifierCache, VerifierCache};
 use crate::core::{consensus, genesis, global, pow};
-use crate::grin::{dandelion_monitor, seed, sync};
+use crate::kepler::{dandelion_monitor, seed, sync};
 use crate::mining::stratumserver;
 use crate::mining::test_miner::Miner;
 use crate::p2p;

@@ -25,16 +25,16 @@ use rpassword;
 use serde_json;
 
 use cuckoo_miner as cuckoo;
-use grin_chain as chain;
-use grin_core as core;
-use grin_miner_plugin as plugin;
-use grin_store as store;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_chain as chain;
+use kepler_core as core;
+use kepler_miner_plugin as plugin;
+use kepler_store as store;
+use kepler_util as util;
+use kepler_wallet as wallet;
 
-use grin_core::core::hash::Hashed;
-use grin_core::core::verifier_cache::LruVerifierCache;
-use grin_keychain::{BlindingFactor, ExtKeychain, Keychain};
+use kepler_core::core::hash::Hashed;
+use kepler_core::core::verifier_cache::LruVerifierCache;
+use kepler_keychain::{BlindingFactor, ExtKeychain, Keychain};
 
 static BCHAIN_INFO_URL: &str = "https://blockchain.info/latestblock";
 static BCYPHER_URL: &str = "https://api.blockcypher.com/v1/btc/main";
@@ -93,7 +93,7 @@ fn main() {
 	{
 		// setup a tmp chain to set block header roots
 		core::global::set_mining_mode(core::global::ChainTypes::UserTesting);
-		let tmp_chain = setup_chain(".grin.tmp", core::pow::mine_genesis_block().unwrap());
+		let tmp_chain = setup_chain(".kepler.tmp", core::pow::mine_genesis_block().unwrap());
 		tmp_chain.set_txhashset_roots(&mut gen).unwrap();
 	}
 

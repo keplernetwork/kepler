@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# check we're in the grin root
+# check we're in the kepler root
 if [ ! -f "LICENSE" ] ; then
 	echo "Script must be run from Kepler's root directory"
 	exit 1

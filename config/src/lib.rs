@@ -23,11 +23,11 @@
 #[macro_use]
 extern crate serde_derive;
 
-use grin_core as core;
-use grin_p2p as p2p;
-use grin_servers as servers;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_core as core;
+use kepler_p2p as p2p;
+use kepler_servers as servers;
+use kepler_util as util;
+use kepler_wallet as wallet;
 
 mod comments;
 pub mod config;

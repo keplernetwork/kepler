@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/keplernetwork/kepler.svg?branch=master)](https://travis-ci.org/keplernetwork/kepler)
-[![Gitter chat](https://badges.gitter.im/grin_community/Lobby.png)](https://gitter.im/grin_community/Lobby)
-[![Support chat](https://badges.gitter.im/grin_community/Lobby.png)](https://gitter.im/grin_community/support)
+[![Gitter chat](https://badges.gitter.im/kepler_community/Lobby.png)](https://gitter.im/kepler_community/Lobby)
+[![Support chat](https://badges.gitter.im/kepler_community/Lobby.png)](https://gitter.im/kepler_community/support)
 [![Codecov coverage status](https://codecov.io/gh/keplernetwork/kepler/branch/master/graph/badge.svg)](https://codecov.io/gh/keplernetwork/kepler)
 
 # Kepler
@@ -27,9 +27,9 @@ To get involved, read our [contributing docs](CONTRIBUTING.md).
 
 Find us:
 
-* Chat: [Gitter](https://gitter.im/grin_community/Lobby).
+* Chat: [Gitter](https://gitter.im/kepler_community/Lobby).
 * Mailing list: join the [~MimbleWimble team](https://launchpad.net/~keplernetwork) and subscribe on Launchpad.
-* Twitter for the Kepler council: [@grincouncil](https://twitter.com/grincouncil)
+* Twitter for the Kepler council: [@keplercouncil](https://twitter.com/keplercouncil)
 
 ## Getting Started
 

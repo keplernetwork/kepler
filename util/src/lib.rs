@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! Logging, as well as various low-level utilities that factor Rust
-//! patterns that are frequent within the grin codebase.
+//! patterns that are frequent within the kepler codebase.
 
 #![deny(non_upper_case_globals)]
 #![deny(non_camel_case_types)]
