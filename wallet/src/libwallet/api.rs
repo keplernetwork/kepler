@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -597,7 +597,7 @@ where
 	///		10,         // minimum confirmations
 	///		1,          // num change outputs
 	///		true,       // select all outputs
-	///		Some("Have some Grins. Love, Yeastplume".to_owned()),
+	///		Some("Have some Keplers. Love, Yeastplume".to_owned()),
 	///	);
 	///
 	/// if let Ok((slate, lock_fn)) = result {
@@ -771,7 +771,7 @@ where
 		let parent_key_id = w.parent_key_id();
 		if !self.update_outputs(&mut w, false) {
 			return Err(ErrorKind::TransactionCancellationError(
-				"Can't contact running Grin node. Not Cancelling.",
+				"Can't contact running Kepler node. Not Cancelling.",
 			))?;
 		}
 		tx::cancel_tx(&mut *w, &parent_key_id, tx_id, tx_slate_id)?;

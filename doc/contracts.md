@@ -1,12 +1,12 @@
 # Contracts
 
-This document describes smart contracts that can be setup using Grin even
-though the Grin chain does not support scripting. All these contracts rely
+This document describes smart contracts that can be setup using Kepler even
+though the Kepler chain does not support scripting. All these contracts rely
 on a few basic features that are built in the chain and compose them in
 increasingly clever ways.
 
 None of those constructs are fully original or invented by the authors of this
-document or the Grin development team. Most of the credit should be attributed
+document or the Kepler development team. Most of the credit should be attributed
 to a long list of cryptographers and researchers. To name just a few: Torben
 Pryds Pedersen, Gregory Maxwell, Andrew Poelstra, John Tromp, Claus Peter
 Schnorr. We apologize in advance for all those we couldn't name and recognize
@@ -14,7 +14,7 @@ that most computer science discoveries are incremental.
 
 ## Built-Ins
 
-This section is meant as a reminder of some crucial features of the Grin chain.
+This section is meant as a reminder of some crucial features of the Kepler chain.
 We assume some prior reading as to how these are constructed and used.
 
 ### Pedersen Commitments
@@ -45,10 +45,10 @@ s*G = k*G + e * x*G
 
 In this simple case of someone sending a transaction to a receiver they trust
 (see later for the trustless case), an aggregate signature can be directly
-built for a Grin transaction by taking the above private key `x` to be the sum
+built for a Kepler transaction by taking the above private key `x` to be the sum
 of output blinding factors minus the sum of input blinding factors. The resulting
 kernel is assembled from the aggregate signature generated using `r` and the
-public key `r*G`, and allows to verify non-inflation for all Grin transactions
+public key `r*G`, and allows to verify non-inflation for all Kepler transactions
 (and signs the fees).
 
 Because these signatures are built simply from a scalar and a public key, they
@@ -92,7 +92,7 @@ but does not demonstrate the full flexibility of the construction. We show
 here how to generalize it for use in outputs involving multiple parties.
 
 As constructed in section 1.2, an aggregate signature requires trusting the
-receiving party. As Grin outputs are completely obscured by Pedersen
+receiving party. As Kepler outputs are completely obscured by Pedersen
 Commitments, one cannot prove money was actually sent to the right party,
 hence a receiver could claim not having received anything. To solve this
 issue, we require the receiver to collaborate with the sender in building a

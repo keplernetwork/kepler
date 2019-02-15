@@ -1,11 +1,11 @@
-# Grin Wallet + Library Design
+# Kepler Wallet + Library Design
 
 ![wallet design](wallet-arch.png)
 
 ## High Level Wallet Design Overview
 
-The current Grin `wallet` crate provides several layers of libraries, services, and traits that can be mixed, matched and reimplemented to support
-various needs within the default Grin wallet as well as provide a set of useful library functions for 3rd-party implementors. At a very high level,
+The current Kepler `wallet` crate provides several layers of libraries, services, and traits that can be mixed, matched and reimplemented to support
+various needs within the default Kepler wallet as well as provide a set of useful library functions for 3rd-party implementors. At a very high level,
 the code is organized into the following components (from highest-level to lowest):
 
 * **Command Line Client** - The command line client invoked by `grin wallet [command]`, simply instantiates the other components below
@@ -20,9 +20,9 @@ the code is organized into the following components (from highest-level to lowes
   * **Foreign API** - An API to communicate with other wallets and external grin nodes
   * **Service Controller** - A Controller that instantiates the above APIs (either locally or via web services)
   * **Internal Functions** Helper functions to perform needed wallet tasks, such as selecting coins, updating wallet outputs with
-  results from a Grin node, etc.
+  results from a Kepler node, etc.
 * **libTx** - Library that provides lower-level transaction building, rangeproof and signing functions, highly-reusable by wallet implementors.
-* **Wallet Traits** - A set of generic traits defined within libWallet and the `keychain` crate . A wallet implementation such as Grin's current
+* **Wallet Traits** - A set of generic traits defined within libWallet and the `keychain` crate . A wallet implementation such as Kepler's current
   default only needs to implement these traits in order to provide a wallet:
   * **NodeClient** - Defines communication between the wallet, a running grin node and/or other wallets
   * **WalletBackend** - Defines the storage implementation of the wallet
@@ -39,7 +39,7 @@ This component is not a 3rd-party hosted 'Web Wallet' , but a client meant to be
 a usable browser interface into the wallet, that should be functionally equivalent to using the command line but (hopefully) far easier to use.
 It is currently not being included by a default grin build, although the required listener is currently being run by default. To build and test this
 component, see instructions on the [project page](https://github.com/mimblewimble/grin-web-wallet). The 'Static File Server' is still under
-discussion, and concerns how to provide the web-wallet to the user in a default Grin build.
+discussion, and concerns how to provide the web-wallet to the user in a default Kepler build.
 
 ### Owner API / Foreign API
 
@@ -74,7 +74,7 @@ where
 With `T` in this instance being a class that implements  the `WalletBackend` trait, which is further parameterized with implementations of
 `NodeClient` and `Keychain`.
 
-There is currently only a single implementation of the Keychain trait within the Grin code, in the `keychain` crate exported as `ExtKeyChain`.
+There is currently only a single implementation of the Keychain trait within the Kepler code, in the `keychain` crate exported as `ExtKeyChain`.
 The `Keychain` trait makes several assumptions about the underlying implementation, particularly that it will adhere to a
 [BIP-38 style](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki) 'master key -> child key' model.
 

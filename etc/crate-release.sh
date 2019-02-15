@@ -2,7 +2,7 @@
 
 # check we're in the grin root
 if [ ! -f "LICENSE" ] ; then
-	echo "Script must be run from Grin's root directory"
+	echo "Script must be run from Kepler's root directory"
 	exit 1
 fi
 

@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ fn basic_wallet_transactions() {
 		coinbase_info =
 			LocalServerContainer::get_wallet_info(&coinbase_wallet_config, &coinbase_seed);
 	}
-	warn!("Sending 50 Grins to recipient wallet");
+	warn!("Sending 50 Keplers to recipient wallet");
 	LocalServerContainer::send_amount_to(
 		&coinbase_wallet_config,
 		"50.00",

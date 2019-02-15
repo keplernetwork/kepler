@@ -1,9 +1,9 @@
 @startuml grin-wallet-overview 
 skinparam componentStyle uml2
 
-[Grin Node] as grin_node
+[Kepler Node] as grin_node
 
-folder "Provided by Grin" as services {
+folder "Provided by Kepler" as services {
 	component foreign_api [
 		**Foreign API**
 		External-Facing functions

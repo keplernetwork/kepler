@@ -1,5 +1,5 @@
 # Run `nix-shell` to be able
-# to build Grin on NixOS.
+# to build Kepler on NixOS.
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.stdenv.mkDerivation {

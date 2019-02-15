@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -258,7 +258,7 @@ impl LocalServerContainer {
 		let _seed = blake2::blake2b::blake2b(32, &[], seed.as_bytes());
 
 		println!(
-			"Starting the Grin wallet receiving daemon on {} ",
+			"Starting the Kepler wallet receiving daemon on {} ",
 			self.config.wallet_port
 		);
 

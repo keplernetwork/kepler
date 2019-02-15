@@ -1,6 +1,6 @@
-# Grin Stratum RPC Protocol
+# Kepler Stratum RPC Protocol
 
-This document describes the current Stratum RPC protocol implemented in Grin.
+This document describes the current Stratum RPC protocol implemented in Kepler.
 
 ## Table of Contents
 
@@ -223,7 +223,7 @@ Example:
 ***
 
 A message initiated by the miner.
-Miner can log in on a Grin Stratum server with a login, password and agent (usually statically set by the miner program).
+Miner can log in on a Kepler Stratum server with a login, password and agent (usually statically set by the miner program).
 
 #### Request
 
@@ -508,7 +508,7 @@ Example:
 
 ## Error Messages
 
-Grin Stratum protocol implementation contains the following error message:
+Kepler Stratum protocol implementation contains the following error message:
 
 | Error code  | Error Message                          |
 | :---------- | :------------------------------------- |
