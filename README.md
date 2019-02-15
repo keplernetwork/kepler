@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/mimblewimble/grin.svg?branch=master)](https://travis-ci.org/mimblewimble/grin)
+[![Build Status](https://travis-ci.org/keplernetwork/kepler.svg?branch=master)](https://travis-ci.org/keplernetwork/kepler)
 [![Gitter chat](https://badges.gitter.im/grin_community/Lobby.png)](https://gitter.im/grin_community/Lobby)
 [![Support chat](https://badges.gitter.im/grin_community/Lobby.png)](https://gitter.im/grin_community/support)
-[![Codecov coverage status](https://codecov.io/gh/mimblewimble/grin/branch/master/graph/badge.svg)](https://codecov.io/gh/mimblewimble/grin)
+[![Codecov coverage status](https://codecov.io/gh/keplernetwork/kepler/branch/master/graph/badge.svg)](https://codecov.io/gh/keplernetwork/kepler)
 
 # Kepler
 

@@ -534,4 +534,4 @@ Miners SHOULD, MAY or MUST respect the following rules:
 
 ## Reference Implementation
 
-The current reference implementation is available at [mimblewimble/grin-miner](https://github.com/mimblewimble/grin-miner/blob/master/src/bin/client.rs).
+The current reference implementation is available at [keplernetwork/kepler-miner](https://github.com/keplernetwork/kepler-miner/blob/master/src/bin/client.rs).

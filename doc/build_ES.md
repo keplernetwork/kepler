@@ -40,7 +40,7 @@ brew install openssl
 ## Pasos para la compilación
 
 ```sh
-git clone https://github.com/mimblewimble/grin.git
+git clone https://github.com/keplernetwork/kepler.git
 cd grin
 cargo build --release
 ```
@@ -112,4 +112,4 @@ La página de la wiki [Cómo usar grin](https://github.com/mimblewimble/docs/wik
 
 ## Minando en Kepler
 
-Tenga en cuenta que todas las funciones de minería de Kepler se han trasladado a un paquete independiente llamado [grin_minner](https://github.com/mimblewimble/grin-miner). Una vez que el nodo de grin esté listo y funcionando, puede empezar a minar compilando y ejecutando grin-miner con su nodo Kepler en funcionamiento.
+Tenga en cuenta que todas las funciones de minería de Kepler se han trasladado a un paquete independiente llamado [grin_minner](https://github.com/keplernetwork/kepler-miner). Una vez que el nodo de grin esté listo y funcionando, puede empezar a minar compilando y ejecutando grin-miner con su nodo Kepler en funcionamiento.
