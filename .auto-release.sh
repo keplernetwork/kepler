@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo_slug="mimblewimble/grin"
+repo_slug="keplernetwork/kepler"
 token="$GITHUB_TOKEN"
 export CHANGELOG_GITHUB_TOKEN="$token"
 

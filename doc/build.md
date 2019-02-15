@@ -42,7 +42,7 @@ brew install openssl
 ## Build steps
 
 ```sh
-git clone https://github.com/mimblewimble/grin.git
+git clone https://github.com/keplernetwork/kepler.git
 cd grin
 cargo build --release
 ```
@@ -133,7 +133,7 @@ troubleshooting, etc.
 ## Mining in Kepler
 
 Please note that all mining functions for Kepler have moved into a separate, standalone package called
-[grin-miner](https://github.com/mimblewimble/grin-miner). Once your Kepler code node is up and running,
+[grin-miner](https://github.com/keplernetwork/kepler-miner). Once your Kepler code node is up and running,
 you can start mining by building and running grin-miner against your running Kepler node.
 
 For grin-miner to be able to communicate with your grin node, make sure that you have `enable_stratum_server = true`
