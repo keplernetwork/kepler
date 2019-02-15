@@ -21,7 +21,7 @@ use crate::core::global;
 use crate::core::ser::PMMRIndexHashable;
 use crate::error::{Error, ErrorKind};
 use crate::store::Batch;
-use grin_store::pmmr::PMMRBackend;
+use kepler_store::pmmr::PMMRBackend;
 
 /// Readonly view of the UTXO set (based on output MMR).
 pub struct UTXOView<'a> {

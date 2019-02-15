@@ -19,7 +19,7 @@ use crate::keychain;
 use crate::util::secp;
 use crate::util::secp::pedersen::Commitment;
 use failure::{Backtrace, Context, Fail};
-use grin_store as store;
+use kepler_store as store;
 use std::fmt::{self, Display};
 use std::io;
 

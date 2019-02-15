@@ -12,7 +12,7 @@
 // limitations under the License.
 
 //! core consensus.rs tests (separated to de-clutter consensus.rs)
-use grin_core as core;
+use kepler_core as core;
 
 use self::core::consensus::*;
 use self::core::global;

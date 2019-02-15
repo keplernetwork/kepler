@@ -26,9 +26,9 @@ use failure;
 #[macro_use]
 extern crate failure_derive;
 #[macro_use]
-extern crate grin_core as core;
+extern crate kepler_core as core;
 
-//use grin_core as core;
+//use kepler_core as core;
 
 pub mod leaf_set;
 mod lmdb;

@@ -42,10 +42,10 @@ So far, Kepler support both Mac and Linux, and 64bits only. There're 2 binaries 
 
 For example:
 
-- grin-0.3.1-pre.1-430839316-oxs.tgz
-- grin-0.3.1-pre.1-430839316-oxs.tgz-md5sum.txt
-- grin-0.3.1-pre.1-430839318-linux-amd64.tgz
-- grin-0.3.1-pre.1-430839318-linux-amd64.tgz-md5sum.txt
+- kepler-0.3.1-pre.1-430839316-oxs.tgz
+- kepler-0.3.1-pre.1-430839316-oxs.tgz-md5sum.txt
+- kepler-0.3.1-pre.1-430839318-linux-amd64.tgz
+- kepler-0.3.1-pre.1-430839318-linux-amd64.tgz-md5sum.txt
 
 ## Change Log of Release
 

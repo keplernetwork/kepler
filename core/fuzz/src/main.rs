@@ -1,14 +1,14 @@
-extern crate grin_core;
-extern crate grin_keychain;
-extern crate grin_wallet;
+extern crate kepler_core;
+extern crate kepler_keychain;
+extern crate kepler_wallet;
 
-use grin_core::core::target::Difficulty;
-use grin_core::core::{Block, BlockHeader, CompactBlock, Transaction};
-use grin_core::libtx::build::{input, output, transaction, with_fee};
-use grin_core::libtx::reward;
-use grin_core::ser;
-use grin_keychain::keychain::ExtKeychain;
-use grin_keychain::Keychain;
+use kepler_core::core::target::Difficulty;
+use kepler_core::core::{Block, BlockHeader, CompactBlock, Transaction};
+use kepler_core::libtx::build::{input, output, transaction, with_fee};
+use kepler_core::libtx::reward;
+use kepler_core::ser;
+use kepler_keychain::keychain::ExtKeychain;
+use kepler_keychain::Keychain;
 use std::fs::{self, File};
 use std::path::Path;
 

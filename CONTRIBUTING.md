@@ -10,15 +10,15 @@ More documentation or updates/fixes to existing documentation are also very welc
 
 # Find Us
 
-When you are starting to contribute to grin, we really would appreciate if you come by the gitter chat channels.
+When you are starting to contribute to kepler, we really would appreciate if you come by the gitter chat channels.
 
-In case of problems with trying out grin, before starting to contribute, there's the [Support chat](https://gitter.im/grin_community/support). Write there about what you've done, what you want to do, and maybe paste logs through a text paste webservice.
+In case of problems with trying out kepler, before starting to contribute, there's the [Support chat](https://gitter.im/kepler_community/support). Write there about what you've done, what you want to do, and maybe paste logs through a text paste webservice.
 
-* Please [join the grin Lobby](https://gitter.im/grin_community/Lobby) to get a feeling for the community.
-* And [see the developers chat](https://gitter.im/grin_community/dev) if you have questions about source code files.
+* Please [join the kepler Lobby](https://gitter.im/kepler_community/Lobby) to get a feeling for the community.
+* And [see the developers chat](https://gitter.im/kepler_community/dev) if you have questions about source code files.
   If you explain what you're looking at and what you want to do, we'll try to help you along the way.
 * Also see `docs/*.md` and the folder structure explanations, and [the wiki](https://github.com/keplernetwork/docs/wiki).
-* Further information and discussions are in the [Forum](https://www.grin-forum.org/), the [website](https://grin-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@grincouncil](https://twitter.com/grincouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWinble/Kepler: [@grinmw](https://twitter.com/grinmw)
+* Further information and discussions are in the [Forum](https://www.kepler-forum.org/), the [website](https://kepler-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@keplercouncil](https://twitter.com/keplercouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWinble/Kepler: [@keplermw](https://twitter.com/keplermw)
 
 ## Testing
 
@@ -30,7 +30,7 @@ After creating a PR on github, the code will be tested automatically by Travis C
 
 ### Building quality
 
-The most important thing you can do alongside - or even before - changing code, is adding tests for how grin should and should not work. See the various `tests` folders and derive test that are already there in grin.
+The most important thing you can do alongside - or even before - changing code, is adding tests for how kepler should and should not work. See the various `tests` folders and derive test that are already there in kepler.
 
 After that, if you want to raise code quality another level, you can use `cargo check`, `cargo cov test` and `cargo tarpaulin`. Install them with `cargo install cargo-check cargo-cov; RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin`. Run with `cargo cov test` and `cargo tarpaulin`. The quality check tools are often integrated with `rustc` and as a side-effect only activated when some code is compiled. Because of this, if you want a complete check you'll need to `cargo clean` first.
 
@@ -50,7 +50,7 @@ Please consider putting one of the following prefixes in the title of your pull-
 - **test**:     Adding missing tests
 - **chore**:    Maintain. Changes to the build process or auxiliary tools/libraries/documentation
 
-For example: `fix: a panick on xxx when grin exiting`. Please don't worry if you can't find a suitable prefix, this's just optional, not mandatory.
+For example: `fix: a panick on xxx when kepler exiting`. Please don't worry if you can't find a suitable prefix, this's just optional, not mandatory.
 
 # Kepler Style Guide
 
@@ -58,7 +58,7 @@ This project uses `rustfmt` to maintain consistent formatting. We've made sure t
 
 ## Install rustfmt
 
-**Note**: To work with grin you must use `rustup`. Linux package managers typically carry a too old rust version.
+**Note**: To work with kepler you must use `rustup`. Linux package managers typically carry a too old rust version.
 See [build docs](doc/build.md) for more info.
 
 First ensure you have a new enough rustfmt:
@@ -97,7 +97,7 @@ Not recommended, but you can run rustfmt on a file like this: `rustfmt client.rs
 
 2. *If unsure about code formatting, it's just fine if you ignore and discard any rustfmt changes. It's only a nice-to-have. Your contribution and code changes is the priority here. Hope you're happy to contribute on this open source project!*
 
-3. Please don't ~~`cargo +nightly fmt`~~ because all grin developers are using stable rustfmt. Also please don't rustfmt files that your code changes does not touch to avoid causing merge conflicts.
+3. Please don't ~~`cargo +nightly fmt`~~ because all kepler developers are using stable rustfmt. Also please don't rustfmt files that your code changes does not touch to avoid causing merge conflicts.
 
 ## Thanks for any contribution
 

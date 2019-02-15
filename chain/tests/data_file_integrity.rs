@@ -23,11 +23,11 @@ use self::core::{consensus, genesis};
 use self::keychain::{ExtKeychain, ExtKeychainPath, Keychain};
 use self::util::{Mutex, RwLock, StopState};
 use chrono::Duration;
-use grin_chain as chain;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_store as store;
-use grin_util as util;
+use kepler_chain as chain;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_store as store;
+use kepler_util as util;
 use std::fs;
 use std::sync::Arc;
 
@@ -73,7 +73,7 @@ fn reload_chain(dir_name: &str) -> Chain {
 
 #[test]
 fn data_files() {
-	let chain_dir = ".grin_df";
+	let chain_dir = ".kepler_df";
 	//new block so chain references should be freed
 	{
 		let chain = setup(chain_dir);

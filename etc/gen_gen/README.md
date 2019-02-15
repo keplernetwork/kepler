@@ -1,6 +1,6 @@
 # Genesis Genesis
 
-This crate isn't strictly part of grin but allows the generation and release of a new Kepler Genesis in an automated fashion. The process is the following:
+This crate isn't strictly part of kepler but allows the generation and release of a new Kepler Genesis in an automated fashion. The process is the following:
 
 * Prepare a multisig output and kernel to use as coinbase. In the case of Kepler mainnet, this is done and owned by the council treasurers. This can be down a few days prior.
 * Grab the latest bitcoin block hash from publicly available APIs.

@@ -34,7 +34,7 @@ use crate::types::{
 };
 use crate::util::secp::pedersen::{Commitment, RangeProof};
 use crate::util::{Mutex, RwLock, StopState};
-use grin_store::Error::NotFoundErr;
+use kepler_store::Error::NotFoundErr;
 use std::collections::HashMap;
 use std::fs::File;
 use std::sync::atomic::{AtomicUsize, Ordering};

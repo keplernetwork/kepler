@@ -16,13 +16,13 @@ use self::keychain::Keychain;
 use self::util::Mutex;
 use self::wallet::{HTTPNodeClient, HTTPWalletCommAdapter, LMDBBackend, WalletConfig};
 use blake2_rfc as blake2;
-use grin_api as api;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_p2p as p2p;
-use grin_servers as servers;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_api as api;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_p2p as p2p;
+use kepler_servers as servers;
+use kepler_util as util;
+use kepler_wallet as wallet;
 use std::default::Default;
 use std::ops::Deref;
 use std::sync::Arc;
@@ -197,7 +197,7 @@ impl LocalServerContainer {
 		let s = servers::Server::new(servers::ServerConfig {
 			api_http_addr: api_addr,
 			api_secret_path: None,
-			db_root: format!("{}/.grin", self.working_dir),
+			db_root: format!("{}/.kepler", self.working_dir),
 			p2p_config: p2p::P2PConfig {
 				port: self.config.p2p_server_port,
 				seeds: Some(seeds),
@@ -396,7 +396,7 @@ impl LocalServerContainer {
 			api.finalize_tx(&mut slate)?;
 			api.tx_lock_outputs(&slate, lock_fn)?;
 			println!(
-				"Tx sent: {} grin to {} (strategy '{}')",
+				"Tx sent: {} kepler to {} (strategy '{}')",
 				core::core::amount_to_hr_string(amount, false),
 				dest,
 				selection_strategy,
@@ -643,7 +643,7 @@ pub fn config(n: u16, test_name_dir: &str, seed_n: u16) -> servers::ServerConfig
 	servers::ServerConfig {
 		api_http_addr: format!("127.0.0.1:{}", 20000 + n),
 		api_secret_path: None,
-		db_root: format!("target/tmp/{}/grin-sync-{}", test_name_dir, n),
+		db_root: format!("target/tmp/{}/kepler-sync-{}", test_name_dir, n),
 		p2p_config: p2p::P2PConfig {
 			port: 10000 + n,
 			seeding_type: p2p::Seeding::List,

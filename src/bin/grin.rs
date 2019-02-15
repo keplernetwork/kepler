@@ -23,12 +23,12 @@ use crate::config::config::{SERVER_CONFIG_FILE_NAME, WALLET_CONFIG_FILE_NAME};
 use crate::core::global;
 use crate::util::init_logger;
 use clap::App;
-use grin_api as api;
-use grin_config as config;
-use grin_core as core;
-use grin_p2p as p2p;
-use grin_servers as servers;
-use grin_util as util;
+use kepler_api as api;
+use kepler_config as config;
+use kepler_core as core;
+use kepler_p2p as p2p;
+use kepler_servers as servers;
+use kepler_util as util;
 use std::process::exit;
 
 mod cmd;
@@ -70,7 +70,7 @@ fn main() {
 }
 
 fn real_main() -> i32 {
-	let yml = load_yaml!("grin.yml");
+	let yml = load_yaml!("kepler.yml");
 	let args = App::from_yaml(yml).get_matches();
 	let mut wallet_config = None;
 	let mut node_config = None;
@@ -114,7 +114,7 @@ fn real_main() -> i32 {
 			if !cmd::seed_exists(w.members.as_ref().unwrap().wallet.clone()) {
 				if "init" == wallet_args.subcommand().0 || "recover" == wallet_args.subcommand().0 {
 				} else {
-					println!("Wallet seed file doesn't exist. Run `grin wallet init` first");
+					println!("Wallet seed file doesn't exist. Run `kepler wallet init` first");
 					exit(1);
 				}
 			}

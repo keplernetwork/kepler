@@ -19,9 +19,9 @@ use self::core::core::{Output, OutputFeatures};
 use self::core::libtx::proof;
 use self::keychain::{ExtKeychain, Keychain};
 use self::util::RwLock;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 use std::sync::Arc;
 
 fn verifier_cache() -> Arc<RwLock<dyn VerifierCache>> {

@@ -14,7 +14,7 @@ RUN set -ex && \
     cmake \
     git
 
-WORKDIR /usr/src/grin
+WORKDIR /usr/src/kepler
 
 # Copying Kepler
 COPY . .
@@ -33,17 +33,17 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 
 ENV LANG en_US.UTF-8
 
-COPY --from=builder /usr/src/grin/target/release/grin /usr/local/bin/grin
+COPY --from=builder /usr/src/kepler/target/release/kepler /usr/local/bin/kepler
 
-WORKDIR /root/.grin
+WORKDIR /root/.kepler
 
-RUN grin server config && \
-    sed -i -e 's/run_tui = true/run_tui = false/' grin-server.toml
+RUN kepler server config && \
+    sed -i -e 's/run_tui = true/run_tui = false/' kepler-server.toml
 
-VOLUME ["/root/.grin"]
+VOLUME ["/root/.kepler"]
 
 EXPOSE 3413 3414 3415 3416
 
-ENTRYPOINT ["grin"]
+ENTRYPOINT ["kepler"]
 
 CMD ["server", "run"]

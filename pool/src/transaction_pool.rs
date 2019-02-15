@@ -27,8 +27,8 @@ use crate::types::{
 	BlockChain, PoolAdapter, PoolConfig, PoolEntry, PoolEntryState, PoolError, TxSource,
 };
 use chrono::prelude::*;
-use grin_core as core;
-use grin_util as util;
+use kepler_core as core;
+use kepler_util as util;
 use std::collections::VecDeque;
 use std::sync::Arc;
 

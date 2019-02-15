@@ -25,9 +25,9 @@ use self::core::pow::Difficulty;
 use self::keychain::{ExtKeychain, Keychain};
 use self::util::RwLock;
 use crate::common::*;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_util as util;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_util as util;
 use std::sync::Arc;
 
 #[test]
@@ -37,7 +37,7 @@ fn test_block_building_max_weight() {
 
 	let keychain: ExtKeychain = Keychain::from_random_seed(false).unwrap();
 
-	let db_root = ".grin_block_building_max_weight".to_string();
+	let db_root = ".kepler_block_building_max_weight".to_string();
 	clean_output_dir(db_root.clone());
 
 	let mut chain = ChainAdapter::init(db_root.clone()).unwrap();

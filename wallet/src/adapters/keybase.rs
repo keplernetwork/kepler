@@ -32,8 +32,8 @@ const LISTEN_SLEEP_DURATION: Duration = Duration::from_millis(5000);
 const POLL_SLEEP_DURATION: Duration = Duration::from_millis(1000);
 
 // Which topic names to use for communication
-const SLATE_NEW: &str = "grin_slate_new";
-const SLATE_SIGNED: &str = "grin_slate_signed";
+const SLATE_NEW: &str = "kepler_slate_new";
+const SLATE_SIGNED: &str = "kepler_slate_signed";
 
 #[derive(Clone)]
 pub struct KeybaseWalletCommAdapter {}
@@ -429,14 +429,14 @@ fn notify_on_receive(keybase_notify_ttl: u16, channel: String, tx_uuid: String) 
 				};
 
 				let msg = format!(
-					"[grin wallet notice]: \
+					"[kepler wallet notice]: \
 					 you could have some coins received from @{}\n\
 					 Transaction Id: {}",
 					sender, tx_uuid
 				);
 				notify(&msg, &receiver, keybase_notify_ttl);
 				info!(
-					"tx from @{} is done, please check on grin wallet. tx uuid: {}",
+					"tx from @{} is done, please check on kepler wallet. tx uuid: {}",
 					sender, tx_uuid,
 				);
 			}

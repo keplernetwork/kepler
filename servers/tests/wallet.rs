@@ -19,9 +19,9 @@ mod framework;
 
 use self::util::Mutex;
 use crate::framework::{LocalServerContainer, LocalServerContainerConfig};
-use grin_core as core;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_core as core;
+use kepler_util as util;
+use kepler_wallet as wallet;
 use std::sync::Arc;
 use std::{thread, time};
 

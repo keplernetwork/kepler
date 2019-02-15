@@ -26,22 +26,22 @@ extern crate serde_derive;
 #[macro_use]
 extern crate log;
 
-use grin_api as api;
-use grin_chain as chain;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_p2p as p2p;
-use grin_pool as pool;
-use grin_store as store;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_api as api;
+use kepler_chain as chain;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_p2p as p2p;
+use kepler_pool as pool;
+use kepler_store as store;
+use kepler_util as util;
+use kepler_wallet as wallet;
 
 pub mod common;
-mod grin;
+mod kepler;
 mod mining;
 mod webwallet;
 
 pub use crate::common::stats::{DiffBlock, PeerStats, ServerStats, StratumStats, WorkerStats};
 pub use crate::common::types::{ServerConfig, StratumServerConfig};
-pub use crate::grin::server::Server;
+pub use crate::kepler::server::Server;
 pub use crate::webwallet::server::start_webwallet_server;

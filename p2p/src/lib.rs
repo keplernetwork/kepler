@@ -28,8 +28,8 @@ extern crate enum_primitive;
 use lmdb_zero as lmdb;
 
 #[macro_use]
-extern crate grin_core as core;
-use grin_util as util;
+extern crate kepler_core as core;
+use kepler_util as util;
 
 #[macro_use]
 extern crate serde_derive;

@@ -20,8 +20,8 @@ use self::core::core::{Output, OutputFeatures};
 use self::core::libtx::proof;
 use self::core::ser;
 use self::keychain::{ExtKeychain, Keychain};
-use grin_core as core;
-use grin_keychain as keychain;
+use kepler_core as core;
+use kepler_keychain as keychain;
 
 #[test]
 fn test_output_ser_deser() {

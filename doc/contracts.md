@@ -98,7 +98,7 @@ hence a receiver could claim not having received anything. To solve this
 issue, we require the receiver to collaborate with the sender in building a
 transaction and specifically its kernel signature.
 
-Alice wants to pay Bob in grins. She starts the transaction building process:
+Alice wants to pay Bob in keplers. She starts the transaction building process:
 
 1. Alice selects her inputs and builds her change output. The sum of all
    blinding factors (change output minus inputs) is `rs`.
@@ -227,12 +227,12 @@ public key derivation `x*G` to be the hash function and by Bob revealing `x`,
 Alice can then produce an adequate signature proving she knows `x` (in
 addition to her own private key).
 
-Alice has grins and Bob has bitcoin. They would like to swap. We assume Bob
+Alice has keplers and Bob has bitcoin. They would like to swap. We assume Bob
 created an output on the Bitcoin blockchain that allows spending either by
 Alice if she learns a hash pre-image `x`, or by Bob after time `Tb`. Alice is
-ready to send her grins to Bob if he reveals `x`.
+ready to send her keplers to Bob if he reveals `x`.
 
-First, Alice sends her grins to a multiparty timelock contract with a refund
+First, Alice sends her keplers to a multiparty timelock contract with a refund
 time `Ta < Tb`. To send the 2-of-2 output to Bob and execute the swap, Alice
 and Bob start as if they were building a normal trustless transaction as
 specified in section 2.1.
@@ -248,7 +248,7 @@ specified in section 2.1.
    can also compute `e = SHA256(M | ks*G + kr*G)`.
 1. To complete the signature, Bob computes `sr = kr + e * rr` and the final
    signature is `(sr + ss, kr*G + ks*G)`.
-1. As soon as Bob broadcasts the final transaction to get his new grins, Alice
+1. As soon as Bob broadcasts the final transaction to get his new keplers, Alice
    can compute `sr' - sr` to get `x`.
 
 #### Notes on the Bitcoin setup

@@ -23,13 +23,13 @@ use std::cmp::{max, min};
 use crate::global;
 use crate::pow::Difficulty;
 
-/// A grin is divisible to 10^9, following the SI prefixes
+/// A kepler is divisible to 10^9, following the SI prefixes
 pub const GRIN_BASE: u64 = 1_000_000_000;
-/// Milligrin, a thousand of a grin
+/// Millikepler, a thousand of a kepler
 pub const MILLI_GRIN: u64 = GRIN_BASE / 1_000;
-/// Microgrin, a thousand of a milligrin
+/// Microkepler, a thousand of a millikepler
 pub const MICRO_GRIN: u64 = MILLI_GRIN / 1_000;
-/// Nanogrin, smallest unit, takes a billion to make a grin
+/// Nanokepler, smallest unit, takes a billion to make a kepler
 pub const NANO_GRIN: u64 = 1;
 
 /// Block interval, in seconds, the network will tune its next_target for. Note
@@ -38,7 +38,7 @@ pub const NANO_GRIN: u64 = 1;
 /// (adjusting the reward accordingly).
 pub const BLOCK_TIME_SEC: u64 = 60;
 
-/// The block subsidy amount, one grin per second on average
+/// The block subsidy amount, one kepler per second on average
 pub const REWARD: u64 = BLOCK_TIME_SEC * GRIN_BASE;
 
 /// Actual block reward for a given total fee amount

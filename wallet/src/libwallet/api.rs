@@ -87,9 +87,9 @@ where
 	///
 	/// # Example
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	///
 	/// use std::sync::Arc;
 	/// use util::Mutex;
@@ -142,9 +142,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -198,9 +198,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -252,9 +252,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -310,9 +310,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -387,9 +387,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -461,9 +461,9 @@ where
 	/// # Example
 	/// Set up as in [`new`](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -532,7 +532,7 @@ where
 	/// for the transaction, overriding whatever the active account is as set via the
 	/// [`set_active_account`](struct.APIOwner.html#method.set_active_account) method.
 	/// If None, the transaction will use the active account.
-	/// * `amount` - The amount to send, in nanogrins. (`1 G = 1_000_000_000nG`)
+	/// * `amount` - The amount to send, in nanokeplers. (`1 G = 1_000_000_000nG`)
 	/// * `minimum_confirmations` - The minimum number of confirmations an output
 	/// should have in order to be included in the transaction.
 	/// * `num_change_outputs` - The target number of change outputs to create in the transaction.
@@ -571,9 +571,9 @@ where
 	/// # Example
 	/// Set up as in [new](struct.APIOwner.html#method.new) method above.
 	/// ```
-	/// # extern crate grin_wallet as wallet;
-	/// # extern crate grin_keychain as keychain;
-	/// # extern crate grin_util as util;
+	/// # extern crate kepler_wallet as wallet;
+	/// # extern crate kepler_keychain as keychain;
+	/// # extern crate kepler_util as util;
 	/// # use std::sync::Arc;
 	/// # use util::Mutex;
 	/// # use keychain::ExtKeychain;
@@ -670,7 +670,7 @@ where
 	/// for the transaction, overriding whatever the active account is as set via the
 	/// [`set_active_account`](struct.APIOwner.html#method.set_active_account) method.
 	/// If None, the transaction will use the active account.
-	/// * `amount` - The amount to send, in nanogrins. (`1 G = 1_000_000_000nG`)
+	/// * `amount` - The amount to send, in nanokeplers. (`1 G = 1_000_000_000nG`)
 	/// * `minimum_confirmations` - The minimum number of confirmations an output
 	/// should have in order to be included in the transaction.
 	/// * `num_change_outputs` - The target number of change outputs to create in the transaction.
@@ -738,7 +738,7 @@ where
 
 	/// Sender finalization of the transaction. Takes the file returned by the
 	/// sender as well as the private file generate on the first send step.
-	/// Builds the complete transaction and sends it to a grin node for
+	/// Builds the complete transaction and sends it to a kepler node for
 	/// propagation.
 	pub fn finalize_tx(&mut self, slate: &mut Slate) -> Result<(), Error> {
 		let mut w = self.wallet.lock();

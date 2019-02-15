@@ -129,14 +129,14 @@ fn build_request<'a>(
 	let mut builder = Request::builder();
 	if api_secret.is_some() {
 		let basic_auth =
-			"Basic ".to_string() + &to_base64(&("grin:".to_string() + &api_secret.unwrap()));
+			"Basic ".to_string() + &to_base64(&("kepler:".to_string() + &api_secret.unwrap()));
 		builder.header(AUTHORIZATION, basic_auth);
 	}
 
 	builder
 		.method(method)
 		.uri(uri)
-		.header(USER_AGENT, "grin-client")
+		.header(USER_AGENT, "kepler-client")
 		.header(ACCEPT, "application/json")
 		.body(match body {
 			None => Body::empty(),

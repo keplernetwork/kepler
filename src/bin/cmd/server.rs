@@ -163,12 +163,12 @@ pub fn server_command(
 				start_server(server_config);
 			}
 			("", _) => {
-				println!("Subcommand required, use 'grin help server' for details");
+				println!("Subcommand required, use 'kepler help server' for details");
 			}
 			(cmd, _) => {
 				println!(":: {:?}", server_args);
 				panic!(
-					"Unknown server command '{}', use 'grin help server' for details",
+					"Unknown server command '{}', use 'kepler help server' for details",
 					cmd
 				);
 			}

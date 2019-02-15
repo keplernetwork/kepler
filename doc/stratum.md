@@ -57,7 +57,7 @@ Example:
 {  
    "id":"10",
    "jsonrpc":"2.0",
-   "method":"getgrins",
+   "method":"getkeplers",
    "error":{  
       "code":-32601,
       "message":"Method not found"
@@ -245,7 +245,7 @@ Example:
    "params":{  
       "login":"login",
       "pass":"password",
-      "agent":"grin-miner"
+      "agent":"kepler-miner"
    }
 }
 

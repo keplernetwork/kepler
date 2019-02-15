@@ -89,7 +89,7 @@ where
 			*height
 		};
 
-		// TODO: Output paths are always going to be length 3 for now, but easy enough to grind
+		// TODO: Output paths are always going to be length 3 for now, but easy enough to keplerd
 		// through to find the right path if required later
 		let key_id = Identifier::from_serialized_path(3u8, &info.message.as_bytes());
 

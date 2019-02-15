@@ -24,8 +24,8 @@ use self::core::core::{
 };
 use self::util::RwLock;
 use crate::types::{BlockChain, PoolEntry, PoolEntryState, PoolError};
-use grin_core as core;
-use grin_util as util;
+use kepler_core as core;
+use kepler_util as util;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 
