@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ fn comments() -> HashMap<String, String> {
 	retval.insert(
 		"[server]".to_string(),
 		"
-# Generated Server Configuration File for Grin
+# Generated Server Configuration File for Kepler
 #
 # When running the grin executable without specifying any command line
 # arguments, it will look for this file in two places, in the following
@@ -402,7 +402,7 @@ fn comments() -> HashMap<String, String> {
 	retval.insert(
 		"node_api_secret_path".to_string(),
 		"
-#location of the node api secret for basic auth on the Grin API
+#location of the node api secret for basic auth on the Kepler API
 "
 		.to_string(),
 	);

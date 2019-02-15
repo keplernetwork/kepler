@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -269,7 +269,7 @@ fn poll(nseconds: u64, channel: &str) -> Option<Slate> {
 		sleep(POLL_SLEEP_DURATION);
 	}
 	error!(
-		"No response from @{} in {} seconds. Grin send failed!",
+		"No response from @{} in {} seconds. Kepler send failed!",
 		channel, nseconds
 	);
 	None

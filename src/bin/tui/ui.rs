@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ impl UI {
 
 		let mut title_string = StyledString::new();
 		title_string.append(StyledString::styled(
-			format!("Grin Version {}", built_info::PKG_VERSION),
+			format!("Kepler Version {}", built_info::PKG_VERSION),
 			Color::Dark(BaseColor::Green),
 		));
 

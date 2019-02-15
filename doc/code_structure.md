@@ -1,6 +1,6 @@
-# Grin code structure
+# Kepler code structure
 
-Grin is built in [Rust](https://www.rust-lang.org/), a memory safe, compiled language. Performance critical parts like the Cuckoo mining algorithm are built as plugins, making it easy to swap between algorithm implementations for various hardware. Grin comes with CPU and experimental GPU support.
+Kepler is built in [Rust](https://www.rust-lang.org/), a memory safe, compiled language. Performance critical parts like the Cuckoo mining algorithm are built as plugins, making it easy to swap between algorithm implementations for various hardware. Kepler comes with CPU and experimental GPU support.
 
 ## Files in project root
 
@@ -39,12 +39,12 @@ After checking out grin, building and using, these are the folders you'll have:
  A folder you're [supposed to create](build.md#running-a-node), before starting your server: cd to project root; mkdir server; cd server; grin server start (or run) and it will create a subfolder .grin
   - `.grin`
     - `chain` - a database with the blockchain blocks and related information
-    - `peers` - a database with the list of Grin peers you're connected to
+    - `peers` - a database with the list of Kepler peers you're connected to
     - `txhashset` - contains folders kernel, rangeproof and output that each have a pmmr_dat.bin
 - `src`\
   Code for the `grin` binary.
 - `store`\
-  Data store - Grin uses near-zero-cost Rust wrapper around LMDB, key-value embedded data store.
+  Data store - Kepler uses near-zero-cost Rust wrapper around LMDB, key-value embedded data store.
 - `target`\
   Where the grin binary ends up, after the compile and build process finishes.
   In case of trouble, see [troubleshooting](https://github.com/mimblewimble/docs/wiki/Troubleshooting)

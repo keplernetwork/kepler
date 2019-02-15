@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -337,7 +337,7 @@ fn validate_header(header: &BlockHeader, ctx: &mut BlockContext<'_>) -> Result<(
 	// check version, enforces scheduled hard fork
 	if !consensus::valid_header_version(header.height, header.version) {
 		error!(
-			"Invalid block header version received ({}), maybe update Grin?",
+			"Invalid block header version received ({}), maybe update Kepler?",
 			header.version
 		);
 		return Err(ErrorKind::InvalidBlockVersion(header.version).into());

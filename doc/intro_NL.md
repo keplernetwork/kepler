@@ -1,15 +1,15 @@
-# Inleiding tot MimbleWimble en Grin
+# Inleiding tot MimbleWimble en Kepler
 
 *Lees dit in andere talen: [English](intro.md), [简体中文](intro_ZH-CN.md), [Español](intro_ES.md), [Nederlands](intro_NL.md), [Русский](intro_RU.md), [日本語](intro_JP.md), [Deutsch](intro_DE.md), [Portuguese](intro_PT-BR.md).*
 
 MimbleWimble is een blockchain formaat en protocol die extreem goede schaalbaarheid, privacy en fungibiliteit biedt door zich te berusten op sterke cryptografische primiteven. Het adresseert de lacunes die in bijna alle huidige blockchain-implementaties bestaan.
 
-Grin is een open source softwareproject dat een MimbleWimble blockchain
+Kepler is een open source softwareproject dat een MimbleWimble blockchain
 implementeert en de lacunes vult die nodig zijn voor een
 volledige blockchain en
 cryptovaluta inzet
 
-Het belangrijkste doel en eigenschappen van het Grin project zijn:
+Het belangrijkste doel en eigenschappen van het Kepler project zijn:
 
 * Privacy als standaard. Dit maakt volledige fungibliteit mogelijk zonder
   het vermogen om selectief informatie vrij te geven indien nodig uit te sluiten.
@@ -27,15 +27,15 @@ Het belangrijkste doel en eigenschappen van het Grin project zijn:
 
 Dit document is bedoeld voor lezers met een sterke achtergrond
 van blockchains en elementaire cryptografie. Met dat in ons achterhoofd, proberen we
-de technische opbouw van MimbleWimble en hoe het in Grin is toegepast uit te leggen.
+de technische opbouw van MimbleWimble en hoe het in Kepler is toegepast uit te leggen.
 We hopen dat dit document verstaanbaar is voor de meeste technische lezers
-Ons doel is om u aan te moedigen geïnteresseerd te raken in Grin en
+Ons doel is om u aan te moedigen geïnteresseerd te raken in Kepler en
 op welke manier mogelijk dan ook bij te dragen.
 
 Om dit doel te bereiken, zullen we de belangrijkste concepten introduceren die vereist
-zijn voor een goed begrip van Grin als een MimbleWimble-implementatie. We beginnen met een beknopte beschrijving
+zijn voor een goed begrip van Kepler als een MimbleWimble-implementatie. We beginnen met een beknopte beschrijving
 van enkele relevante eigenschappen van Elliptic Curve Cryptografie (ECC) om de basis
-waarop Grin gebaseerd is en vervolgens alle belangrijke elementen van
+waarop Kepler gebaseerd is en vervolgens alle belangrijke elementen van
 MimbleWimble blockchain's transacties en -blokken te beschrijven.
 
 ### Minuscule Databits van Elliptic Curves
@@ -67,7 +67,7 @@ demonstreert dat een openbare sleutel verkregen is door de toevoeging van
 twee privésleutels (`(k+j)*H`) zijn identiek aan de toevoeging van de
 openbare sleutels voor elk van die twee privésleutels (`k*H + j*H`). 
 In de Bitcoin blockchain, zijn Hiërarchische Deterministische portefeuilles 
-sterk afhankelijk van dit principe. Alsook MimbleWimble en de Grin-implementatie.
+sterk afhankelijk van dit principe. Alsook MimbleWimble en de Kepler-implementatie.
 
 ### Transacties met MimbleWimble
 
@@ -206,7 +206,7 @@ mining fees), wordt een _transaction kernel_ genoemd en wordt gecontroleerd door
 Dit gedeelte gaat in op het maken van transacties door te bespreken hoe verandering geïntroduceerd is
 en de vereiste voor range proofs zodat alle waarden bewezen zijn als niet-negatieve.
 Geen van beide zijn absoluut vereist om MimbleWimble en
-Grin te begrijpen, dus als je gehaast bent, voel je virj om meteen over te gaan naar
+Kepler te begrijpen, dus als je gehaast bent, voel je virj om meteen over te gaan naar
 [Alles bij elkaar samenbrengen](#putting-it-all-together).
 
 ##### Wisselbedrag

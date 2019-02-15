@@ -16,10 +16,10 @@ RUN set -ex && \
 
 WORKDIR /usr/src/grin
 
-# Copying Grin
+# Copying Kepler
 COPY . .
 
-# Building Grin
+# Building Kepler
 RUN cargo build --release
 
 # runtime stage

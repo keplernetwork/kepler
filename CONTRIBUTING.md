@@ -18,7 +18,7 @@ In case of problems with trying out grin, before starting to contribute, there's
 * And [see the developers chat](https://gitter.im/grin_community/dev) if you have questions about source code files.
   If you explain what you're looking at and what you want to do, we'll try to help you along the way.
 * Also see `docs/*.md` and the folder structure explanations, and [the wiki](https://github.com/mimblewimble/docs/wiki).
-* Further information and discussions are in the [Forum](https://www.grin-forum.org/), the [website](https://grin-tech.org), the [mailing list](https://lists.launchpad.net/mimblewimble/) and news channels like the [@grincouncil](https://twitter.com/grincouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWinble/Grin: [@grinmw](https://twitter.com/grinmw)
+* Further information and discussions are in the [Forum](https://www.grin-forum.org/), the [website](https://grin-tech.org), the [mailing list](https://lists.launchpad.net/mimblewimble/) and news channels like the [@grincouncil](https://twitter.com/grincouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWinble/Kepler: [@grinmw](https://twitter.com/grinmw)
 
 ## Testing
 
@@ -52,7 +52,7 @@ Please consider putting one of the following prefixes in the title of your pull-
 
 For example: `fix: a panick on xxx when grin exiting`. Please don't worry if you can't find a suitable prefix, this's just optional, not mandatory.
 
-# Grin Style Guide
+# Kepler Style Guide
 
 This project uses `rustfmt` to maintain consistent formatting. We've made sure that rustfmt runs **automatically**, but you must install rustfmt manually first.
 
@@ -101,4 +101,4 @@ Not recommended, but you can run rustfmt on a file like this: `rustfmt client.rs
 
 ## Thanks for any contribution
 
-Even one word correction are welcome! Our objective is to encourage you to get interested in Grin and contribute in any way possible. Thanks for any help!
+Even one word correction are welcome! Our objective is to encourage you to get interested in Kepler and contribute in any way possible. Thanks for any help!

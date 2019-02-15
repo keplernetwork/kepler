@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ where
 	if api_secret.is_some() {
 		let api_basic_auth =
 			"Basic ".to_string() + &to_base64(&("grin:".to_string() + &api_secret.unwrap()));
-		let basic_realm = "Basic realm=GrinOwnerAPI".to_string();
+		let basic_realm = "Basic realm=KeplerOwnerAPI".to_string();
 		let basic_auth_middleware = Arc::new(BasicAuthMiddleware::new(api_basic_auth, basic_realm));
 		router.add_middleware(basic_auth_middleware);
 	}

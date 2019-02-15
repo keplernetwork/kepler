@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ where
 	let mut wallet_outputs: Vec<OutputResult> = Vec::new();
 
 	warn!(
-		"Scanning {} outputs in the current Grin utxo set",
+		"Scanning {} outputs in the current Kepler utxo set",
 		outputs.len(),
 	);
 

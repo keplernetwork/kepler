@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// Grin client commands processing
+/// Kepler client commands processing
 use std::net::SocketAddr;
 
 use clap::ArgMatches;
@@ -61,7 +61,7 @@ pub fn client_command(client_args: &ArgMatches<'_>, global_config: GlobalConfig)
 
 pub fn show_status(config: &ServerConfig, api_secret: Option<String>) {
 	println!();
-	let title = format!("Grin Server Status");
+	let title = format!("Kepler Server Status");
 	let mut t = term::stdout().unwrap();
 	let mut e = term::stdout().unwrap();
 	t.fg(term::color::MAGENTA).unwrap();
