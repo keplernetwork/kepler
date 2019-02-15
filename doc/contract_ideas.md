@@ -5,7 +5,7 @@
 "On another chain, Igno sends coins to me that I can only redeem by revealing a hash preimage (which he knows, I don't). On the MW chain we do this exchange so that Igno can take my coins by revealing the preimage. When he takes his coins, he reveals it, enabling me to take my coins.
 
 Note that this requires both chains to support hash preimages: all Bitcoin script derivatives, Ethereum, and now Mimblewimble support this." - Andrew Poelstra
-- https://lists.launchpad.net/mimblewimble/msg00022.html
+- https://lists.launchpad.net/keplernetwork/msg00022.html
 
 "At the [Stanford BPASE Conference](https://cyber.stanford.edu/blockchainconf) I gave a talk where I briefly mentioned that it was possible to do atomic swaps with no preimages at all."
 
@@ -40,7 +40,7 @@ Observe that I can verify sconv is legitimate in step (3), and that this verific
 
 
 My thinking is that this atomic linking of multiple transactions is a fairly general primitive that can be used to link lightning channels etc, and that we might not need hash preimages for this after all." - Andrew Poelstra
-- https://lists.launchpad.net/mimblewimble/msg00036.html
+- https://lists.launchpad.net/keplernetwork/msg00036.html
 
 "So the setting is that Igno holds some coins on the MW altchain, by knowing the blinding factor rI0 in an output rI0*G+a*H of a coins, while Andrew holds some coins on an MW' sidechain, by knowing the blinding factor rA0' in an output rA0'*G+a'*H of a' coins, and they'll like to swap these. Note that we require MW and MW' to use the same curve and generators G,H. We adopt a notation for quantities that start with a lower case letter for its role, followed by an uppercase letter for who
 picked or computed it, a serial number, and an optional ' to distinguish the two chains.
@@ -125,7 +125,7 @@ Appearance of tx3' on MW' reveals s3'
 6) let Andrew obtain his swapping coins on MW
 
 Andrew computes s3 = sI3+sA3 = sconv+sI3'+sA3=sconv+s3'-sA3'+sA3 and issues tx3" - John Tromp
-- https://lists.launchpad.net/mimblewimble/msg00047.html
+- https://lists.launchpad.net/keplernetwork/msg00047.html
 
 ## Secure Transaction Exchange
 
@@ -133,10 +133,10 @@ Andrew computes s3 = sI3+sA3 = sconv+sI3'+sA3=sconv+s3'-sA3'+sA3 and issues tx3"
 
 "I talked with Thaddeus Dryja just now and showed him down to do locktime and hash preimages, and he said this should be sufficient to create HTLC's (hash-timelocked lightning channels), so I guess this gives us full lightning
 support in principle." - Andrew Poelstra
-- https://lists.launchpad.net/mimblewimble/msg00022.html
+- https://lists.launchpad.net/keplernetwork/msg00022.html
 
 
-- https://lists.launchpad.net/mimblewimble/msg00029.html - bunch of replies, nothing super specific
+- https://lists.launchpad.net/keplernetwork/msg00029.html - bunch of replies, nothing super specific
 
 "Recently I've found a different construction that behaves much more like
 a hash preimage challenge, and this can actually be used for Lightning.
@@ -251,7 +251,7 @@ Note also that nothing I've said depends at all on what's being signed. This
 means this works just as well for MimbleWimble as it would for Bitcoin+Schnorr
 as it would for Monero (with a multisig ring-CT construction) as it would
 for Ethereum+Schnorr. Further, it can link transactions across chains."  - Andrew Poelstra
-- https://lists.launchpad.net/mimblewimble/msg00086.html
+- https://lists.launchpad.net/keplernetwork/msg00086.html
 
 ## Lock-time
 
@@ -266,13 +266,13 @@ for Ethereum+Schnorr. Further, it can link transactions across chains."  - Andre
 3. I produce a transaction which sends these coins to Igno. With the excess I sign the hash e, leave the locktime blank, and do my part to sign.
 
 At this point Igno can either (a) complete the transaction, doing his part of the signature and revealing the preimage to the network, including me; or (b) do nothing, in which case I'll take the coin back after the lock time." - Andrew Poelstra
-- https://lists.launchpad.net/mimblewimble/msg00022.html
+- https://lists.launchpad.net/keplernetwork/msg00022.html
 
-- https://lists.launchpad.net/mimblewimble/msg00025.html
-- https://lists.launchpad.net/mimblewimble/msg00034.html
-- https://lists.launchpad.net/mimblewimble/msg00048.html
-- https://lists.launchpad.net/mimblewimble/msg00050.html
-- https://lists.launchpad.net/mimblewimble/msg00102.html
+- https://lists.launchpad.net/keplernetwork/msg00025.html
+- https://lists.launchpad.net/keplernetwork/msg00034.html
+- https://lists.launchpad.net/keplernetwork/msg00048.html
+- https://lists.launchpad.net/keplernetwork/msg00050.html
+- https://lists.launchpad.net/keplernetwork/msg00102.html
 
 ## ZKCP (Zero-Knowledge Contingent Payments)
 
@@ -280,10 +280,10 @@ At this point Igno can either (a) complete the transaction, doing his part of th
 https://bitcoincore.org/en/2016/02/26/zero-knowledge-contingent-payments-announcement/
 
 In this case, Igno produces a zero-knowledge proof that the hash preimage will decrypt the solution to some problem I care about. He gives me the encrypted solution and the hash and the proof, then we do the above exchange to trade the preimage for money."
-- https://lists.launchpad.net/mimblewimble/msg00022.html
+- https://lists.launchpad.net/keplernetwork/msg00022.html
 
-- https://lists.launchpad.net/mimblewimble/msg00037.html
+- https://lists.launchpad.net/keplernetwork/msg00037.html
 
 ## Scripting etc.
-- https://lists.launchpad.net/mimblewimble/msg00025.html
-- https://lists.launchpad.net/mimblewimble/msg00029.html
+- https://lists.launchpad.net/keplernetwork/msg00025.html
+- https://lists.launchpad.net/keplernetwork/msg00029.html

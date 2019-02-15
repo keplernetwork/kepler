@@ -1,16 +1,16 @@
 [package]
-name = "grin_core-fuzz"
+name = "kepler_core-fuzz"
 version = "0.0.3"
-authors = ["Grin Developers <mimblewimble@lists.launchpad.net>"]
+authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 publish = false
 
 [package.metadata]
 cargo-fuzz = true
 
 [dependencies]
-grin_core = { path = ".."}
-grin_keychain = { path = "../../keychain"}
-grin_wallet = { path = "../../wallet"}
+kepler_core = { path = ".."}
+kepler_keychain = { path = "../../keychain"}
+kepler_wallet = { path = "../../wallet"}
 [dependencies.libfuzzer-sys]
 git = "https://github.com/rust-fuzz/libfuzzer-sys.git"
 

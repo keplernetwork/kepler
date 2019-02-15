@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Library module for the main wallet functionalities provided by Grin.
+//! Library module for the main wallet functionalities provided by Kepler.
 
 use blake2_rfc as blake2;
 
@@ -24,11 +24,11 @@ extern crate serde_derive;
 #[macro_use]
 extern crate log;
 use failure;
-use grin_api as api;
-use grin_core as core;
-use grin_keychain as keychain;
-use grin_store as store;
-use grin_util as util;
+use kepler_api as api;
+use kepler_core as core;
+use kepler_keychain as keychain;
+use kepler_store as store;
+use kepler_util as util;
 
 mod adapters;
 pub mod command;

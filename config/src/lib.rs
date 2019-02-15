@@ -1,4 +1,4 @@
-// Copyright 2018 The Grin Developers
+// Copyright 2018 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! Crate wrapping up the Grin binary and configuration file
+//! Crate wrapping up the Kepler binary and configuration file
 
 #![deny(non_upper_case_globals)]
 #![deny(non_camel_case_types)]
@@ -23,11 +23,11 @@
 #[macro_use]
 extern crate serde_derive;
 
-use grin_core as core;
-use grin_p2p as p2p;
-use grin_servers as servers;
-use grin_util as util;
-use grin_wallet as wallet;
+use kepler_core as core;
+use kepler_p2p as p2p;
+use kepler_servers as servers;
+use kepler_util as util;
+use kepler_wallet as wallet;
 
 mod comments;
 pub mod config;
