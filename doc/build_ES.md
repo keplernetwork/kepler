@@ -49,7 +49,7 @@ Kepler también puede compilarse en modo debug (sin la etiqueta `--release`, per
 
 ## Errores de compilación
 
-Vea [Solución de problemas](https://github.com/mimblewimble/docs/wiki/Troubleshooting)
+Vea [Solución de problemas](https://github.com/keplernetwork/docs/wiki/Troubleshooting)
 
 ## ¿Qué se ha compilado?
 
@@ -108,7 +108,7 @@ Rust (cargo) puede compilar Kepler para muchas plataformas, así que en teoría 
 
 ## Usando Kepler
 
-La página de la wiki [Cómo usar grin](https://github.com/mimblewimble/docs/wiki/How-to-use-grin) y las páginas de enlaces tienen más información sobre las características que disponemos, resolución de problemas, etc.
+La página de la wiki [Cómo usar grin](https://github.com/keplernetwork/docs/wiki/How-to-use-grin) y las páginas de enlaces tienen más información sobre las características que disponemos, resolución de problemas, etc.
 
 ## Minando en Kepler
 
