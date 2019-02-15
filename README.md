@@ -19,7 +19,7 @@ To learn more, read our [introduction to MimbleWimble and Kepler](doc/intro.md).
 
 ## Status
 
-Kepler is live with mainnet. Still, much is left to be done and [contributions](CONTRIBUTING.md) are welcome (see below). Check our [mailing list archives](https://lists.launchpad.net/mimblewimble/) for the latest status.
+Kepler is live with mainnet. Still, much is left to be done and [contributions](CONTRIBUTING.md) are welcome (see below). Check our [mailing list archives](https://lists.launchpad.net/keplernetwork/) for the latest status.
 
 ## Contributing
 
@@ -28,7 +28,7 @@ To get involved, read our [contributing docs](CONTRIBUTING.md).
 Find us:
 
 * Chat: [Gitter](https://gitter.im/grin_community/Lobby).
-* Mailing list: join the [~MimbleWimble team](https://launchpad.net/~mimblewimble) and subscribe on Launchpad.
+* Mailing list: join the [~MimbleWimble team](https://launchpad.net/~keplernetwork) and subscribe on Launchpad.
 * Twitter for the Kepler council: [@grincouncil](https://twitter.com/grincouncil)
 
 ## Getting Started

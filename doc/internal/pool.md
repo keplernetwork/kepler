@@ -8,7 +8,7 @@ The primary purpose of the memory pool is to maintain a list of mineable transac
 
 For standard (non-mining) nodes, the primary purpose of the memory pool is to serve as a moderator for transaction broadcasts by requiring connectivity to the blockchain. Secondary uses include monitoring incoming transactions, for example for giving early notice of an unconfirmed transaction to the user's wallet.
 
-Given the focus of grin (and mimblewimble) on reduced resource consumption, the memory pool should be an optional but recommended component for non-mining nodes.
+Given the focus of grin (and keplernetwork) on reduced resource consumption, the memory pool should be an optional but recommended component for non-mining nodes.
 
 ## Design Overview
 

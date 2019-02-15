@@ -29,7 +29,7 @@
 
 ## External (wiki)
 
-- [FAQ](https://github.com/mimblewimble/docs/wiki/FAQ) - Frequently Asked Questions
-- [Building grin](https://github.com/mimblewimble/docs/wiki/Building)
-- [How to use grin](https://github.com/mimblewimble/docs/wiki/How-to-use-grin)
-- [Hacking and contributing](https://github.com/mimblewimble/docs/wiki/Hacking-and-contributing)
+- [FAQ](https://github.com/keplernetwork/docs/wiki/FAQ) - Frequently Asked Questions
+- [Building grin](https://github.com/keplernetwork/docs/wiki/Building)
+- [How to use grin](https://github.com/keplernetwork/docs/wiki/How-to-use-grin)
+- [Hacking and contributing](https://github.com/keplernetwork/docs/wiki/Hacking-and-contributing)

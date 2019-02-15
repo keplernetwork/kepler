@@ -14,7 +14,7 @@
 
 //! Aggregated Signature functions used in the creation of Kepler transactions.
 //! This module interfaces into the underlying
-//! [Rust Aggsig library](https://github.com/mimblewimble/rust-secp256k1-zkp/blob/master/src/aggsig.rs)
+//! [Rust Aggsig library](https://github.com/keplernetwork/rust-secp256k1-zkp/blob/master/src/aggsig.rs)
 
 use crate::keychain::{BlindingFactor, Identifier, Keychain};
 use crate::libtx::error::{Error, ErrorKind};

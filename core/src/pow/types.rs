@@ -84,7 +84,7 @@ impl Difficulty {
 
 	/// Computes the difficulty from a hash. Divides the maximum target by the
 	/// provided hash and applies the Cuck(at)oo size adjustment factor (see
-	/// https://lists.launchpad.net/mimblewimble/msg00494.html).
+	/// https://lists.launchpad.net/keplernetwork/msg00494.html).
 	fn from_proof_adjusted(height: u64, proof: &Proof) -> Difficulty {
 		// scale with natural scaling factor
 		Difficulty::from_num(proof.scaled_difficulty(graph_weight(height, proof.edge_bits)))

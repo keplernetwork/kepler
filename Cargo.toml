@@ -1,11 +1,11 @@
 [package]
 name = "grin"
 version = "1.0.1"
-authors = ["Kepler Developers <mimblewimble@lists.launchpad.net>"]
+authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
 repository = "https://github.com/keplernetwork/kepler"
-keywords = [ "crypto", "grin", "mimblewimble" ]
+keywords = [ "crypto", "grin", "keplernetwork" ]
 readme = "README.md"
 exclude = ["**/*.grin", "**/*.grin2"]
 build = "src/build/build.rs"

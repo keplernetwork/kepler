@@ -1,11 +1,11 @@
 [package]
 name = "grin_wallet"
 version = "1.0.1"
-authors = ["Kepler Developers <mimblewimble@lists.launchpad.net>"]
+authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
 repository = "https://github.com/keplernetwork/kepler"
-keywords = [ "crypto", "grin", "mimblewimble" ]
+keywords = [ "crypto", "grin", "keplernetwork" ]
 workspace = '..'
 edition = "2018"
 

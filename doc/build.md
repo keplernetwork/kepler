@@ -51,7 +51,7 @@ Kepler can also be built in debug mode (without the `--release` flag, but using 
 
 ## Build errors
 
-See [Troubleshooting](https://github.com/mimblewimble/docs/wiki/Troubleshooting)
+See [Troubleshooting](https://github.com/keplernetwork/docs/wiki/Troubleshooting)
 
 ## What was built?
 
@@ -126,7 +126,7 @@ say, for a Raspberry Pi.
 
 ## Using grin
 
-The wiki page [Wallet User Guide](https://github.com/mimblewimble/docs/wiki/Wallet-User-Guide)
+The wiki page [Wallet User Guide](https://github.com/keplernetwork/docs/wiki/Wallet-User-Guide)
 and linked pages have more information on what features we have,
 troubleshooting, etc.
 
