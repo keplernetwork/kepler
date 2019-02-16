@@ -25,7 +25,7 @@ pub mod pmmr;
 pub mod transaction;
 pub mod verifier_cache;
 
-use crate::consensus::GRIN_BASE;
+use crate::consensus::KEPLER_BASE;
 
 use crate::util::secp::pedersen::Commitment;
 
@@ -59,7 +59,7 @@ pub fn amount_from_hr_string(amount: &str) -> Result<u64, Error> {
 			(parse_keplers(gs)?, parse_nkeplers(&tail[1..])?)
 		}
 	};
-	Ok(keplers * GRIN_BASE + nkeplers)
+	Ok(keplers * KEPLER_BASE + nkeplers)
 }
 
 fn parse_keplers(amount: &str) -> Result<u64, Error> {
@@ -73,7 +73,7 @@ fn parse_keplers(amount: &str) -> Result<u64, Error> {
 }
 
 lazy_static! {
-	static ref WIDTH: usize = (GRIN_BASE as f64).log(10.0) as usize + 1;
+	static ref WIDTH: usize = (KEPLER_BASE as f64).log(10.0) as usize + 1;
 }
 
 fn parse_nkeplers(amount: &str) -> Result<u64, Error> {
@@ -90,7 +90,7 @@ fn parse_nkeplers(amount: &str) -> Result<u64, Error> {
 /// Common method for converting an amount to a human-readable string
 
 pub fn amount_to_hr_string(amount: u64, truncate: bool) -> String {
-	let amount = (amount as f64 / GRIN_BASE as f64) as f64;
+	let amount = (amount as f64 / KEPLER_BASE as f64) as f64;
 	let hr = format!("{:.*}", WIDTH, amount);
 	if truncate {
 		let nzeros = hr.chars().rev().take_while(|x| x == &'0').count();
