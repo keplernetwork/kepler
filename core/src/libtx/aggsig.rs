@@ -233,10 +233,12 @@ pub fn verify_partial_sig(
 /// use core::core::{Output, OutputFeatures};
 /// use keychain::{Keychain, ExtKeychain};
 ///
+/// 
+/// let height = 20;
 /// let secp = Secp256k1::with_caps(ContextFlag::Commit);
 /// let keychain = ExtKeychain::from_random_seed(false).unwrap();
 /// let fees = 10_000;
-/// let value = reward(fees);
+/// let value = reward(height, fees);
 /// let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
 /// let commit = keychain.commit(value, &key_id).unwrap();
 /// let rproof = proof::create(&keychain, value, &key_id, commit, None).unwrap();
@@ -245,8 +247,7 @@ pub fn verify_partial_sig(
 ///		commit: commit,
 ///		proof: rproof,
 /// };
-/// let height = 20;
-/// let over_commit = secp.commit_value(reward(fees)).unwrap();
+/// let over_commit = secp.commit_value(reward(height, fees)).unwrap();
 /// let out_commit = output.commitment();
 /// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
@@ -298,10 +299,11 @@ where
 /// use keychain::{Keychain, ExtKeychain};
 ///
 /// // Create signature
+/// let height = 20;
 /// let secp = Secp256k1::with_caps(ContextFlag::Commit);
 /// let keychain = ExtKeychain::from_random_seed(false).unwrap();
 /// let fees = 10_000;
-/// let value = reward(fees);
+/// let value = reward(height, fees);
 /// let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
 /// let commit = keychain.commit(value, &key_id).unwrap();
 /// let rproof = proof::create(&keychain, value, &key_id, commit, None).unwrap();
@@ -310,8 +312,7 @@ where
 ///		commit: commit,
 ///		proof: rproof,
 /// };
-/// let height = 20;
-/// let over_commit = secp.commit_value(reward(fees)).unwrap();
+/// let over_commit = secp.commit_value(reward(height, fees)).unwrap();
 /// let out_commit = output.commitment();
 /// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
