@@ -631,12 +631,12 @@ fn hard_forks() {
 #[test]
 fn test_halvings() {
 	let mut total_coin=0;
-	for x in (0..130*YEAR_HEIGHT) {
-	total_coin=total_coin+reward(x,0);
-    
+	for height in 0..128*YEAR_HEIGHT {
+    let reward = reward(height,0);
+	assert!(reward==INITIAL_REWARD >> (height / HALVING_INTERVAL));
+	total_coin=total_coin+reward;
 	}
-	println!("{}",total_coin);
-	assert!(false);
+	assert!(total_coin==2096639999986371840u64);
 }
 	
 // #[test]
