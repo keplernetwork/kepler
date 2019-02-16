@@ -42,10 +42,10 @@ pub const SERVER_CONFIG_FILE_NAME: &'static str = "kepler-server.toml";
 pub const WALLET_CONFIG_FILE_NAME: &'static str = "kepler-wallet.toml";
 const SERVER_LOG_FILE_NAME: &'static str = "kepler-server.log";
 const WALLET_LOG_FILE_NAME: &'static str = "kepler-wallet.log";
-const GRIN_HOME: &'static str = ".kepler";
-const GRIN_CHAIN_DIR: &'static str = "chain_data";
+const KEPLER_HOME: &'static str = ".kepler";
+const KEPLER_CHAIN_DIR: &'static str = "chain_data";
 /// Wallet data directory
-pub const GRIN_WALLET_DIR: &'static str = "wallet_data";
+pub const KEPLER_WALLET_DIR: &'static str = "wallet_data";
 pub const API_SECRET_FILE_NAME: &'static str = ".api_secret";
 
 fn get_kepler_path(chain_type: &global::ChainTypes) -> Result<PathBuf, ConfigError> {
@@ -54,7 +54,7 @@ fn get_kepler_path(chain_type: &global::ChainTypes) -> Result<PathBuf, ConfigErr
 		Some(p) => p,
 		None => PathBuf::new(),
 	};
-	kepler_path.push(GRIN_HOME);
+	kepler_path.push(KEPLER_HOME);
 	kepler_path.push(chain_type.shortname());
 	// Create if the default path doesn't exist
 	if !kepler_path.exists() {
@@ -300,7 +300,7 @@ impl GlobalConfig {
 	pub fn update_paths(&mut self, kepler_home: &PathBuf) {
 		// need to update server chain path
 		let mut chain_path = kepler_home.clone();
-		chain_path.push(GRIN_CHAIN_DIR);
+		chain_path.push(KEPLER_CHAIN_DIR);
 		self.members.as_mut().unwrap().server.db_root = chain_path.to_str().unwrap().to_owned();
 		let mut secret_path = kepler_home.clone();
 		secret_path.push(API_SECRET_FILE_NAME);
@@ -429,7 +429,7 @@ impl GlobalWalletConfig {
 	/// Update paths
 	pub fn update_paths(&mut self, wallet_home: &PathBuf) {
 		let mut wallet_path = wallet_home.clone();
-		wallet_path.push(GRIN_WALLET_DIR);
+		wallet_path.push(KEPLER_WALLET_DIR);
 		self.members.as_mut().unwrap().wallet.data_file_dir =
 			wallet_path.to_str().unwrap().to_owned();
 		let mut secret_path = wallet_home.clone();

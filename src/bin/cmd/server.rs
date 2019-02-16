@@ -46,7 +46,7 @@ fn start_server_tui(config: servers::ServerConfig) {
 	// Run the UI controller.. here for now for simplicity to access
 	// everything it might need
 	if config.run_tui.unwrap_or(false) {
-		warn!("Starting GRIN in UI mode...");
+		warn!("Starting KEPLER in UI mode...");
 		servers::Server::start(config, |serv: Arc<servers::Server>| {
 			let running = Arc::new(AtomicBool::new(true));
 			let _ = thread::Builder::new()
@@ -60,7 +60,7 @@ fn start_server_tui(config: servers::ServerConfig) {
 		})
 		.unwrap();
 	} else {
-		warn!("Starting GRIN w/o UI...");
+		warn!("Starting KEPLER w/o UI...");
 		servers::Server::start(config, |serv: Arc<servers::Server>| {
 			let running = Arc::new(AtomicBool::new(true));
 			let r = running.clone();
