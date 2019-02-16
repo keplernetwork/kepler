@@ -92,7 +92,6 @@ where
 {
 	let fees = txs.iter().map(|tx| tx.fee()).sum();
 	let height = previous_header.height + 1;
-	println!("Create new block at height {}", height);
 	let reward_output = reward::output(keychain, &key_id, fees, height).unwrap();
 	Block::new(
 		&previous_header,
