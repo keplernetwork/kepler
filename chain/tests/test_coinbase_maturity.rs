@@ -67,7 +67,7 @@ fn test_coinbase_maturity() {
 	let key_id4 = ExtKeychainPath::new(1, 4, 0, 0, 0).to_identifier();
 
 	let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
-	let reward = libtx::reward::output(&keychain, &key_id1, 0).unwrap();
+	let reward = libtx::reward::output(&keychain, &key_id1, 0, 0).unwrap();
 	let mut block = core::core::Block::new(&prev, vec![], Difficulty::min(), reward).unwrap();
 	block.header.timestamp = prev.timestamp + Duration::seconds(60);
 	block.header.pow.secondary_scaling = next_header_info.secondary_scaling;
@@ -92,7 +92,7 @@ fn test_coinbase_maturity() {
 
 	let prev = chain.head_header().unwrap();
 
-	let amount = consensus::REWARD;
+	let amount = consensus::INITIAL_REWARD;
 
 	let lock_height = 1 + global::coinbase_maturity();
 	assert_eq!(lock_height, 4);
@@ -111,7 +111,7 @@ fn test_coinbase_maturity() {
 
 	let txs = vec![coinbase_txn.clone()];
 	let fees = txs.iter().map(|tx| tx.fee()).sum();
-	let reward = libtx::reward::output(&keychain, &key_id3, fees).unwrap();
+	let reward = libtx::reward::output(&keychain, &key_id3, fees, 0).unwrap();
 	let mut block = core::core::Block::new(&prev, txs, Difficulty::min(), reward).unwrap();
 	let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
 	block.header.timestamp = prev.timestamp + Duration::seconds(60);
@@ -145,7 +145,7 @@ fn test_coinbase_maturity() {
 		let keychain = ExtKeychain::from_random_seed(false).unwrap();
 		let pk = ExtKeychainPath::new(1, 1, 0, 0, 0).to_identifier();
 
-		let reward = libtx::reward::output(&keychain, &pk, 0).unwrap();
+		let reward = libtx::reward::output(&keychain, &pk, 0, 0).unwrap();
 		let mut block = core::core::Block::new(&prev, vec![], Difficulty::min(), reward).unwrap();
 		let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
 		block.header.timestamp = prev.timestamp + Duration::seconds(60);
@@ -173,7 +173,7 @@ fn test_coinbase_maturity() {
 	let txs = vec![coinbase_txn];
 	let fees = txs.iter().map(|tx| tx.fee()).sum();
 	let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
-	let reward = libtx::reward::output(&keychain, &key_id4, fees).unwrap();
+	let reward = libtx::reward::output(&keychain, &key_id4, fees, 0).unwrap();
 	let mut block = core::core::Block::new(&prev, txs, Difficulty::min(), reward).unwrap();
 
 	block.header.timestamp = prev.timestamp + Duration::seconds(60);

@@ -22,7 +22,7 @@ use std::fmt;
 use std::iter::FromIterator;
 use std::sync::Arc;
 
-use crate::consensus::{reward, REWARD};
+use crate::consensus::{reward, INITIAL_REWARD};
 use crate::core::committed::{self, Committed};
 use crate::core::compact_block::{CompactBlock, CompactBlockBody};
 use crate::core::hash::{Hash, Hashed, ZERO_HASH};
@@ -321,7 +321,7 @@ impl BlockHeader {
 	/// The "overage" to use when verifying the kernel sums.
 	/// For a block header the overage is 0 - reward.
 	pub fn overage(&self) -> i64 {
-		(REWARD as i64).checked_neg().unwrap_or(0)
+		(INITIAL_REWARD as i64).checked_neg().unwrap_or(0)
 	}
 
 	/// The "total overage" to use when verifying the kernel sums for a full
@@ -332,7 +332,7 @@ impl BlockHeader {
 			reward_count += 1;
 		}
 
-		((reward_count * REWARD) as i64).checked_neg().unwrap_or(0)
+		((reward_count * INITIAL_REWARD) as i64).checked_neg().unwrap_or(0)
 	}
 
 	/// Total kernel offset for the chain state up to and including this block.
@@ -676,7 +676,7 @@ impl Block {
 		{
 			let secp = static_secp_instance();
 			let secp = secp.lock();
-			let over_commit = secp.commit_value(reward(self.total_fees()))?;
+			let over_commit = secp.commit_value(reward(self.header.height,self.total_fees()))?;
 
 			let out_adjust_sum =
 				secp.commit_sum(map_vec!(cb_outs, |x| x.commitment()), vec![over_commit])?;
