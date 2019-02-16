@@ -67,7 +67,7 @@ fn check_repair_impl(test_dir: &str) -> Result<(), libwallet::Error> {
 	});
 
 	// few values to keep things shorter
-	let reward = core::consensus::REWARD;
+	let reward = core::consensus::INITIAL_REWARD;
 	let cm = global::coinbase_maturity() as u64; // assume all testing precedes soft fork height
 
 	// add some accounts
@@ -306,7 +306,7 @@ fn two_wallets_one_seed_impl(test_dir: &str) -> Result<(), libwallet::Error> {
 	});
 
 	// few values to keep things shorter
-	let _reward = core::consensus::REWARD;
+	let _reward = core::consensus::INITIAL_REWARD;
 	let cm = global::coinbase_maturity() as usize; // assume all testing precedes soft fork height
 
 	// Do some mining

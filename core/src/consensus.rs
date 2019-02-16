@@ -38,13 +38,8 @@ pub const NANO_KEPLER: u64 = 1;
 /// (adjusting the reward accordingly).
 pub const BLOCK_TIME_SEC: u64 = 60;
 
-/// The block subsidy amount, one kepler per second on average
-pub const REWARD: u64 = BLOCK_TIME_SEC * KEPLER_BASE;
-
-/// Actual block reward for a given total fee amount
-pub fn reward(fee: u64) -> u64 {
-	REWARD.saturating_add(fee)
-}
+/// The block initial subsidy amount, 1000 keplers per block
+pub const INITIAL_REWARD: u64 = 1000 * KEPLER_BASE;
 
 /// Nominal height for standard time intervals, hour is 60 blocks
 pub const HOUR_HEIGHT: u64 = 3600 / BLOCK_TIME_SEC;
@@ -57,6 +52,18 @@ pub const YEAR_HEIGHT: u64 = 52 * WEEK_HEIGHT;
 
 /// Number of blocks before a coinbase matures and can be spent
 pub const COINBASE_MATURITY: u64 = DAY_HEIGHT;
+
+/// The halving interval, every two years
+pub const HALVING_INTERVAL: u64 = 2*YEAR_HEIGHT;
+
+/// Actual block reward for a given total fee amount
+pub fn reward(height: u64, fee: u64) -> u64 {
+	let halvings = height / HALVING_INTERVAL;
+	if halvings >= 64 {
+		return fee;
+	}
+	(INITIAL_REWARD >> halvings).saturating_add(fee)
+}
 
 /// Ratio the secondary proof of work should take over the primary, as a
 /// function of block height (time). Starts at 90% losing a percent
