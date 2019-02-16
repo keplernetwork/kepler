@@ -24,13 +24,13 @@ use crate::global;
 use crate::pow::Difficulty;
 
 /// A kepler is divisible to 10^9, following the SI prefixes
-pub const GRIN_BASE: u64 = 1_000_000_000;
+pub const KEPLER_BASE: u64 = 1_000_000_000;
 /// Millikepler, a thousand of a kepler
-pub const MILLI_GRIN: u64 = GRIN_BASE / 1_000;
+pub const MILLI_KEPLER: u64 = KEPLER_BASE / 1_000;
 /// Microkepler, a thousand of a millikepler
-pub const MICRO_GRIN: u64 = MILLI_GRIN / 1_000;
+pub const MICRO_KEPLER: u64 = MILLI_KEPLER / 1_000;
 /// Nanokepler, smallest unit, takes a billion to make a kepler
-pub const NANO_GRIN: u64 = 1;
+pub const NANO_KEPLER: u64 = 1;
 
 /// Block interval, in seconds, the network will tune its next_target for. Note
 /// that we may reduce this value in the future as we get more data on mining
@@ -39,7 +39,7 @@ pub const NANO_GRIN: u64 = 1;
 pub const BLOCK_TIME_SEC: u64 = 60;
 
 /// The block subsidy amount, one kepler per second on average
-pub const REWARD: u64 = BLOCK_TIME_SEC * GRIN_BASE;
+pub const REWARD: u64 = BLOCK_TIME_SEC * KEPLER_BASE;
 
 /// Actual block reward for a given total fee amount
 pub fn reward(fee: u64) -> u64 {
