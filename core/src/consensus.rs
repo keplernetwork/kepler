@@ -387,9 +387,4 @@ mod test {
 		assert_eq!(graph_weight(4 * YEAR_HEIGHT, 32), 0);
 		assert_eq!(graph_weight(4 * YEAR_HEIGHT, 33), 1024 * 32);
 	}
-	
-	#[test]
-	fn test_halvings() {
-		debug!("hello there!");
-	}
 }

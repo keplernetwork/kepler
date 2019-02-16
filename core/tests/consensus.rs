@@ -628,6 +628,17 @@ fn hard_forks() {
 	assert!(!valid_header_version(YEAR_HEIGHT / 2 + 1, 2));
 }
 
+#[test]
+fn test_halvings() {
+	let mut total_coin=0;
+	for x in (0..130*YEAR_HEIGHT) {
+	total_coin=total_coin+reward(x,0);
+    
+	}
+	println!("{}",total_coin);
+	assert!(false);
+}
+	
 // #[test]
 // fn hard_fork_2() {
 // 	assert!(valid_header_version(0, 1));
