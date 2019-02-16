@@ -233,7 +233,7 @@ pub fn verify_partial_sig(
 /// use core::core::{Output, OutputFeatures};
 /// use keychain::{Keychain, ExtKeychain};
 ///
-/// 
+///
 /// let height = 20;
 /// let secp = Secp256k1::with_caps(ContextFlag::Commit);
 /// let keychain = ExtKeychain::from_random_seed(false).unwrap();
