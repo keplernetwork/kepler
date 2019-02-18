@@ -60,9 +60,9 @@ pub const HALVING_INTERVAL: u64 = 2*YEAR_HEIGHT;
 pub fn reward(height: u64, fee: u64) -> u64 {
 	let halvings = height / HALVING_INTERVAL;
 	if halvings >= 64 {
-		return fee;
+		return NANO_KEPLER+fee;
 	}
-	(INITIAL_REWARD >> halvings).saturating_add(fee)
+	(max(INITIAL_REWARD >> halvings,NANO_KEPLER)).saturating_add(fee)
 }
 
 /// Ratio the secondary proof of work should take over the primary, as a
