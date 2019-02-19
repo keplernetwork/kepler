@@ -155,7 +155,7 @@ where
 	let chain_type = CHAIN_TYPE.read().clone();
 	match chain_type {
 		// Mainnet has Cuckaroo29 for AR and Cuckatoo30+ for AF
-		ChainTypes::Mainnet if edge_bits == 29 => new_cuckaroo_ctx(edge_bits, proof_size),
+		//ChainTypes::Mainnet if edge_bits == 29 => new_cuckaroo_ctx(edge_bits, proof_size),
 		ChainTypes::Mainnet => new_cuckatoo_ctx(edge_bits, proof_size, max_sols),
 
 		// Same for Floonet
