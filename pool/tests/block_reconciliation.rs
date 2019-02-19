@@ -44,7 +44,7 @@ fn test_transaction_pool_block_reconciliation() {
 	let header = {
 		let height = 1;
 		let key_id = ExtKeychain::derive_key_id(1, height as u32, 0, 0, 0);
-		let reward = libtx::reward::output(&keychain, &key_id, 0, 0).unwrap();
+		let reward = libtx::reward::output(&keychain, &key_id, 0, height).unwrap();
 		let genesis = BlockHeader::default();
 		let mut block = Block::new(&genesis, vec![], Difficulty::min(), reward).unwrap();
 
