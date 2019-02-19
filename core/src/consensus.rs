@@ -54,22 +54,25 @@ pub const YEAR_HEIGHT: u64 = 52 * WEEK_HEIGHT;
 pub const COINBASE_MATURITY: u64 = DAY_HEIGHT;
 
 /// The halving interval, every two years
-pub const HALVING_INTERVAL: u64 = 2*YEAR_HEIGHT;
+pub const HALVING_INTERVAL: u64 = 2 * YEAR_HEIGHT;
 
 /// Actual block reward for a given total fee amount
 pub fn reward(height: u64, fee: u64) -> u64 {
+	if height == 0 {
+		return 42_000_000 * KEPLER_BASE;
+	}
 	let halvings = height / HALVING_INTERVAL;
 	if halvings >= 64 {
-		return NANO_KEPLER+fee;
+		return NANO_KEPLER + fee;
 	}
-	(max(INITIAL_REWARD >> halvings,NANO_KEPLER)).saturating_add(fee)
+	(max(INITIAL_REWARD >> halvings, NANO_KEPLER)).saturating_add(fee)
 }
 
 /// Ratio the secondary proof of work should take over the primary, as a
 /// function of block height (time). Starts at 90% losing a percent
 /// approximately every week. Represented as an integer between 0 and 100.
 pub fn secondary_pow_ratio(height: u64) -> u64 {
-	90u64.saturating_sub(height / (2 * YEAR_HEIGHT / 90))
+	5u64.saturating_sub(height / (2 * YEAR_HEIGHT / 90))
 }
 
 /// The AR scale damping factor to use. Dependent on block height
@@ -199,7 +202,7 @@ pub const UNIT_DIFFICULTY: u64 =
 /// and difficulty should come down at launch rather than up
 /// Currently grossly over-estimated at 10% of current
 /// ethereum GPUs (assuming 1GPU can solve a block at diff 1 in one block interval)
-pub const INITIAL_DIFFICULTY: u64 = 1_000_000 * UNIT_DIFFICULTY;
+pub const INITIAL_DIFFICULTY: u64 = 250_000 * UNIT_DIFFICULTY;
 
 /// Minimal header information required for the Difficulty calculation to
 /// take place
