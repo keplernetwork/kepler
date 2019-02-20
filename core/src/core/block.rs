@@ -321,16 +321,20 @@ impl BlockHeader {
 	/// The "overage" to use when verifying the kernel sums.
 	/// For a block header the overage is 0 - reward.
 	pub fn overage(&self) -> i64 {
-		(reward(self.height,0) as i64).checked_neg().unwrap_or(0)
+		(reward(self.height, 0) as i64).checked_neg().unwrap_or(0)
 	}
 
 	/// The "total overage" to use when verifying the kernel sums for a full
 	/// chain state. For a full chain state this is 0 - (height * reward).
 	pub fn total_overage(&self, genesis_had_reward: bool) -> i64 {
-		let reward_count = self.height;
-		let genesis_reward = if genesis_had_reward { reward(0, 0) } else { 0 };
-		let total_rewards = ((reward_count * reward(self.height, 0)) + genesis_reward) as i64;
-		total_rewards.checked_neg().unwrap_or(0)
+		let mut total_rewards = 0;
+		if genesis_had_reward {
+			total_rewards += reward(0, 0);
+		}
+		for height in 1..=self.height {
+			total_rewards += reward(height, 0);
+		}
+		(total_rewards as i64).checked_neg().unwrap_or(0)
 	}
 
 	/// Total kernel offset for the chain state up to and including this block.
