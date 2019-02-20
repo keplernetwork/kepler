@@ -141,7 +141,7 @@ fn test_coinbase_maturity() {
 
 	// mine enough blocks to increase the height sufficiently for
 	// coinbase to reach maturity and be spendable in the next block
-	for n in 0..3 {
+	for _ in 0..3 {
 		let prev = chain.head_header().unwrap();
 
 		let keychain = ExtKeychain::from_random_seed(false).unwrap();
