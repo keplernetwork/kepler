@@ -1,7 +1,8 @@
 # Documentation structure
 
-## Explaining kepler
+*Read this in other languages: [Korean](table_of_contents_KR.md).*
 
+## Explaining kepler
 - [intro](intro.md) - Technical introduction to kepler
 - [kepler4bitcoiners](kepler4bitcoiners.md) - Explaining kepler from a bitcoiner's perspective
 
