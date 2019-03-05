@@ -1,45 +1,54 @@
-[![Build Status](https://travis-ci.org/keplernetwork/kepler.svg?branch=master)](https://travis-ci.org/keplernetwork/kepler)
-[![Gitter chat](https://badges.gitter.im/kepler_community/Lobby.png)](https://gitter.im/kepler_community/Lobby)
-[![Support chat](https://badges.gitter.im/kepler_community/Lobby.png)](https://gitter.im/kepler_community/support)
-[![Codecov coverage status](https://codecov.io/gh/keplernetwork/kepler/branch/master/graph/badge.svg)](https://codecov.io/gh/keplernetwork/kepler)
+https://travis-ci.org/keplernetwork/kepler
 
 # Kepler
 
 Kepler is an in-progress implementation of the MimbleWimble protocol. Many characteristics are still undefined but the following constitutes a first set of choices:
 
-  * Clean and minimal implementation, and aiming to stay as such.
-  * Follows the MimbleWimble protocol, which provides great anonymity and scaling characteristics.
-  * Cuckoo Cycle proof of work in two variants named Cuckaroo (ASIC-resistant) and Cuckatoo (ASIC-targeted).
-  * Relatively fast block time: one minute.
-  * Fixed block reward over time with a decreasing dilution.
-  * Transaction fees are based on the number of Outputs created/destroyed and total transaction size.
-  * Smooth curve for difficulty adjustments.
+Clean and minimal implementation, and aiming to stay as such.
+Follows the MimbleWimble protocol, which provides great anonymity and scaling characteristics.
+Proof of work: Cuckatoo (C31).
+Relatively fast block time: one minute.
+Fixed block reward over time with a decreasing dilution.
+Transaction fees are based on the number of Outputs created/destroyed and total transaction size.
+Smooth curve for difficulty adjustments.
 
-To learn more, read our [introduction to MimbleWimble and Kepler](doc/intro.md).
+## Specs
+
+Ticker: KMW
+Max Kepler Supply: 2.138.639.000
+Premine: 2%
+Avg 60s /block
+Confidential assets
+Block rewards: 1000 KMW / block
+C31 only
+Halving every two years
+
+To learn more, read our introduction to MimbleWimble and Kepler.
 
 ## Status
 
-Kepler is live with mainnet. Still, much is left to be done and [contributions](CONTRIBUTING.md) are welcome (see below). Check our [mailing list archives](https://lists.launchpad.net/keplernetwork/) for the latest status.
+Kepler is live with mainnet. UI wallet coming up shortly after launch
 
 ## Contributing
 
-To get involved, read our [contributing docs](CONTRIBUTING.md).
+To get involved, read our contributing docs.
 
-Find us:
+## Social:
 
-* Chat: [Gitter](https://gitter.im/kepler_community/Lobby).
-* Mailing list: join the [~MimbleWimble team](https://launchpad.net/~keplernetwork) and subscribe on Launchpad.
-* Twitter for the Kepler council: [@keplercouncil](https://twitter.com/keplercouncil)
+Telegram: http://t.me/keplernetwork
+Twitter Network Project: @keplernetwork
+Reddit: https://www.reddit.com/r/keplernetwork
+Discord: 
 
 ## Getting Started
 
-To learn more about the technology, read our [introduction](doc/intro.md).
+To learn more about the technology, read our introduction.
 
-To build and try out Kepler, see the [build docs](doc/build.md).
+To build and try out Kepler, see the build docs.
 
 ## Philosophy
 
-Kepler likes itself small and easy on the eyes. It wants to be inclusive and welcoming for all walks of life, without judgement. Kepler is terribly ambitious, but not at the detriment of others, rather to further us all. It may have strong opinions to stay in line with its objectives, which doesn't mean disrespect of others' ideas.
+Kepler believes in keeping it simple. Users will feel welcomed by Kepler's cool appeal. Kepler will redefine how apps using the MW protocol are seen, ease of use comes to mind.
 
 We believe in pull requests, data and scientific research. We do not believe in unfounded beliefs.
 
@@ -51,7 +60,7 @@ Andrew Poelstra for his related work and improvements.
 
 John Tromp for the Cuckoo Cycle proof of work.
 
-J.K. Rowling for making it despite extraordinary adversity.
+Johannes Kepler for being so awesome.
 
 ## License
 
