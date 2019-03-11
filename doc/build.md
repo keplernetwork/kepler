@@ -1,6 +1,6 @@
 # Kepler - Build, Configuration, and Running
 
-*Read this in other languages: [Español](build_ES.md).*
+*Read this in other languages: [Español](build_ES.md), [Korean](build_KR.md).*
 
 ## Supported Platforms
 
@@ -115,7 +115,7 @@ You can bind-mount your kepler cache to run inside the container.
 docker run -it -d -v $HOME/.kepler:/root/.kepler kepler
 ```
 If you prefer to use a docker named volume, you can pass `-v dotkepler:/root/.kepler` instead.
-Using a named volume copies default configurations upon volume creation
+Using a named volume copies default configurations upon volume creation.
 
 ## Cross-platform builds
 
