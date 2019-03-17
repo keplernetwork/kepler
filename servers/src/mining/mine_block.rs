@@ -105,7 +105,7 @@ fn build_block(
 
 	// Determine the difficulty our block should be at.
 	// Note: do not keep the difficulty_iter in scope (it has an active batch).
-	let difficulty = consensus::next_difficulty(head.height + 1, chain.difficulty_iter());
+	let difficulty = consensus::next_difficulty(head.height + 1, chain.difficulty_iter()?);
 
 	// Extract current "mineable" transactions from the pool.
 	// If this fails for *any* reason then fallback to an empty vec of txs.
@@ -182,7 +182,8 @@ fn burn_reward(block_fees: BlockFees) -> Result<(core::Output, core::TxKernel, B
 	let keychain = ExtKeychain::from_random_seed(global::is_floonet()).unwrap();
 	let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
 	let (out, kernel) =
-		crate::core::libtx::reward::output(&keychain, &key_id, block_fees.fees, block_fees.height).unwrap();
+		crate::core::libtx::reward::output(&keychain, &key_id, block_fees.fees, block_fees.height)
+			.unwrap();
 	Ok((out, kernel, block_fees))
 }
 
