@@ -101,7 +101,7 @@ where
 
 	for n in 1..4 {
 		let prev = chain.head_header().unwrap();
-		let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
+		let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter().unwrap());
 		let pk = ExtKeychainPath::new(1, n as u32, 0, 0, 0).to_identifier();
 		let reward = libtx::reward::output(keychain, &pk, 0, n).unwrap();
 		let mut b =
@@ -304,8 +304,11 @@ fn spend_in_fork_and_compact() {
 
 	let tx1 = build::transaction(
 		vec![
-			build::coinbase_input(consensus::reward(fork_head.height,0), key_id2.clone()),
-			build::output(consensus::reward(fork_head.height,0) - 20000, key_id30.clone()),
+			build::coinbase_input(consensus::reward(fork_head.height, 0), key_id2.clone()),
+			build::output(
+				consensus::reward(fork_head.height, 0) - 20000,
+				key_id30.clone(),
+			),
 			build::with_fee(20000),
 		],
 		&kc,
@@ -321,8 +324,14 @@ fn spend_in_fork_and_compact() {
 
 	let tx2 = build::transaction(
 		vec![
-			build::input(consensus::reward(next.header.clone().height,0) - 20000, key_id30.clone()),
-			build::output(consensus::reward(next.header.clone().height,0) - 40000, key_id31.clone()),
+			build::input(
+				consensus::reward(next.header.clone().height, 0) - 20000,
+				key_id30.clone(),
+			),
+			build::output(
+				consensus::reward(next.header.clone().height, 0) - 40000,
+				key_id31.clone(),
+			),
 			build::with_fee(20000),
 		],
 		&kc,
@@ -409,7 +418,7 @@ fn output_header_mappings() {
 
 	for n in 1..15 {
 		let prev = chain.head_header().unwrap();
-		let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter());
+		let next_header_info = consensus::next_difficulty(1, chain.difficulty_iter().unwrap());
 		let pk = ExtKeychainPath::new(1, n as u32, 0, 0, 0).to_identifier();
 		let height = prev.height + 1;
 		let reward = libtx::reward::output(&keychain, &pk, 0, height).unwrap();
@@ -546,7 +555,7 @@ fn actual_diff_iter_output() {
 		Arc::new(Mutex::new(StopState::new())),
 	)
 	.unwrap();
-	let iter = chain.difficulty_iter();
+	let iter = chain.difficulty_iter().unwrap();
 	let mut last_time = 0;
 	let mut first = true;
 	for elem in iter.into_iter() {
