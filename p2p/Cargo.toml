@@ -24,6 +24,7 @@ chrono = { version = "0.4.4", features = ["serde"] }
 
 kepler_core = { path = "../core", version = "1.0.3" }
 kepler_store = { path = "../store", version = "1.0.3" }
+kepler_chain = { path = "../chain", version = "1.0.3" }
 kepler_util = { path = "../util", version = "1.0.3" }
 
 [dev-dependencies]

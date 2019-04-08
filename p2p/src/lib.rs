@@ -29,6 +29,7 @@ use lmdb_zero as lmdb;
 
 #[macro_use]
 extern crate kepler_core as core;
+use kepler_chain as chain;
 use kepler_util as util;
 
 #[macro_use]
