@@ -34,14 +34,11 @@ use kepler_p2p as p2p;
 use kepler_pool as pool;
 use kepler_store as store;
 use kepler_util as util;
-use kepler_wallet as wallet;
 
 pub mod common;
 mod kepler;
 mod mining;
-mod webwallet;
 
 pub use crate::common::stats::{DiffBlock, PeerStats, ServerStats, StratumStats, WorkerStats};
 pub use crate::common::types::{ServerConfig, StratumServerConfig};
 pub use crate::kepler::server::Server;
-pub use crate::webwallet::server::start_webwallet_server;

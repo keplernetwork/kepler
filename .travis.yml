@@ -58,7 +58,7 @@ matrix:
     - os: linux
       env: CI_JOB="test"        CI_JOB_ARGS="pool p2p src"
     - os: linux
-      env: CI_JOB="test"        CI_JOB_ARGS="keychain wallet"
+      env: CI_JOB="test"        CI_JOB_ARGS="keychain"
     - os: linux
       env: CI_JOB="test"        CI_JOB_ARGS="api util store"
     - os: linux
@@ -81,7 +81,7 @@ deploy:
   api_key:
     secure: MRhdzzB0SQ0XTyjW7Kzp/OeHKIzMsVDUm2Is2SHSvDHrxU+Ix4RWOQPuBPNBdC/lHVZIfQFVVUSJbpX0ofZxvBTyHsRCxDWJSBuzWrmX2nVvvB+aReCCNXqasWdc/qQSH7w+WRG90CKvefQfv7jhFeF+WL2ckKWlWeQzIoW3boujmCZR8cLzJWD7D5MQD7UP3Fdh0Gl2OhMl05s39bBGNM/NZTDugIpGY8f1hTQ5W2kdFkPkqz5rnUIwa17CfR0j7MO0bQHmekfAOx9wPtKSlnrG8bN2uarGFpOvPLiNQtdIflasaTdu4BeH9EHiBPJHFjaUnkaQmmU4uqYq5cqLQg3h4ijhoxW2jL/qELi3XfzsBihfw9lc/kKS1cxiqRiHyH+oJZi/i8wg8a/82V93WXFTT7qbI4YurLRUDaoaWf2CxymK2VtqaTS4iQ0SW/BKpqvQWR9LwI8vRd67zVt4RUBvCOF/3FKhC3sEdxkN0ld5C23Uko9QgLps13BE+7aywvUSRt21aDASt9MHpAZlViMjipie2LbrSgrElziFiWN4huCBBkI1iAAm1EhjyQwV+gOhbuhJSq20lUlqGKJewE/EhqoybtasxzfIhMRi9X5vITmkD8SAMHmNk5z97kws0ddiTmtTuppV9t+hGKNh8nZcbmBlneWG/d2nUejTshg=
   file_glob: true
-  file: target/release/kepler-*.tgz*
+  file: target/release/kepler-*.*
   skip_cleanup: true
   on:
     repo: keplernetwork/kepler
