@@ -15,7 +15,6 @@
 use kepler_chain as chain;
 use kepler_core as core;
 
-use kepler_store as store;
 use kepler_util as util;
 
 use std::collections::HashSet;
@@ -42,8 +41,7 @@ fn test_unexpected_zip() {
 	let db_root = format!(".kepler_txhashset_zip");
 	clean_output_dir(&db_root);
 	{
-		let db_env = Arc::new(store::new_env(db_root.clone()));
-		let chain_store = ChainStore::new(db_env).unwrap();
+		let chain_store = ChainStore::new(&db_root).unwrap();
 		let store = Arc::new(chain_store);
 		txhashset::TxHashSet::open(db_root.clone(), store.clone(), None).unwrap();
 		// First check if everything works out of the box
