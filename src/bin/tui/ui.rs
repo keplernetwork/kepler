@@ -117,7 +117,7 @@ impl UI {
 				.send(ControllerMessage::Shutdown)
 				.unwrap();
 		});
-		kepler_ui.cursive.set_autorefresh(true);
+		kepler_ui.cursive.set_fps(3);
 		kepler_ui
 	}
 
