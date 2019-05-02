@@ -18,7 +18,7 @@
 - [merkle_proof graph](merkle_proof/merkle_proof.png) - Example merkle proof with pruning applied
 - [pruning](pruning.md) - Technical explanation of pruning
 - [stratum](stratum.md) - Technical explanation of Kepler Stratum RPC protocol
-- [transaction UML](wallet/transaction/basic-transaction-wf.png) - UML of an interactive transaction (aggregating transaction without `lock_height`)
+- [transaction UML](https://github.com/keplernetwork/kepler-wallet/blob/master/doc/transaction/basic-transaction-wf.png) - UML of an interactive transaction (aggregating transaction without `lock_height`)
 
 ## Build and use
 
