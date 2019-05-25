@@ -23,14 +23,13 @@ use self::core::libtx::{self, build, reward};
 use self::core::pow::Difficulty;
 use self::core::{consensus, global, pow};
 use self::keychain::{ExtKeychain, ExtKeychainPath, Keychain};
-use self::util::{RwLock, StopState};
+use self::util::RwLock;
 use chrono::Duration;
 use kepler_chain as chain;
 use kepler_chain::{BlockStatus, ChainAdapter, Options};
 use kepler_core as core;
 use kepler_keychain as keychain;
 use kepler_util as util;
-use std::cell::RefCell;
 use std::fs;
 use std::sync::Arc;
 
@@ -224,7 +223,7 @@ fn mine_reorg() {
 	let genesis = pow::mine_genesis_block().unwrap();
 	{
 		// Create chain that reports last block status
-		let mut last_status = RwLock::new(None);
+		let last_status = RwLock::new(None);
 		let adapter = Arc::new(StatusAdapter::new(last_status));
 		let chain = setup_with_status_adapter(DIR_NAME, genesis.clone(), adapter.clone());
 
