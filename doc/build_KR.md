@@ -44,7 +44,7 @@ brew install openssl
 ## 빌드 순서
 
 ```sh
-git clone https://github.com/mimblewimble/kepler.git
+git clone https://github.com/keplernetwork/kepler.git
 cd kepler
 cargo build --release
 ```

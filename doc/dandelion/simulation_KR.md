@@ -9,7 +9,7 @@
 
 ## T = 5
 
-A는 B에게 grin를 보냅니다. A는 거래를 스템풀(stem pool)에 추가하고 이 트랜잭션에 대한 엠바고 타이머를 시작합니다.
+A는 B에게 kepler를 보냅니다. A는 거래를 스템풀(stem pool)에 추가하고 이 트랜잭션에 대한 엠바고 타이머를 시작합니다.
 
 ![t = 5](images/t5.png)
 
@@ -27,7 +27,7 @@ A는 인내심이 바닥나면 동전을 뒤집고 Stem transaction을 G에게 D
 
 ## T = 40
 
-G는 E에게 Grin을 보냅니다ㅏ.
+G는 E에게 Kepler을 보냅니다ㅏ.
 G는 이 Transaction을 Stem pool에 Transaction을 추가하고 이 Transaction의 엠바고 타이머를 시작합니다.
 
 ![t = 40](images/t40.png)
