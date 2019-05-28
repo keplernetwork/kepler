@@ -5,9 +5,9 @@ extern crate kepler_core;
 extern crate kepler_p2p;
 
 use kepler_core::ser;
-use kepler_p2p::msg::SockAddr;
+use kepler_p2p::types::PeerAddr;
 
 fuzz_target!(|data: &[u8]| {
 	let mut d = data.clone();
-	let _t: Result<SockAddr, ser::Error> = ser::deserialize(&mut d);
+	let _t: Result<PeerAddr, ser::Error> = ser::deserialize(&mut d);
 });
