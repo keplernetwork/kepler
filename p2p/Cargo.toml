@@ -1,6 +1,6 @@
 [package]
 name = "kepler_p2p"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
@@ -22,9 +22,9 @@ serde_derive = "1"
 log = "0.4"
 chrono = { version = "0.4.4", features = ["serde"] }
 
-kepler_core = { path = "../core", version = "1.0.1" }
-kepler_store = { path = "../store", version = "1.0.1" }
-kepler_util = { path = "../util", version = "1.0.1" }
+kepler_core = { path = "../core", version = "1.0.2" }
+kepler_store = { path = "../store", version = "1.0.2" }
+kepler_util = { path = "../util", version = "1.0.2" }
 
 [dev-dependencies]
-kepler_pool = { path = "../pool", version = "1.0.1" }
+kepler_pool = { path = "../pool", version = "1.0.2" }
