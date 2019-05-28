@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2019 The Grin Developers
+# Copyright 2019 The Kepler Developers
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ case "${CI_JOB}" in
                 cargo build --release
                 readonly ARCHIVE_CMD="tar zcf"
                 readonly BIN_SUFFIX=""
-                readonly PKG_NAME="grin-${REPO_TAG}-${JOB_ID}-linux-amd64"
+                readonly PKG_NAME="kepler-${REPO_TAG}-${JOB_ID}-linux-amd64"
                 readonly PKG_SUFFIX=".tgz"
                 ;;
 
@@ -46,7 +46,7 @@ case "${CI_JOB}" in
                 cargo build --release
                 readonly ARCHIVE_CMD="tar zcf"
                 readonly BIN_SUFFIX=""
-                readonly PKG_NAME="grin-${REPO_TAG}-${JOB_ID}-osx"
+                readonly PKG_NAME="kepler-${REPO_TAG}-${JOB_ID}-osx"
                 readonly PKG_SUFFIX=".tgz"
                 ;;
 
@@ -55,7 +55,7 @@ case "${CI_JOB}" in
                 cargo build --release
                 readonly ARCHIVE_CMD="7z a -tzip"
                 readonly BIN_SUFFIX=".exe"
-                readonly PKG_NAME="grin-${REPO_TAG}-${JOB_ID}-win-x64"
+                readonly PKG_NAME="kepler-${REPO_TAG}-${JOB_ID}-win-x64"
                 readonly PKG_SUFFIX=".zip"
                 ;;
 
@@ -68,7 +68,7 @@ case "${CI_JOB}" in
 
         cd ./target/release/ || exit 1
         rm -f -- *"${PKG_SUFFIX}"
-        ${ARCHIVE_CMD} "${PKG_NAME}${PKG_SUFFIX}" "grin${BIN_SUFFIX}"
+        ${ARCHIVE_CMD} "${PKG_NAME}${PKG_SUFFIX}" "kepler${BIN_SUFFIX}"
         ls -ls -- *.tgz | cut -d' ' -f6-
         openssl md5 "${PKG_NAME}${PKG_SUFFIX}" > "${PKG_NAME}${PKG_SUFFIX}-md5sum.txt"
         ls -ls -- *-md5sum.txt | cut -d' ' -f6-
@@ -80,7 +80,7 @@ case "${CI_JOB}" in
         [[ "${OS_NAME}" != "linux" ]] && exit 0
 
         # Generate CHANGELOG.md
-        readonly REPO_SLUG="mimblewimble/grin"
+        readonly REPO_SLUG="keplernetwork/kepler"
         readonly REPO_BRANCH="$(git symbolic-ref -q --short HEAD)"
         readonly REPO_PREV_RELEASE_TAG="$(git describe --abbrev=0 --tags "$(git rev-list --tags --skip=0 --max-count=1)")"
 

@@ -52,7 +52,7 @@ While this "box" metaphor no longer seems to be reasonable in the real-world thi
 is perfectly possible using the properties of operations on elliptic curves.   
 
 Look into [Introduction to MimbleWimble](intro.md) for further details on Pedersen Commitments
-and how they are used in Grin.
+and how they are used in Kepler.
 
 
 ## Properties of commitment schemes:
@@ -118,7 +118,7 @@ secure then the other can be at most _computationally_ secure
 Which roles do these properties play in the design of cryptocurrencies?
 
 **Hidingness**:
-In privacy oriented cryptocurrencies like Grin, commitment schemes are used to secure
+In privacy oriented cryptocurrencies like Kepler, commitment schemes are used to secure
 the contents of transactions. The sender commits to an amount of coins he sends, but for
 the general public the concrete amount should remain private (protected by the _hidingness_ property of the commitment scheme).
 
@@ -202,13 +202,13 @@ element, calculated by multiplying the blinding factor `r` with another generato
 So if we store the additional field `r*J` and ignore it for now, we can treat it like
 Pedersen Commitments, until we decide to also validate the full ElGamal
 commitment at some time in future. This is exactly what was implemented in an
-[earlier version of Grin](https://github.com/mimblewimble/grin/blob/5a47a1710112153fb38e4406251c9874c366f1c0/core/src/core/transaction.rs#L812),
+[earlier version of Kepler](https://github.com/keplernetwork/kepler/blob/5a47a1710112153fb38e4406251c9874c366f1c0/core/src/core/transaction.rs#L812),
 before mainnet was launched. In detail: the hashed value of `r*J`
 (_switch\_commit\_hash_) was added to the transaction output, but this came with
 the burden of increasing the size of each output by 32 bytes.
 
 Fortunately, later on the Mimblewimble mailinglist Tim Ruffing came up with a really
-[beautiful idea](https://lists.launchpad.net/mimblewimble/msg00479.html)
+[beautiful idea](https://lists.launchpad.net/keplernetwork/msg00479.html)
 (initially suggested by Pieter Wuille), which offers the same advantages but doesn't
 need this extra storage of an additional element per transaction output:
 
@@ -236,14 +236,14 @@ that the part within the brackets of the hash function (`v*H + r'*G  ,  r'*J`) i
 **ElGamal commitment**.
 
 This neat idea lead to the removal of the switch commitment hash from the outputs in this
-(and following) [pull requests](https://github.com/mimblewimble/grin/issues/998) as now it
+(and following) [pull requests](https://github.com/keplernetwork/kepler/issues/998) as now it
 could be easily included into the Pedersen Commitments.
 
 
-This is how it is currently implemented in Grin. Pedersen commitments are
+This is how it is currently implemented in Kepler. Pedersen commitments are
 used for the Confidential Transaction but instead of choosing the blinding factor `r`
 only by random, it is calculated by adding the hash of an ElGamal commitment to a random `r'`
-(see here in [main_impl.h#L267](https://github.com/mimblewimble/secp256k1-zkp/blob/73617d0fcc4f51896cce4f9a1a6977a6958297f8/src/modules/commitment/main_impl.h#L267)).
+(see here in [main_impl.h#L267](https://github.com/keplernetwork/secp256k1-zkp/blob/73617d0fcc4f51896cce4f9a1a6977a6958297f8/src/modules/commitment/main_impl.h#L267)).
 
 
 In general switch commitments were first described in the paper
@@ -257,7 +257,7 @@ backwards compatible way with commitments created today.
 
 ## Conclusion
 
-Grin uses Pedersen Commitments - like other privacy cryptocurrencies do as well - with
+Kepler uses Pedersen Commitments - like other privacy cryptocurrencies do as well - with
 the only difference that the random blinding factor `r` is created using the ElGamal
 commitment scheme.
 
