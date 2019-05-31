@@ -1,6 +1,6 @@
 # Kepler/MimbleWimble for Bitcoiners
 
-*Read this in other languages:[Korean](grin4bitcoiners_KR.md)
+*Read this in other languages:[Korean](kepler4bitcoiners_KR.md)
 
 ## Privacy and Fungibility
 

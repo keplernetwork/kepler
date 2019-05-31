@@ -19,17 +19,17 @@ steps:
     condition:  and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['CI_JOB'], 'release' ))
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)\target\release'
-      contents: 'grin.exe'
-      targetFolder: '$(Build.BinariesDirectory)\grin'
+      contents: 'kepler.exe'
+      targetFolder: '$(Build.BinariesDirectory)\kepler'
   - task: ArchiveFiles@2
     displayName: Gather assets
     condition:  and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['CI_JOB'], 'release' ))
     inputs:
-      rootFolderOrFile: '$(Build.BinariesDirectory)\grin'
+      rootFolderOrFile: '$(Build.BinariesDirectory)\kepler'
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)\grin-$(build.my_tag)-$(build.platform).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)\kepler-$(build.my_tag)-$(build.platform).zip'
   - script: |
-      powershell -Command "get-filehash -algorithm sha256 $(Build.ArtifactStagingDirectory)\grin-$(build.my_tag)-$(build.platform).zip | Format-List |  Out-String | ForEach-Object { $_.Trim() } > $(Build.ArtifactStagingDirectory)\grin-$(build.my_tag)-$(build.platform)-sha256sum.txt"
+      powershell -Command "get-filehash -algorithm sha256 $(Build.ArtifactStagingDirectory)\kepler-$(build.my_tag)-$(build.platform).zip | Format-List |  Out-String | ForEach-Object { $_.Trim() } > $(Build.ArtifactStagingDirectory)\kepler-$(build.my_tag)-$(build.platform)-sha256sum.txt"
     displayName: Create Checksum
     condition:  and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['CI_JOB'], 'release' ))
   - task: GithubRelease@0
@@ -37,14 +37,14 @@ steps:
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['CI_JOB'], 'release' ))
     inputs:
       gitHubConnection: 'ignopeverell'
-      repositoryName: 'mimblewimble/grin'
+      repositoryName: 'keplernetwork/kepler'
       action: 'edit'
       target: '$(build.sourceVersion)'
       tagSource: 'manual'
       tag: '$(build.my_tag)'
       assets: |
-        $(Build.ArtifactStagingDirectory)\grin-$(build.my_tag)-$(build.platform).zip
-        $(Build.ArtifactStagingDirectory)\grin-$(build.my_tag)-$(build.platform)-sha256sum.txt
+        $(Build.ArtifactStagingDirectory)\kepler-$(build.my_tag)-$(build.platform).zip
+        $(Build.ArtifactStagingDirectory)\kepler-$(build.my_tag)-$(build.platform)-sha256sum.txt
       title: '$(build.my_tag)'
       assetUploadMode: 'replace'
       addChangeLog: true
