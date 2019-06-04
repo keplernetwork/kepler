@@ -1,7 +1,7 @@
 MimbleWimble 和 Kepler 简介
 =====================================
 
-*阅读其它语言版本: [English](intro.md), [简体中文](intro_ZH-CN.md), [Español](intro_ES.md), [Nederlands](intro_NL.md), [Русский](intro_RU.md), [日本語](intro_JP.md), [Deutsch](intro_DE.md), [Portuguese](intro_PT-BR.md).*
+*阅读其它语言版本: [English](intro.md), [简体中文](intro_ZH-CN.md), [Español](intro_ES.md), [Nederlands](intro_NL.md), [Русский](intro_RU.md), [日本語](intro_JP.md), [Deutsch](intro_DE.md), [Portuguese](intro_PT-BR.md), [Korean](intro_KR.md).*
 
 MimbleWimble是一个区块链格式和协议，依托于健壮的加密原语，提供非常好的可扩展性、隐私和可替代性。它解决了当前几乎所有实现的区块链（与现实需求之间）差距。MimbleWimble 的白皮书在[本项目的WiKi](https://github.com/keplernetwork/docs/wiki/A-Brief-History-of-MinbleWimble-White-Paper)中可以找到，WiKi是开放的。
 
@@ -187,7 +187,7 @@ MimbleWimble区块格式通过引入一个附加概念来构建：核销（_cut-
 
 回顾一下一笔交易的组成：
 * 一系列交易输入，用来引用并花掉一系列以前的交易输出
-* 一些列新的交易输出（Pedersen commitments）
+* 一系列新的交易输出（Pedersen commitments）
 * 一个交易核，包含：
 	* kernel excess，用来确保等式平衡
 	* 交易签名（采用kernel excess作为签名公钥）
@@ -305,4 +305,4 @@ MimbleWimble区块格式通过引入一个附加概念来构建：核销（_cut-
 ## 结论
 
 在本文中，我们介绍了基于MimbleWimble区块链的基本原则。 通过使用椭圆曲线密码的附加属性，我们能够构建完全不透明但仍可以正确验证的交易。 
-通过将这些属性，我们可以消除大量区块链数据，从而实现新对等点的大规模部署和快速同步。
+通过应用这些属性，我们可以消除大量区块链数据，从而实现新对等点的大规模部署和快速同步。

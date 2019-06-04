@@ -6,7 +6,23 @@ The [list of issues](https://github.com/keplernetwork/kepler/issues) is a good p
 
 Additional tests are rewarded with an immense amount of positive karma.
 
-More documentation or updates/fixes to existing documentation are also very welcome. However, if submitting a PR(Pull-Request) consisting of documentation changes only, please try to ensure that the change is significantly more substantial than one or two lines. For example, working through an install document and making changes and updates throughout as you find issues is worth a PR. For typos and other small changes, either contact one of the developers, or if you think it's a significant enough error to cause problems for other users, please feel free to open an issue.
+More documentation or updates/fixes to existing documentation are also very welcome.
+
+# PR Guidelines
+
+We generally prefer you to PR your work earlier rather than later. This ensures everyone else has a better idea of what's being worked on, and can help reduce wasted effort. If work on your PR has just begun, please feel free to create the PR with [WIP] (work in progress) in the PR title, and let us know when it's ready for review in the comments.
+
+Since mainnet has been released, the bar for having PRs accepted has been raised. Before submitting your PR for approval, please be ensure it:
+* Includes a proper description of what problems the PR addresses, as well as a detailed explanation as to what it changes
+* Explains whether/how the change is consensus breaking or breaks existing client functionality
+* Contains unit tests exercising new/changed functionality
+* Fully considers the potential impact of the change on other parts of the system
+* Describes how you've tested the change (e.g. against Floonet, etc)
+* Updates any documentation that's affected by the PR
+
+If submitting a PR consisting of documentation changes only, please try to ensure that the change is significantly more substantial than one or two lines. For example, working through an install document and making changes and updates throughout as you find issues is worth a PR. For typos and other small changes, either contact one of the developers, or if you think it's a significant enough error to cause problems for other users, please feel free to open an issue.
+
+The development team will be happy to help and guide you with any of these points and work with you getting your PR submitted for approval. Create a PR with [WIP] in the title and ask for specific assistance within the issue, or contact the dev team on any of the channels below.
 
 # Find Us
 
@@ -18,7 +34,7 @@ In case of problems with trying out kepler, before starting to contribute, there
 * And [see the developers chat](https://gitter.im/kepler_community/dev) if you have questions about source code files.
   If you explain what you're looking at and what you want to do, we'll try to help you along the way.
 * Also see `docs/*.md` and the folder structure explanations, and [the wiki](https://github.com/keplernetwork/docs/wiki).
-* Further information and discussions are in the [Forum](https://www.kepler-forum.org/), the [website](https://kepler-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@keplercouncil](https://twitter.com/keplercouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWinble/Kepler: [@keplermw](https://twitter.com/keplermw)
+* Further information and discussions are in the [Forum](https://www.kepler-forum.org/), the [website](https://kepler-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@keplercouncil](https://twitter.com/keplercouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWimble/Kepler: [@keplermw](https://twitter.com/keplermw)
 
 ## Testing
 

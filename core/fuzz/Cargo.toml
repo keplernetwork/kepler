@@ -10,7 +10,6 @@ cargo-fuzz = true
 [dependencies]
 kepler_core = { path = ".."}
 kepler_keychain = { path = "../../keychain"}
-kepler_wallet = { path = "../../wallet"}
 [dependencies.libfuzzer-sys]
 git = "https://github.com/rust-fuzz/libfuzzer-sys.git"
 
