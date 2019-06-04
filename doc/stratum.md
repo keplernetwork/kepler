@@ -1,5 +1,7 @@
 # Kepler Stratum RPC Protocol
 
+*Read this in other languages: [Korean](stratum_KR.md).*
+
 This document describes the current Stratum RPC protocol implemented in Kepler.
 
 ## Table of Contents

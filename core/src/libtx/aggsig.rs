@@ -252,7 +252,7 @@ pub fn verify_partial_sig(
 /// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
 /// let pubkey = excess.to_pubkey(&secp).unwrap();
-/// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, Some(&pubkey)).unwrap();
+/// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, None, Some(&pubkey)).unwrap();
 /// ```
 
 pub fn sign_from_key_id<K>(
@@ -261,13 +261,14 @@ pub fn sign_from_key_id<K>(
 	msg: &Message,
 	value: u64,
 	key_id: &Identifier,
+	s_nonce: Option<&SecretKey>,
 	blind_sum: Option<&PublicKey>,
 ) -> Result<Signature, Error>
 where
 	K: Keychain,
 {
 	let skey = k.derive_key(value, key_id)?;
-	let sig = aggsig::sign_single(secp, &msg, &skey, None, None, None, blind_sum, None)?;
+	let sig = aggsig::sign_single(secp, &msg, &skey, s_nonce, None, None, blind_sum, None)?;
 	Ok(sig)
 }
 
@@ -317,7 +318,7 @@ where
 /// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
 /// let pubkey = excess.to_pubkey(&secp).unwrap();
-/// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, Some(&pubkey)).unwrap();
+/// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, None, Some(&pubkey)).unwrap();
 ///
 /// // Verify the signature from the excess commit
 /// let sig_verifies =
@@ -422,14 +423,15 @@ pub fn add_signatures(
 	Ok(sig)
 }
 
-/// Just a simple sig, creates its own nonce, etc
+/// Just a simple sig, creates its own nonce if not provided
 pub fn sign_single(
 	secp: &Secp256k1,
 	msg: &Message,
 	skey: &SecretKey,
+	snonce: Option<&SecretKey>,
 	pubkey_sum: Option<&PublicKey>,
 ) -> Result<Signature, Error> {
-	let sig = aggsig::sign_single(secp, &msg, skey, None, None, None, pubkey_sum, None)?;
+	let sig = aggsig::sign_single(secp, &msg, skey, snonce, None, None, pubkey_sum, None)?;
 	Ok(sig)
 }
 

@@ -15,5 +15,6 @@
 //! Modules common to all Kepler server types
 
 pub mod adapters;
+pub mod hooks;
 pub mod stats;
 pub mod types;

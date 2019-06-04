@@ -22,9 +22,7 @@ use crate::util::secp::pedersen::Commitment;
 use crate::web::*;
 use failure::ResultExt;
 use hyper::{Body, Request, StatusCode};
-use std::collections::HashMap;
 use std::sync::Weak;
-use url::form_urlencoded;
 
 // Sum tree handler. Retrieve the roots:
 // GET /v1/txhashset/roots
@@ -47,23 +45,26 @@ pub struct TxHashSetHandler {
 
 impl TxHashSetHandler {
 	// gets roots
-	fn get_roots(&self) -> TxHashSet {
-		TxHashSet::from_head(w(&self.chain))
+	fn get_roots(&self) -> Result<TxHashSet, Error> {
+		Ok(TxHashSet::from_head(w(&self.chain)?))
 	}
 
 	// gets last n outputs inserted in to the tree
-	fn get_last_n_output(&self, distance: u64) -> Vec<TxHashSetNode> {
-		TxHashSetNode::get_last_n_output(w(&self.chain), distance)
+	fn get_last_n_output(&self, distance: u64) -> Result<Vec<TxHashSetNode>, Error> {
+		Ok(TxHashSetNode::get_last_n_output(w(&self.chain)?, distance))
 	}
 
 	// gets last n outputs inserted in to the tree
-	fn get_last_n_rangeproof(&self, distance: u64) -> Vec<TxHashSetNode> {
-		TxHashSetNode::get_last_n_rangeproof(w(&self.chain), distance)
+	fn get_last_n_rangeproof(&self, distance: u64) -> Result<Vec<TxHashSetNode>, Error> {
+		Ok(TxHashSetNode::get_last_n_rangeproof(
+			w(&self.chain)?,
+			distance,
+		))
 	}
 
 	// gets last n outputs inserted in to the tree
-	fn get_last_n_kernel(&self, distance: u64) -> Vec<TxHashSetNode> {
-		TxHashSetNode::get_last_n_kernel(w(&self.chain), distance)
+	fn get_last_n_kernel(&self, distance: u64) -> Result<Vec<TxHashSetNode>, Error> {
+		Ok(TxHashSetNode::get_last_n_kernel(w(&self.chain)?, distance))
 	}
 
 	// allows traversal of utxo set
@@ -72,18 +73,21 @@ impl TxHashSetHandler {
 		if max > 1000 {
 			max = 1000;
 		}
-		let outputs = w(&self.chain)
+		let chain = w(&self.chain)?;
+		let outputs = chain
 			.unspent_outputs_by_insertion_index(start_index, max)
 			.context(ErrorKind::NotFound)?;
-		Ok(OutputListing {
+		let out = OutputListing {
 			last_retrieved_index: outputs.0,
 			highest_index: outputs.1,
 			outputs: outputs
 				.2
 				.iter()
-				.map(|x| OutputPrintable::from_output(x, w(&self.chain), None, true))
-				.collect(),
-		})
+				.map(|x| OutputPrintable::from_output(x, chain.clone(), None, true))
+				.collect::<Result<Vec<_>, _>>()
+				.context(ErrorKind::Internal("cain error".to_owned()))?,
+		};
+		Ok(out)
 	}
 
 	// return a dummy output with merkle proof for position filled out
@@ -94,10 +98,9 @@ impl TxHashSetHandler {
 			id
 		)))?;
 		let commit = Commitment::from_vec(c);
-		let output_pos = w(&self.chain)
-			.get_output_pos(&commit)
-			.context(ErrorKind::NotFound)?;
-		let merkle_proof = chain::Chain::get_merkle_proof_for_pos(&w(&self.chain), commit)
+		let chain = w(&self.chain)?;
+		let output_pos = chain.get_output_pos(&commit).context(ErrorKind::NotFound)?;
+		let merkle_proof = chain::Chain::get_merkle_proof_for_pos(&chain, commit)
 			.map_err(|_| ErrorKind::NotFound)?;
 		Ok(OutputPrintable {
 			output_type: OutputType::Coinbase,
@@ -114,63 +117,18 @@ impl TxHashSetHandler {
 
 impl Handler for TxHashSetHandler {
 	fn get(&self, req: Request<Body>) -> ResponseFuture {
-		let mut start_index = 1;
-		let mut max = 100;
-		let mut id = "".to_owned();
-
 		// TODO: probably need to set a reasonable max limit here
-		let mut last_n = 10;
-		if let Some(query_string) = req.uri().query() {
-			let params = form_urlencoded::parse(query_string.as_bytes())
-				.into_owned()
-				.fold(HashMap::new(), |mut hm, (k, v)| {
-					hm.entry(k).or_insert(vec![]).push(v);
-					hm
-				});
-			if let Some(nums) = params.get("n") {
-				for num in nums {
-					if let Ok(n) = str::parse(num) {
-						last_n = n;
-					}
-				}
-			}
-			if let Some(start_indexes) = params.get("start_index") {
-				for si in start_indexes {
-					if let Ok(s) = str::parse(si) {
-						start_index = s;
-					}
-				}
-			}
-			if let Some(maxes) = params.get("max") {
-				for ma in maxes {
-					if let Ok(m) = str::parse(ma) {
-						max = m;
-					}
-				}
-			}
-			if let Some(ids) = params.get("id") {
-				if !ids.is_empty() {
-					id = ids.last().unwrap().to_owned();
-				}
-			}
-		}
-		let command = match req
-			.uri()
-			.path()
-			.trim_right()
-			.trim_right_matches("/")
-			.rsplit("/")
-			.next()
-		{
-			Some(c) => c,
-			None => return response(StatusCode::BAD_REQUEST, "invalid url"),
-		};
+		let params = QueryParams::from(req.uri().query());
+		let last_n = parse_param_no_err!(params, "n", 10);
+		let start_index = parse_param_no_err!(params, "start_index", 1);
+		let max = parse_param_no_err!(params, "max", 100);
+		let id = parse_param_no_err!(params, "id", "".to_owned());
 
-		match command {
-			"roots" => json_response_pretty(&self.get_roots()),
-			"lastoutputs" => json_response_pretty(&self.get_last_n_output(last_n)),
-			"lastrangeproofs" => json_response_pretty(&self.get_last_n_rangeproof(last_n)),
-			"lastkernels" => json_response_pretty(&self.get_last_n_kernel(last_n)),
+		match right_path_element!(req) {
+			"roots" => result_to_response(self.get_roots()),
+			"lastoutputs" => result_to_response(self.get_last_n_output(last_n)),
+			"lastrangeproofs" => result_to_response(self.get_last_n_rangeproof(last_n)),
+			"lastkernels" => result_to_response(self.get_last_n_kernel(last_n)),
 			"outputs" => result_to_response(self.outputs(start_index, max)),
 			"merkleproof" => result_to_response(self.get_merkle_proof_for_output(&id)),
 			_ => response(StatusCode::BAD_REQUEST, ""),
