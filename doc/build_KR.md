@@ -14,7 +14,7 @@ Kepler 프로그래밍 언어는 `rust`로 대부분의 플랫폼들에서 빌�
 
 ## 요구사항
 
-* rust 1.31 버전 이상  (다음 명령어를 사용하세요. [rustup]((https://www.rustup.rs/))- 예.) `curl https://sh.rustup.rs -sSf | sh; source $HOME/.cargo/env`)
+* rust 1.34 버전 이상  (다음 명령어를 사용하세요. [rustup]((https://www.rustup.rs/))- 예.) `curl https://sh.rustup.rs -sSf | sh; source $HOME/.cargo/env`)
 
   * 만약 rust 가 설치되어 있다면, 다음 명령어를 사용해서 업데이트 할 수 있습니다.
     `rustup update`
