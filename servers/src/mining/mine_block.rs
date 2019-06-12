@@ -28,6 +28,7 @@ use crate::common::types::Error;
 use crate::core::core::verifier_cache::VerifierCache;
 use crate::core::core::{Output, TxKernel};
 use crate::core::libtx::secp_ser;
+use crate::core::libtx::ProofBuilder;
 use crate::core::{consensus, core, global};
 use crate::keychain::{ExtKeychain, Identifier, Keychain};
 use crate::pool;
@@ -225,11 +226,13 @@ fn burn_reward(block_fees: BlockFees) -> Result<(core::Output, core::TxKernel, B
 	let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
 	let (out, kernel) = crate::core::libtx::reward::output(
 		&keychain,
+		&ProofBuilder::new(&keychain),
 		&key_id,
 		block_fees.fees,
 		block_fees.height,
 		false,
-	)?;
+	)
+	.unwrap();
 	Ok((out, kernel, block_fees))
 }
 
