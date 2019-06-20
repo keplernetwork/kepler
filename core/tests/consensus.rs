@@ -620,34 +620,56 @@ fn test_secondary_pow_scale() {
 fn hard_forks() {
 	// Tests for mainnet chain type.
 	{
+		fn hard_fork_adjust_height_valid_header_version(
+			height: u64,
+			version: HeaderVersion,
+		) -> bool {
+			valid_header_version(height - HARD_FORK_ADJUST_HEIGHT, version)
+		}
+
 		global::set_mining_mode(global::ChainTypes::Mainnet);
 		assert_eq!(global::is_floonet(), false);
 		assert!(valid_header_version(0, HeaderVersion::new(1)));
 		assert!(valid_header_version(10, HeaderVersion::new(1)));
 		assert!(!valid_header_version(10, HeaderVersion::new(2)));
-		assert!(valid_header_version(
+		assert!(hard_fork_adjust_height_valid_header_version(
 			YEAR_HEIGHT / 2 - 1,
 			HeaderVersion::new(1)
 		));
-		assert!(valid_header_version(YEAR_HEIGHT / 2, HeaderVersion::new(2)));
-		assert!(valid_header_version(
+		assert!(hard_fork_adjust_height_valid_header_version(
+			YEAR_HEIGHT / 2,
+			HeaderVersion::new(2)
+		));
+		assert!(hard_fork_adjust_height_valid_header_version(
 			YEAR_HEIGHT / 2 + 1,
 			HeaderVersion::new(2)
 		));
-		assert!(!valid_header_version(
+		assert!(!hard_fork_adjust_height_valid_header_version(
 			YEAR_HEIGHT / 2,
 			HeaderVersion::new(1)
 		));
-		assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion::new(1)));
+		assert!(!hard_fork_adjust_height_valid_header_version(
+			YEAR_HEIGHT,
+			HeaderVersion::new(1)
+		));
 		// v3 not active yet
-		assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion::new(3)));
-		assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion::new(2)));
-		assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion::new(1)));
-		assert!(!valid_header_version(
+		assert!(!hard_fork_adjust_height_valid_header_version(
+			YEAR_HEIGHT,
+			HeaderVersion::new(3)
+		));
+		assert!(!hard_fork_adjust_height_valid_header_version(
+			YEAR_HEIGHT,
+			HeaderVersion::new(2)
+		));
+		assert!(!hard_fork_adjust_height_valid_header_version(
+			YEAR_HEIGHT,
+			HeaderVersion::new(1)
+		));
+		assert!(!hard_fork_adjust_height_valid_header_version(
 			YEAR_HEIGHT * 3 / 2,
 			HeaderVersion::new(2)
 		));
-		assert!(!valid_header_version(
+		assert!(!hard_fork_adjust_height_valid_header_version(
 			YEAR_HEIGHT + 1,
 			HeaderVersion::new(2)
 		));

@@ -137,6 +137,11 @@ pub const MAX_BLOCK_WEIGHT: usize = 40_000;
 /// Fork every 6 months.
 pub const HARD_FORK_INTERVAL: u64 = YEAR_HEIGHT / 2;
 
+/// The adjust height for hard fork
+/// Kepler begins mining 50 days later after grin
+/// And add another week to merge and test grin's new code
+pub const HARD_FORK_ADJUST_HEIGHT: u64 = 50 * DAY_HEIGHT + WEEK_HEIGHT;
+
 /// Floonet first hard fork height, set to happen around 2019-06-20
 pub const FLOONET_FIRST_HARD_FORK: u64 = 185_040;
 
@@ -158,9 +163,10 @@ pub fn valid_header_version(height: u64, version: HeaderVersion) -> bool {
 		}
 		// everything else just like mainnet
 		_ => {
-			if height < HARD_FORK_INTERVAL {
+			let adjusted_height = height + HARD_FORK_ADJUST_HEIGHT;
+			if adjusted_height < HARD_FORK_INTERVAL {
 				version == HeaderVersion::default()
-			} else if height < 2 * HARD_FORK_INTERVAL {
+			} else if adjusted_height < 2 * HARD_FORK_INTERVAL {
 				version == HeaderVersion::new(2)
 			// uncomment branches one by one as we go from hard fork to hard fork
 			/*} else if height < 3 * HARD_FORK_INTERVAL {
