@@ -29,8 +29,7 @@ use crate::core::core;
 use crate::core::core::hash::Hash;
 use crate::core::global;
 use crate::core::pow::Difficulty;
-use crate::core::ser::{self, Readable, Reader, Writeable, Writer};
-use crate::msg::ProtocolVersion;
+use crate::core::ser::{self, ProtocolVersion, Readable, Reader, Writeable, Writer};
 use kepler_store;
 
 /// Maximum number of block headers a peer should ever send
@@ -187,9 +186,9 @@ impl std::fmt::Display for PeerAddr {
 
 impl PeerAddr {
 	/// Convenient way of constructing a new peer_addr from an ip_addr
-	/// defaults to port 3414 on mainnet and 13414 on floonet.
+	/// defaults to port 7414 on mainnet and 17414 on floonet.
 	pub fn from_ip(addr: IpAddr) -> PeerAddr {
-		let port = if global::is_floonet() { 13414 } else { 3414 };
+		let port = if global::is_floonet() { 17414 } else { 7414 };
 		PeerAddr(SocketAddr::new(addr, port))
 	}
 
@@ -535,6 +534,9 @@ pub trait ChainAdapter: Sync + Send {
 	/// the required indexes for a consumer to rewind to a consistant state
 	/// at the provided block hash.
 	fn txhashset_read(&self, h: Hash) -> Option<TxHashSetRead>;
+
+	/// Header of the txhashset archive currently being served to peers.
+	fn txhashset_archive_header(&self) -> Result<core::BlockHeader, chain::Error>;
 
 	/// Whether the node is ready to accept a new txhashset. If this isn't the
 	/// case, the archive is provided without being requested and likely an

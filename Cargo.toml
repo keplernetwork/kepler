@@ -34,6 +34,7 @@ failure_derive = "0.1"
 
 kepler_api = { path = "./api", version = "2.0.1-beta.1" }
 kepler_config = { path = "./config", version = "2.0.1-beta.1" }
+kepler_chain = { path = "./chain", version = "2.0.1-beta.1" }
 kepler_core = { path = "./core", version = "2.0.1-beta.1" }
 kepler_keychain = { path = "./keychain", version = "2.0.1-beta.1" }
 kepler_p2p = { path = "./p2p", version = "2.0.1-beta.1" }

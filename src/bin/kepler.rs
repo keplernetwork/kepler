@@ -24,6 +24,7 @@ use crate::core::global;
 use crate::util::init_logger;
 use clap::App;
 use kepler_api as api;
+use kepler_chain as chain;
 use kepler_config as config;
 use kepler_core as core;
 use kepler_p2p as p2p;
