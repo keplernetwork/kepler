@@ -30,7 +30,7 @@ use crate::core::global;
 use crate::mining::mine_block;
 use crate::pool;
 use crate::util::StopState;
-use grin_chain::SyncState;
+use kepler_chain::SyncState;
 use std::thread;
 use std::time::Duration;
 
