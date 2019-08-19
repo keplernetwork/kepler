@@ -93,8 +93,6 @@ pub fn genesis_floo() -> core::Block {
 	});
 	let kernel = core::TxKernel {
 		features: core::KernelFeatures::Coinbase,
-		fee: 0,
-		lock_height: 0,
 		excess: Commitment::from_vec(
 			util::from_hex(
 				"080af906b3aed1ff7501b2255cb52e4f7be6843b5d93c17f10264525fe93516ba5".to_string(),
@@ -211,8 +209,6 @@ pub fn genesis_main() -> core::Block {
 	});
 	let kernel = core::TxKernel {
 		features: core::KernelFeatures::Coinbase,
-		fee: 0,
-		lock_height: 0,
 		excess: Commitment::from_vec(
 			util::from_hex(
 				"080af906b3aed1ff7501b2255cb52e4f7be6843b5d93c17f10264525fe93516ba5".to_string(),
