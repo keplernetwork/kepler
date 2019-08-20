@@ -87,8 +87,8 @@ Para obtener ayuda sobre los comandos de kepler y sus cambios intente:
 
 ```sh
 kepler help
-kepler wallet help
-kepler client help
+kepler wallet --help
+kepler client --help
 ```
 
 ## Docker
