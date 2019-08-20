@@ -93,8 +93,8 @@ keplerは気の利いたデフォルト設定で起動するようになって�
 
 ```sh
 kepler help
-kepler wallet help
-kepler client help
+kepler wallet --help
+kepler client --help
 ```
 
 ## Docker

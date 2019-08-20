@@ -94,8 +94,8 @@ Kepler을 작동시키는 명령어에 대한 도움말은 다음 명령어를 �
 
 ```sh
 kepler help
-kepler wallet help
-kepler client help
+kepler wallet --help
+kepler client --help
 ```
 
 ## Docker 사용하기
