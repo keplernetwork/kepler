@@ -1374,9 +1374,11 @@ impl<'a> Extension<'a> {
 
 	fn verify_kernel_signatures(&self, status: &dyn TxHashsetWriteStatus) -> Result<(), Error> {
 		let now = Instant::now();
+		const KERNEL_BATCH_SIZE: usize = 5_000;
 
 		let mut kern_count = 0;
 		let total_kernels = pmmr::n_leaves(self.kernel_pmmr.unpruned_size());
+		let mut tx_kernels: Vec<TxKernel> = Vec::with_capacity(KERNEL_BATCH_SIZE);
 		for n in 1..self.kernel_pmmr.unpruned_size() + 1 {
 			if pmmr::is_leaf(n) {
 				let kernel = self
@@ -1384,18 +1386,18 @@ impl<'a> Extension<'a> {
 					.get_data(n)
 					.ok_or::<Error>(ErrorKind::TxKernelNotFound.into())?;
 
-				kernel.verify()?;
-				kern_count += 1;
+				tx_kernels.push(kernel.kernel);
+			}
 
-				if kern_count % 20 == 0 {
-					status.on_validation(kern_count, total_kernels, 0, 0);
-				}
-				if kern_count % 1_000 == 0 {
-					debug!(
-						"txhashset: verify_kernel_signatures: verified {} signatures",
-						kern_count,
-					);
-				}
+			if tx_kernels.len() >= KERNEL_BATCH_SIZE || n >= self.kernel_pmmr.unpruned_size() {
+				TxKernel::batch_sig_verify(&tx_kernels)?;
+				kern_count += tx_kernels.len() as u64;
+				tx_kernels.clear();
+				status.on_validation(kern_count, total_kernels, 0, 0);
+				debug!(
+					"txhashset: verify_kernel_signatures: verified {} signatures",
+					kern_count,
+				);
 			}
 		}
 
@@ -1412,8 +1414,8 @@ impl<'a> Extension<'a> {
 	fn verify_rangeproofs(&self, status: &dyn TxHashsetWriteStatus) -> Result<(), Error> {
 		let now = Instant::now();
 
-		let mut commits: Vec<Commitment> = vec![];
-		let mut proofs: Vec<RangeProof> = vec![];
+		let mut commits: Vec<Commitment> = Vec::with_capacity(1_000);
+		let mut proofs: Vec<RangeProof> = Vec::with_capacity(1_000);
 
 		let mut proof_count = 0;
 		let total_rproofs = pmmr::n_leaves(self.output_pmmr.unpruned_size());
@@ -1444,7 +1446,7 @@ impl<'a> Extension<'a> {
 				);
 			}
 
-			if proof_count % 20 == 0 {
+			if proof_count % 1_000 == 0 {
 				status.on_validation(0, 0, proof_count, total_rproofs);
 			}
 		}
