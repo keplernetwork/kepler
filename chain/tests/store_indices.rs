@@ -13,7 +13,6 @@
 // limitations under the License.
 
 use self::core::core::hash::Hashed;
-use kepler_chain as chain;
 use kepler_core as core;
 use kepler_util as util;
 

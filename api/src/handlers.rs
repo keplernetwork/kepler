@@ -75,6 +75,7 @@ pub fn start_rest_apis(
 		let basic_auth_middleware = Arc::new(BasicAuthMiddleware::new(
 			api_basic_auth,
 			&KEPLER_BASIC_REALM,
+			None,
 		));
 		router.add_middleware(basic_auth_middleware);
 	}
