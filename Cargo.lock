@@ -1071,6 +1071,7 @@ dependencies = [
  "kepler_store 3.0.0-alpha.1",
  "kepler_util 3.0.0-alpha.1",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lru-cache 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "net2 0.2.33 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.42 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
