@@ -1,6 +1,6 @@
 [package]
 name = "kepler_api"
-version = "2.1.0-beta.2"
+version = "2.1.0-beta.3"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "APIs for kepler, a simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
@@ -31,9 +31,9 @@ futures = "0.1.21"
 rustls = "0.13"
 url = "1.7.0"
 
-kepler_core = { path = "../core", version = "2.1.0-beta.2" }
-kepler_chain = { path = "../chain", version = "2.1.0-beta.2" }
-kepler_p2p = { path = "../p2p", version = "2.1.0-beta.2" }
-kepler_pool = { path = "../pool", version = "2.1.0-beta.2" }
-kepler_store = { path = "../store", version = "2.1.0-beta.2" }
-kepler_util = { path = "../util", version = "2.1.0-beta.2" }
+kepler_core = { path = "../core", version = "2.1.0-beta.3" }
+kepler_chain = { path = "../chain", version = "2.1.0-beta.3" }
+kepler_p2p = { path = "../p2p", version = "2.1.0-beta.3" }
+kepler_pool = { path = "../pool", version = "2.1.0-beta.3" }
+kepler_store = { path = "../store", version = "2.1.0-beta.3" }
+kepler_util = { path = "../util", version = "2.1.0-beta.3" }
