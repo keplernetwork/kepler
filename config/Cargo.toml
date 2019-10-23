@@ -1,6 +1,6 @@
 [package]
 name = "kepler_config"
-version = "2.0.1-beta.1"
+version = "2.1.0-dev.1"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Configuration for kepler, a simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
@@ -16,10 +16,10 @@ serde_derive = "1"
 toml = "0.4"
 dirs = "1.0.3"
 
-kepler_core = { path = "../core", version = "2.0.1-beta.1" }
-kepler_servers = { path = "../servers", version = "2.0.1-beta.1" }
-kepler_p2p = { path = "../p2p", version = "2.0.1-beta.1" }
-kepler_util = { path = "../util", version = "2.0.1-beta.1" }
+kepler_core = { path = "../core", version = "2.1.0-dev.1" }
+kepler_servers = { path = "../servers", version = "2.1.0-dev.1" }
+kepler_p2p = { path = "../p2p", version = "2.1.0-dev.1" }
+kepler_util = { path = "../util", version = "2.1.0-dev.1" }
 
 [dev-dependencies]
 pretty_assertions = "0.5.1"

@@ -1,6 +1,6 @@
 [package]
 name = "kepler"
-version = "2.0.1-beta.1"
+version = "2.1.0-dev.1"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
 license = "Apache-2.0"
@@ -32,14 +32,14 @@ term = "0.5"
 failure = "0.1"
 failure_derive = "0.1"
 
-kepler_api = { path = "./api", version = "2.0.1-beta.1" }
-kepler_config = { path = "./config", version = "2.0.1-beta.1" }
-kepler_chain = { path = "./chain", version = "2.0.1-beta.1" }
-kepler_core = { path = "./core", version = "2.0.1-beta.1" }
-kepler_keychain = { path = "./keychain", version = "2.0.1-beta.1" }
-kepler_p2p = { path = "./p2p", version = "2.0.1-beta.1" }
-kepler_servers = { path = "./servers", version = "2.0.1-beta.1" }
-kepler_util = { path = "./util", version = "2.0.1-beta.1" }
+kepler_api = { path = "./api", version = "2.1.0-dev.1" }
+kepler_config = { path = "./config", version = "2.1.0-dev.1" }
+kepler_chain = { path = "./chain", version = "2.1.0-dev.1" }
+kepler_core = { path = "./core", version = "2.1.0-dev.1" }
+kepler_keychain = { path = "./keychain", version = "2.1.0-dev.1" }
+kepler_p2p = { path = "./p2p", version = "2.1.0-dev.1" }
+kepler_servers = { path = "./servers", version = "2.1.0-dev.1" }
+kepler_util = { path = "./util", version = "2.1.0-dev.1" }
 
 [target.'cfg(windows)'.dependencies]
 cursive = { version = "0.12", default-features = false, features = ["pancurses-backend"] }
@@ -53,5 +53,5 @@ cursive = "0.12"
 built = "0.3"
 
 [dev-dependencies]
-kepler_chain = { path = "./chain", version = "2.0.1-beta.1" }
-kepler_store = { path = "./store", version = "2.0.1-beta.1" }
+kepler_chain = { path = "./chain", version = "2.1.0-dev.1" }
+kepler_store = { path = "./store", version = "2.1.0-dev.1" }
