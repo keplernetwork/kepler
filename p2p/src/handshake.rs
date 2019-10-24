@@ -1,4 +1,4 @@
-// Copyright 2018 The Kepler Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
 
 use crate::core::core::hash::Hash;
 use crate::core::pow::Difficulty;
-use crate::msg::{read_message, write_message, Hand, ProtocolVersion, Shake, Type, USER_AGENT};
+use crate::core::ser::ProtocolVersion;
+use crate::msg::{read_message, write_message, Hand, Shake, Type, USER_AGENT};
 use crate::peer::Peer;
 use crate::types::{Capabilities, Direction, Error, P2PConfig, PeerAddr, PeerInfo, PeerLiveInfo};
 use crate::util::RwLock;
@@ -45,6 +46,7 @@ pub struct Handshake {
 	/// ok).
 	genesis: Hash,
 	config: P2PConfig,
+	protocol_version: ProtocolVersion,
 }
 
 impl Handshake {
@@ -55,12 +57,25 @@ impl Handshake {
 			addrs: Arc::new(RwLock::new(VecDeque::with_capacity(ADDRS_CAP))),
 			genesis,
 			config,
+			protocol_version: ProtocolVersion::local(),
 		}
+	}
+
+	/// Select a protocol version here that we know is supported by both us and the remote peer.
+	///
+	/// Current strategy is to simply use `min(local, remote)`.
+	///
+	/// We can enforce "minimum" protocol version here in the future
+	/// by raising an error and forcing the connection to close.
+	///
+	fn negotiate_protocol_version(&self, other: ProtocolVersion) -> Result<ProtocolVersion, Error> {
+		let version = std::cmp::min(self.protocol_version, other);
+		Ok(version)
 	}
 
 	pub fn initiate(
 		&self,
-		capab: Capabilities,
+		capabilities: Capabilities,
 		total_difficulty: Difficulty,
 		self_addr: PeerAddr,
 		conn: &mut TcpStream,
@@ -73,30 +88,34 @@ impl Handshake {
 		};
 
 		let hand = Hand {
-			version: ProtocolVersion::default(),
-			capabilities: capab,
-			nonce: nonce,
+			version: self.protocol_version,
+			capabilities,
+			nonce,
 			genesis: self.genesis,
-			total_difficulty: total_difficulty,
+			total_difficulty,
 			sender_addr: self_addr,
 			receiver_addr: peer_addr,
 			user_agent: USER_AGENT.to_string(),
 		};
 
 		// write and read the handshake response
-		write_message(conn, hand, Type::Hand)?;
-		let shake: Shake = read_message(conn, Type::Shake)?;
+		write_message(conn, hand, Type::Hand, self.protocol_version)?;
+
+		let shake: Shake = read_message(conn, self.protocol_version, Type::Shake)?;
 		if shake.genesis != self.genesis {
 			return Err(Error::GenesisMismatch {
 				us: self.genesis,
 				peer: shake.genesis,
 			});
 		}
+
+		let negotiated_version = self.negotiate_protocol_version(shake.version)?;
+
 		let peer_info = PeerInfo {
 			capabilities: shake.capabilities,
 			user_agent: shake.user_agent,
 			addr: peer_addr,
-			version: shake.version,
+			version: negotiated_version,
 			live_info: Arc::new(RwLock::new(PeerLiveInfo::new(shake.total_difficulty))),
 			direction: Direction::Outbound,
 		};
@@ -108,11 +127,12 @@ impl Handshake {
 		}
 
 		debug!(
-			"Connected! Cumulative {} offered from {:?} {:?} {:?}",
+			"Connected! Cumulative {} offered from {:?}, {:?}, {:?}, {:?}",
 			shake.total_difficulty.to_num(),
 			peer_info.addr,
+			peer_info.version,
 			peer_info.user_agent,
-			peer_info.capabilities
+			peer_info.capabilities,
 		);
 		// when more than one protocol version is supported, choosing should go here
 		Ok(peer_info)
@@ -124,7 +144,7 @@ impl Handshake {
 		total_difficulty: Difficulty,
 		conn: &mut TcpStream,
 	) -> Result<PeerInfo, Error> {
-		let hand: Hand = read_message(conn, Type::Hand)?;
+		let hand: Hand = read_message(conn, self.protocol_version, Type::Hand)?;
 
 		// all the reasons we could refuse this connection for
 		if hand.genesis != self.genesis {
@@ -147,12 +167,14 @@ impl Handshake {
 			}
 		}
 
+		let negotiated_version = self.negotiate_protocol_version(hand.version)?;
+
 		// all good, keep peer info
 		let peer_info = PeerInfo {
 			capabilities: hand.capabilities,
 			user_agent: hand.user_agent,
 			addr: resolve_peer_addr(hand.sender_addr, &conn),
-			version: hand.version,
+			version: negotiated_version,
 			live_info: Arc::new(RwLock::new(PeerLiveInfo::new(hand.total_difficulty))),
 			direction: Direction::Inbound,
 		};
@@ -167,17 +189,16 @@ impl Handshake {
 
 		// send our reply with our info
 		let shake = Shake {
-			version: ProtocolVersion::default(),
+			version: self.protocol_version,
 			capabilities: capab,
 			genesis: self.genesis,
 			total_difficulty: total_difficulty,
 			user_agent: USER_AGENT.to_string(),
 		};
 
-		write_message(conn, shake, Type::Shake)?;
+		write_message(conn, shake, Type::Shake, negotiated_version)?;
 		trace!("Success handshake with {}.", peer_info.addr);
 
-		// when more than one protocol version is supported, choosing should go here
 		Ok(peer_info)
 	}
 

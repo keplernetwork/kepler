@@ -98,8 +98,8 @@ For help on kepler commands and their switches, try:
 
 ```sh
 kepler help
-kepler wallet help
-kepler client help
+kepler wallet --help
+kepler client --help
 ```
 
 ## Docker
