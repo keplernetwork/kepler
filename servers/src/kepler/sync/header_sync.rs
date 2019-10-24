@@ -1,4 +1,4 @@
-// Copyright 2018 The Kepler Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@ use chrono::prelude::{DateTime, Utc};
 use chrono::Duration;
 use std::sync::Arc;
 
-use crate::chain;
-use crate::common::types::{Error, SyncState, SyncStatus};
+use crate::chain::{self, SyncState, SyncStatus};
+use crate::common::types::Error;
 use crate::core::core::hash::{Hash, Hashed};
 use crate::p2p::{self, types::ReasonForBan, Peer};
 

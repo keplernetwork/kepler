@@ -1,4 +1,4 @@
-// Copyright 2018 The Kepler Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,11 +23,9 @@ use std::sync::{Arc, Weak};
 use std::thread;
 use std::time::Instant;
 
-use crate::chain::{self, BlockStatus, ChainAdapter, Options};
+use crate::chain::{self, BlockStatus, ChainAdapter, Options, SyncState, SyncStatus};
 use crate::common::hooks::{ChainEvents, NetEvents};
-use crate::common::types::{
-	self, ChainValidationMode, DandelionEpoch, ServerConfig, SyncState, SyncStatus,
-};
+use crate::common::types::{ChainValidationMode, DandelionEpoch, ServerConfig};
 use crate::core::core::hash::{Hash, Hashed};
 use crate::core::core::transaction::Transaction;
 use crate::core::core::verifier_cache::VerifierCache;
@@ -37,7 +35,6 @@ use crate::core::{core, global};
 use crate::p2p;
 use crate::p2p::types::PeerInfo;
 use crate::pool;
-use crate::pool::types::DandelionConfig;
 use crate::util::OneTime;
 use chrono::prelude::*;
 use chrono::Duration;
@@ -97,10 +94,7 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 			return Ok(true);
 		}
 
-		let source = pool::TxSource {
-			debug_name: "p2p".to_string(),
-			identifier: "?.?.?.?".to_string(),
-		};
+		let source = pool::TxSource::Broadcast;
 
 		let header = self.chain().head_header()?;
 
@@ -242,11 +236,11 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 		bh: core::BlockHeader,
 		peer_info: &PeerInfo,
 	) -> Result<bool, chain::Error> {
-		let bhash = bh.hash();
-		debug!(
-			"Received block header {} at {} from {}, going to process.",
-			bhash, bh.height, peer_info.addr,
-		);
+		if !self.sync_state.is_syncing() {
+			for hook in &self.hooks {
+				hook.on_header_received(&bh, &peer_info.addr);
+			}
+		}
 
 		// pushing the new block header through the header chain pipeline
 		// we will go ask for the block if this is a new header
@@ -255,7 +249,11 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 			.process_block_header(&bh, self.chain_opts(false));
 
 		if let Err(e) = res {
-			debug!("Block header {} refused by chain: {:?}", bhash, e.kind());
+			debug!(
+				"Block header {} refused by chain: {:?}",
+				bh.hash(),
+				e.kind()
+			);
 			if e.is_bad_data() {
 				return Ok(false);
 			} else {
@@ -312,8 +310,8 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 
 		let max_height = self.chain().header_head()?.height;
 
-		let txhashset = self.chain().txhashset();
-		let txhashset = txhashset.read();
+		let header_pmmr = self.chain().header_pmmr();
+		let header_pmmr = header_pmmr.read();
 
 		// looks like we know one, getting as many following headers as allowed
 		let hh = header.height;
@@ -323,7 +321,8 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 				break;
 			}
 
-			if let Ok(header) = txhashset.get_header_by_height(h) {
+			if let Ok(hash) = header_pmmr.get_header_hash_by_height(h) {
+				let header = self.chain().get_block_header(&hash)?;
 				headers.push(header);
 			} else {
 				error!("Failed to locate headers successfully.");
@@ -349,7 +348,7 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 		self.chain().kernel_data_read()
 	}
 
-	fn kernel_data_write(&self, reader: &mut Read) -> Result<bool, chain::Error> {
+	fn kernel_data_write(&self, reader: &mut dyn Read) -> Result<bool, chain::Error> {
 		let res = self.chain().kernel_data_write(reader)?;
 		error!("***** kernel_data_write: {:?}", res);
 		Ok(true)
@@ -370,6 +369,10 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 				None
 			}
 		}
+	}
+
+	fn txhashset_archive_header(&self) -> Result<core::BlockHeader, chain::Error> {
+		self.chain().txhashset_archive_header()
 	}
 
 	fn txhashset_receive_ready(&self) -> bool {
@@ -417,22 +420,31 @@ impl p2p::ChainAdapter for NetToChainAdapter {
 		// check status again after download, in case 2 txhashsets made it somehow
 		if let SyncStatus::TxHashsetDownload { .. } = self.sync_state.status() {
 		} else {
-			return Ok(true);
+			return Ok(false);
 		}
 
-		if let Err(e) = self
+		match self
 			.chain()
 			.txhashset_write(h, txhashset_data, self.sync_state.as_ref())
 		{
-			self.chain().clean_txhashset_sandbox();
-			error!("Failed to save txhashset archive: {}", e);
-
-			let is_good_data = !e.is_bad_data();
-			self.sync_state.set_sync_error(types::Error::Chain(e));
-			Ok(is_good_data)
-		} else {
-			info!("Received valid txhashset data for {}.", h);
-			Ok(true)
+			Ok(is_bad_data) => {
+				if is_bad_data {
+					self.chain().clean_txhashset_sandbox();
+					error!("Failed to save txhashset archive: bad data");
+					self.sync_state.set_sync_error(
+						chain::ErrorKind::TxHashSetErr("bad txhashset data".to_string()).into(),
+					);
+				} else {
+					info!("Received valid txhashset data for {}.", h);
+				}
+				Ok(is_bad_data)
+			}
+			Err(e) => {
+				self.chain().clean_txhashset_sandbox();
+				error!("Failed to save txhashset archive: {}", e);
+				self.sync_state.set_sync_error(e);
+				Ok(false)
+			}
 		}
 	}
 
@@ -487,14 +499,16 @@ impl NetToChainAdapter {
 
 	// Find the first locator hash that refers to a known header on our main chain.
 	fn find_common_header(&self, locator: &[Hash]) -> Option<BlockHeader> {
-		let txhashset = self.chain().txhashset();
-		let txhashset = txhashset.read();
+		let header_pmmr = self.chain().header_pmmr();
+		let header_pmmr = header_pmmr.read();
 
 		for hash in locator {
 			if let Ok(header) = self.chain().get_block_header(&hash) {
-				if let Ok(header_at_height) = txhashset.get_header_by_height(header.height) {
-					if header.hash() == header_at_height.hash() {
-						return Some(header);
+				if let Ok(hash_at_height) = header_pmmr.get_header_hash_by_height(header.height) {
+					if let Ok(header_at_height) = self.chain().get_block_header(&hash_at_height) {
+						if header.hash() == header_at_height.hash() {
+							return Some(header);
+						}
 					}
 				}
 			}
@@ -804,11 +818,11 @@ impl DandelionAdapter for PoolToNetAdapter {
 }
 
 impl pool::PoolAdapter for PoolToNetAdapter {
-	fn tx_accepted(&self, tx: &core::Transaction) {
-		self.peers().broadcast_transaction(tx);
+	fn tx_accepted(&self, entry: &pool::PoolEntry) {
+		self.peers().broadcast_transaction(&entry.tx);
 	}
 
-	fn stem_tx_accepted(&self, tx: &core::Transaction) -> Result<(), pool::PoolError> {
+	fn stem_tx_accepted(&self, entry: &pool::PoolEntry) -> Result<(), pool::PoolError> {
 		// Take write lock on the current epoch.
 		// We need to be able to update the current relay peer if not currently connected.
 		let mut epoch = self.dandelion_epoch.write();
@@ -816,9 +830,10 @@ impl pool::PoolAdapter for PoolToNetAdapter {
 		// If "stem" epoch attempt to relay the tx to the next Dandelion relay.
 		// Fallback to immediately fluffing the tx if we cannot stem for any reason.
 		// If "fluff" epoch then nothing to do right now (fluff via Dandelion monitor).
-		if epoch.is_stem() {
+		// If node is configured to always stem our (pushed via api) txs then do so.
+		if epoch.is_stem() || (entry.src.is_pushed() && epoch.always_stem_our_txs()) {
 			if let Some(peer) = epoch.relay_peer(&self.peers()) {
-				match peer.send_stem_transaction(tx) {
+				match peer.send_stem_transaction(&entry.tx) {
 					Ok(_) => {
 						info!("Stemming this epoch, relaying to next peer.");
 						Ok(())
@@ -841,7 +856,7 @@ impl pool::PoolAdapter for PoolToNetAdapter {
 
 impl PoolToNetAdapter {
 	/// Create a new pool to net adapter
-	pub fn new(config: DandelionConfig) -> PoolToNetAdapter {
+	pub fn new(config: pool::DandelionConfig) -> PoolToNetAdapter {
 		PoolToNetAdapter {
 			peers: OneTime::new(),
 			dandelion_epoch: Arc::new(RwLock::new(DandelionEpoch::new(config))),

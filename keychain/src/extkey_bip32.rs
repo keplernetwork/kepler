@@ -1,4 +1,4 @@
-// Copyright 2018 The Kepler Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ use sha2::{Sha256, Sha512};
 
 use crate::base58;
 
-// Create alias for HMAC-SHA256
+// Create alias for HMAC-SHA512
 type HmacSha512 = Hmac<Sha512>;
 
 /// A chain code

@@ -1,4 +1,4 @@
-// Copyright 2018 The Kepler Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -230,7 +230,7 @@ pub fn verify_partial_sig(
 /// use util::secp::key::{PublicKey, SecretKey};
 /// use util::secp::{ContextFlag, Secp256k1};
 /// use core::libtx::{aggsig, proof};
-/// use core::core::transaction::{kernel_sig_msg, KernelFeatures};
+/// use core::core::transaction::KernelFeatures;
 /// use core::core::{Output, OutputFeatures};
 /// use keychain::{Keychain, ExtKeychain, SwitchCommitmentType};
 ///
@@ -252,7 +252,8 @@ pub fn verify_partial_sig(
 /// };
 /// let over_commit = secp.commit_value(reward(height, fees)).unwrap();
 /// let out_commit = output.commitment();
-/// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
+/// let features = KernelFeatures::HeightLocked{fee: 0, lock_height: height};
+/// let msg = features.kernel_sig_msg().unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
 /// let pubkey = excess.to_pubkey(&secp).unwrap();
 /// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, None, Some(&pubkey)).unwrap();
@@ -298,7 +299,7 @@ where
 /// use core::libtx::{aggsig, proof};
 /// use util::secp::key::{PublicKey, SecretKey};
 /// use util::secp::{ContextFlag, Secp256k1};
-/// use core::core::transaction::{kernel_sig_msg, KernelFeatures};
+/// use core::core::transaction::KernelFeatures;
 /// use core::core::{Output, OutputFeatures};
 /// use keychain::{Keychain, ExtKeychain, SwitchCommitmentType};
 ///
@@ -320,7 +321,8 @@ where
 /// };
 /// let over_commit = secp.commit_value(reward(height, fees)).unwrap();
 /// let out_commit = output.commitment();
-/// let msg = kernel_sig_msg(0, height, KernelFeatures::HeightLocked).unwrap();
+/// let features = KernelFeatures::HeightLocked{fee: 0, lock_height: height};
+/// let msg = features.kernel_sig_msg().unwrap();
 /// let excess = secp.commit_sum(vec![out_commit], vec![over_commit]).unwrap();
 /// let pubkey = excess.to_pubkey(&secp).unwrap();
 /// let sig = aggsig::sign_from_key_id(&secp, &keychain, &msg, value, &key_id, None, Some(&pubkey)).unwrap();
