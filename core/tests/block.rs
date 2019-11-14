@@ -27,15 +27,13 @@ use crate::core::core::{
 use crate::core::libtx::build::{self, input, output};
 use crate::core::libtx::ProofBuilder;
 use crate::core::{global, ser};
-use crate::keychain::{BlindingFactor, ExtKeychain, Keychain};
-use crate::util::secp;
-use crate::util::RwLock;
 use chrono::Duration;
 use kepler_core as core;
 use kepler_core::global::ChainTypes;
-use kepler_keychain as keychain;
-use kepler_util as util;
+use keychain::{BlindingFactor, ExtKeychain, Keychain};
 use std::sync::Arc;
+use util::secp;
+use util::RwLock;
 
 fn verifier_cache() -> Arc<RwLock<dyn VerifierCache>> {
 	Arc::new(RwLock::new(LruVerifierCache::new()))

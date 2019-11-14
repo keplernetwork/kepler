@@ -14,7 +14,6 @@
 
 //! Common test functions
 
-use crate::keychain::{Identifier, Keychain};
 use kepler_core::core::{Block, BlockHeader, KernelFeatures, Transaction};
 use kepler_core::libtx::{
 	build::{self, input, output},
@@ -22,7 +21,7 @@ use kepler_core::libtx::{
 	reward,
 };
 use kepler_core::pow::Difficulty;
-use kepler_keychain as keychain;
+use keychain::{Identifier, Keychain};
 
 // utility producing a transaction with 2 inputs and a single outputs
 pub fn tx2i1o() -> Transaction {
