@@ -1,5 +1,5 @@
 # State and Storage
-*Read this in other languages: [Korean](state_KR.md), [日本語](state_JP.md).*
+*Read this in other languages: [Korean](state_KR.md), [日本語](state_JP.md), [简体中文](state_ZH-CN.md).*
 
 ## The Kepler State
 

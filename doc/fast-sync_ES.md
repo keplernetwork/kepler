@@ -1,5 +1,7 @@
 # Sincronización rápida
 
+*Lea esto en otros idiomas: [English](fast-sync.md), [简体中文](fast-sync_ZH-CN.md), [Korean](fast-sync_KR.md).*
+
 En Kepler, llamamos "sync" al proceso de sincronizar un nuevo nodo o un nodo que no ha estado al día con la cadena durante un 
 tiempo, y llevarlo hasta el último bloque conocido. La Descarga Inicial de Bloques (o IBD) es usada a menudo por otras cadenas 
 de bloques, pero esto es problemático para Kepler ya que típicamente no descarga bloques completos..
