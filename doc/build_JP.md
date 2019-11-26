@@ -93,7 +93,7 @@ keplerは気の利いたデフォルト設定で起動するようになって�
 
 ```sh
 kepler help
-kepler wallet --help
+kepler server --help
 kepler client --help
 ```
 
@@ -126,4 +126,4 @@ x86のLinux上で`kepler`をクロスコンパイルしARMバイナリを作成�
 
 keplerのマイニングに関する全ての機能は[kepler-miner](https://github.com/keplernetwork/kepler-miner)と呼ばれるスタンドアローンなパッケージに分離されていることに注意。
 
-kepler-minerをkeplerノードと通信させるためには、`kepler-server.toml`の設定ファイルで`enable_stratum_server = true`と設定し、ウォレットリスナーを起動(`kepler wallet listen`)しておく必要がある。
+kepler-minerをkeplerノードと通信させるためには、`kepler-server.toml`の設定ファイルで`enable_stratum_server = true`と設定し、ウォレットリスナーを起動(`kepler-wallet listen`)しておく必要がある。
