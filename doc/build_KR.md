@@ -94,7 +94,7 @@ Kepler을 작동시키는 명령어에 대한 도움말은 다음 명령어를 �
 
 ```sh
 kepler help
-kepler wallet --help
+kepler server --help
 kepler client --help
 ```
 
@@ -128,4 +128,4 @@ Rust(Cargo)는 여러 플랫폼에서 Kepler을 빌드 할 수 있습니다. 그
 Kepler의 모든 마이닝 기능은 분리된 독랍형 패키지인 [kepler-miner](https://github.com/keplernetwork/kepler-miner)로 옮겨졌습니다.
 일단 Kepler 노드가 실행되면 실행중인 노드에 대해 kepler-miner를 빌드하고 실행하여 마이닝을 시작할 수 있습니다.
 
-kepler-miner가 kepler 노드와 통신 할 수 있게 하려면, `kepler-server.toml` 설정 파일에서`enable_stratum_server = true`가 설정되어 있는지 확인하세요. 그 다음 Wallet listener인 `kepler wallet listen` 명령어를 실행하세요 .
+kepler-miner가 kepler 노드와 통신 할 수 있게 하려면, `kepler-server.toml` 설정 파일에서`enable_stratum_server = true`가 설정되어 있는지 확인하세요. 그 다음 Wallet listener인 `kepler-wallet listen` 명령어를 실행하세요 .
