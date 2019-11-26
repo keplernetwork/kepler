@@ -4,13 +4,13 @@ https://travis-ci.org/keplernetwork/kepler
 
 Kepler is an in-progress implementation of the Mimblewimble protocol. Many characteristics are still undefined but the following constitutes a first set of choices:
 
-Clean and minimal implementation, and aiming to stay as such.
-Follows the Mimblewimble protocol, which provides great anonymity and scaling characteristics.
-Proof of work: Cuckatoo (C31).
-Relatively fast block time: one minute.
-Fixed block reward over time with a decreasing dilution.
-Transaction fees are based on the number of Outputs created/destroyed and total transaction size.
-Smooth curve for difficulty adjustments.
+  * Clean and minimal implementation, and aiming to stay as such.
+  * Follows the Mimblewimble protocol, which provides hidden amounts and scaling advantages.
+  * Cuckoo Cycle proof of work in two variants named Cuckaroo (ASIC-resistant) and Cuckatoo (ASIC-targeted).
+  * Relatively fast block time: one minute.
+  * Fixed block reward over time with a decreasing dilution.
+  * Transaction fees are based on the number of Outputs created/destroyed and total transaction size.
+  * Smooth curve for difficulty adjustments.
 
 ## Specs
 
