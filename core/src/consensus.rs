@@ -88,7 +88,7 @@ pub const PROOFSIZE: usize = 42;
 /// Default Cuckatoo Cycle edge_bits, used for mining and validating.
 pub const DEFAULT_MIN_EDGE_BITS: u8 = 31;
 
-/// Cuckaroo proof-of-work edge_bits, meant to be ASIC resistant.
+/// Cuckaroo* proof-of-work edge_bits, meant to be ASIC resistant.
 pub const SECOND_POW_EDGE_BITS: u8 = 29;
 
 /// Original reference edge_bits to compute difficulty factors for higher
@@ -138,48 +138,44 @@ pub const MAX_BLOCK_WEIGHT: usize = 40_000;
 pub const HARD_FORK_INTERVAL: u64 = YEAR_HEIGHT / 2;
 
 /// The adjust height for hard fork
-/// Kepler begins mining 50 days later after grin
-/// And add another week to merge and test grin's new code
+/// Kepler begins mining 50 days later after grin and now it 79days behind. Just keep this adjust is ok
 pub const HARD_FORK_ADJUST_HEIGHT: u64 = 50 * DAY_HEIGHT + WEEK_HEIGHT;
 
 /// Floonet first hard fork height, set to happen around 2019-06-20
 pub const FLOONET_FIRST_HARD_FORK: u64 = 185_040;
 
-/// Check whether the block version is valid at a given height, implements
+/// Floonet second hard fork height, set to happen around 2019-12-19
+pub const FLOONET_SECOND_HARD_FORK: u64 = 298_080;
+
+/// Compute possible block version at a given height, implements
 /// 6 months interval scheduled hard forks for the first 2 years.
-pub fn valid_header_version(height: u64, version: HeaderVersion) -> bool {
+pub fn header_version(height: u64) -> HeaderVersion {
 	let chain_type = global::CHAIN_TYPE.read().clone();
+	let hf_interval = (1 + height / HARD_FORK_INTERVAL) as u16;
 	match chain_type {
 		global::ChainTypes::Floonet => {
 			if height < FLOONET_FIRST_HARD_FORK {
-				version == HeaderVersion::default()
-			// add branches one by one as we go from hard fork to hard fork
-			// } else if height < FLOONET_SECOND_HARD_FORK {
-			} else if height < 2 * HARD_FORK_INTERVAL {
-				version == HeaderVersion::new(2)
+				(HeaderVersion::new(1))
+			} else if height < FLOONET_SECOND_HARD_FORK {
+				(HeaderVersion::new(2))
+			} else if height < 3 * HARD_FORK_INTERVAL {
+				(HeaderVersion::new(3))
 			} else {
-				false
+				HeaderVersion::new(hf_interval)
 			}
 		}
 		// everything else just like mainnet
 		_ => {
-			let adjusted_height = height + HARD_FORK_ADJUST_HEIGHT;
-			if adjusted_height < HARD_FORK_INTERVAL {
-				version == HeaderVersion::default()
-			} else if adjusted_height < 2 * HARD_FORK_INTERVAL {
-				version == HeaderVersion::new(2)
-			// uncomment branches one by one as we go from hard fork to hard fork
-			/*} else if height < 3 * HARD_FORK_INTERVAL {
-				version == HeaderVersion::new(3)
-			} else if height < 4 * HARD_FORK_INTERVAL {
-				version == HeaderVersion::new(4)
-			} else {
-				version > HeaderVersion::new(4) */
-			} else {
-				false
-			}
+			HeaderVersion::new((1 + (height + HARD_FORK_ADJUST_HEIGHT) / HARD_FORK_INTERVAL) as u16)
 		}
 	}
+}
+
+/// Check whether the block version is valid at a given height, implements
+/// 6 months interval scheduled hard forks for the first 2 years.
+pub fn valid_header_version(height: u64, version: HeaderVersion) -> bool {
+	return (height + HARD_FORK_ADJUST_HEIGHT) < 3 * HARD_FORK_INTERVAL
+		&& version == header_version(height);
 }
 
 /// Number of blocks used to calculate difficulty adjustments
@@ -204,13 +200,14 @@ pub const AR_SCALE_DAMP_FACTOR: u64 = 13;
 pub fn graph_weight(height: u64, edge_bits: u8) -> u64 {
 	let mut xpr_edge_bits = edge_bits as u64;
 
-	let bits_over_min = edge_bits.saturating_sub(global::min_edge_bits());
-	let expiry_height = (1 << bits_over_min) * YEAR_HEIGHT;
-	if edge_bits < 32 && height >= expiry_height {
+	let expiry_height = YEAR_HEIGHT;
+	if edge_bits == 31 && height >= expiry_height {
 		xpr_edge_bits = xpr_edge_bits.saturating_sub(1 + (height - expiry_height) / WEEK_HEIGHT);
 	}
+	// For C31 xpr_edge_bits reaches 0 at height YEAR_HEIGHT + 30 * WEEK_HEIGHT
+	// 30 weeks after Jan 15, 2020 would be Aug 12, 2020
 
-	(2 << (edge_bits - global::base_edge_bits()) as u64) * xpr_edge_bits
+	(2u64 << (edge_bits - global::base_edge_bits()) as u64) * xpr_edge_bits
 }
 
 /// Minimum difficulty, enforced in diff retargetting
