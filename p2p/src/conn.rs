@@ -53,7 +53,7 @@ pub trait MessageHandler: Send + 'static {
 	) -> Result<Option<Msg>, Error>;
 }
 
-// Macro to simplify the boilerplate around I/O and Grin error handling
+// Macro to simplify the boilerplate around I/O and Kepler error handling
 macro_rules! try_break {
 	($inner:expr) => {
 		match $inner {
