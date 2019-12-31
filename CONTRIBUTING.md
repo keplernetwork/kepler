@@ -34,7 +34,7 @@ In case of problems with trying out kepler, before starting to contribute, there
 * And [see the developers chat](https://gitter.im/kepler_community/dev) if you have questions about source code files.
   If you explain what you're looking at and what you want to do, we'll try to help you along the way.
 * Also see `docs/*.md` and the folder structure explanations, and [the wiki](https://github.com/keplernetwork/docs/wiki).
-* Further information and discussions are in the [Forum](https://www.kepler-forum.org/), the [website](https://kepler-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@keplercouncil](https://twitter.com/keplercouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to MimbleWimble/Kepler: [@keplermw](https://twitter.com/keplermw)
+* Further information and discussions are in the [Forum](https://www.kepler-forum.org/), the [website](https://kepler-tech.org), the [mailing list](https://lists.launchpad.net/keplernetwork/) and news channels like the [@keplercouncil](https://twitter.com/keplercouncil) and a (mostly unfiltered!) Twitter bot that collects headlines, mailing list posts, and reddit posts related to Mimblewimble/Kepler: [@keplermw](https://twitter.com/keplermw)
 
 ## Testing
 

@@ -2,10 +2,10 @@ https://travis-ci.org/keplernetwork/kepler
 
 # Kepler
 
-Kepler is an in-progress implementation of the MimbleWimble protocol. Many characteristics are still undefined but the following constitutes a first set of choices:
+Kepler is an in-progress implementation of the Mimblewimble protocol. Many characteristics are still undefined but the following constitutes a first set of choices:
 
 Clean and minimal implementation, and aiming to stay as such.
-Follows the MimbleWimble protocol, which provides great anonymity and scaling characteristics.
+Follows the Mimblewimble protocol, which provides great anonymity and scaling characteristics.
 Proof of work: Cuckatoo (C31).
 Relatively fast block time: one minute.
 Fixed block reward over time with a decreasing dilution.
@@ -23,7 +23,7 @@ Block rewards: 1000 KMW / block
 C31 only
 Halving every two years
 
-To learn more, read our introduction to MimbleWimble and Kepler.
+To learn more, read our introduction to Mimblewimble and Kepler.
 
 ## Status
 
@@ -54,7 +54,7 @@ We believe in pull requests, data and scientific research. We do not believe in 
 
 ## Credits
 
-Tom Elvis Jedusor for the first formulation of MimbleWimble.
+Tom Elvis Jedusor for the first formulation of Mimblewimble.
 
 Andrew Poelstra for his related work and improvements.
 
