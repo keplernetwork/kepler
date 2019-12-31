@@ -52,7 +52,7 @@ use crate::p2p::types::PeerAddr;
 use crate::pool;
 use crate::util::file::get_first_line;
 use crate::util::{RwLock, StopState};
-use grin_util::logger::LogEntry;
+use kepler_util::logger::LogEntry;
 
 /// Kepler server holding internal structures.
 pub struct Server {
