@@ -35,7 +35,7 @@ use crate::servers::Server;
 use crate::tui::constants::ROOT_STACK;
 use crate::tui::types::{TUIStatusListener, UIMessage};
 use crate::tui::{logs, menu, mining, peers, status, version};
-use grin_util::logger::LogEntry;
+use kepler_util::logger::LogEntry;
 
 pub struct UI {
 	cursive: Cursive,

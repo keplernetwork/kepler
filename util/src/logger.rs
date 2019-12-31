@@ -91,7 +91,7 @@ impl Default for LoggingConfig {
 			stdout_log_level: Level::Warn,
 			log_to_file: true,
 			file_log_level: Level::Info,
-			log_file_path: String::from("grin.log"),
+			log_file_path: String::from("kepler.log"),
 			log_file_append: true,
 			log_max_size: Some(1024 * 1024 * 16), // 16 megabytes default
 			log_max_files: Some(DEFAULT_ROTATE_LOG_FILES),
@@ -100,8 +100,8 @@ impl Default for LoggingConfig {
 	}
 }
 
-/// This filter is rejecting messages that doesn't start with "grin"
-/// in order to save log space for only Grin-related records
+/// This filter is rejecting messages that doesn't start with "kepler"
+/// in order to save log space for only Kepler-related records
 #[derive(Debug)]
 struct KeplerFilter;
 
@@ -182,7 +182,7 @@ pub fn init_logger(config: Option<LoggingConfig>, logs_tx: Option<mpsc::SyncSend
 			appenders.push(
 				Appender::builder()
 					.filter(Box::new(ThresholdFilter::new(level_stdout)))
-					.filter(Box::new(GrinFilter))
+					.filter(Box::new(KeplerFilter))
 					.build("tui", Box::new(channel_appender)),
 			);
 			root = root.appender("tui");
