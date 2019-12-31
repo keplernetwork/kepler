@@ -1,6 +1,6 @@
 [package]
 name = "kepler_pool"
-version = "3.0.0-beta.1"
+version = "3.0.0-beta.2"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the Mimblewimble chain format."
 license = "Apache-2.0"
@@ -19,10 +19,10 @@ chrono = "0.4.4"
 failure = "0.1"
 failure_derive = "0.1"
 
-kepler_core = { path = "../core", version = "3.0.0-beta.1" }
-kepler_keychain = { path = "../keychain", version = "3.0.0-beta.1" }
-kepler_store = { path = "../store", version = "3.0.0-beta.1" }
-kepler_util = { path = "../util", version = "3.0.0-beta.1" }
+kepler_core = { path = "../core", version = "3.0.0-beta.2" }
+kepler_keychain = { path = "../keychain", version = "3.0.0-beta.2" }
+kepler_store = { path = "../store", version = "3.0.0-beta.2" }
+kepler_util = { path = "../util", version = "3.0.0-beta.2" }
 
 [dev-dependencies]
-kepler_chain = { path = "../chain", version = "3.0.0-beta.1" }
+kepler_chain = { path = "../chain", version = "3.0.0-beta.2" }
