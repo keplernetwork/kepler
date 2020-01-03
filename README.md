@@ -1,18 +1,21 @@
-https://travis-ci.org/keplernetwork/kepler
-
 # Kepler
 
-Kepler is an in-progress implementation of the MimbleWimble protocol. Many characteristics are still undefined but the following constitutes a first set of choices:
+Official Rust-based Kepler Network client
 
-Clean and minimal implementation, and aiming to stay as such.
-Follows the MimbleWimble protocol, which provides great anonymity and scaling characteristics.
-Proof of work: Cuckatoo (C31).
-Relatively fast block time: one minute.
-Fixed block reward over time with a decreasing dilution.
-Transaction fees are based on the number of Outputs created/destroyed and total transaction size.
-Smooth curve for difficulty adjustments.
+https://travis-ci.org/keplernetwork/kepler
 
-## Specs
+# What is Kepler ? 
+
+Kepler is a Cryptocurrency with focus on Privacy, Scalability, Fungibility and ease of use. Kepler was built based on Grin which is a fantastic MimbleWimble (MW) Blockchain platform. Kepler, is a Proof of Work (PoW) blockchain, producing blocks every 60 seconds. 
+Thanks to its Blockchain design, Kepler uses less disk space, less CPU, it is far more efficient, faster, safer and private than "traditional" blockchain types.
+
+Kepler will be capable of being extended towards Confidential Assets (CA). These are a major part of the evolution of the Blockchain technology, this will allow to support multiple asset types on the same chain which, at the same time, will enable new use cases, multi-asset transactions which effect atomic exchanges.  
+
+We are currently working on our whitepaper which includes confidential assets. These will be released in an upcoming update for Kepler.
+
+Blockchain technology and MimbleWimble are perhaps the most exciting recent technological achievements in the Blockchain industry. 
+
+# Specs
 
 Ticker: KMW
 Max Kepler Supply: 2.138.639.000
@@ -23,36 +26,21 @@ Block rewards: 1000 KMW / block
 C31 only
 Halving every two years
 
-To learn more, read our introduction to MimbleWimble and Kepler.
-
-## Status
-
-Kepler is live with mainnet. UI wallet coming up shortly after launch
-
-## Contributing
+# Contributing
 
 To get involved, read our contributing docs.
 
-## Social:
+# Social:
 
 Telegram: http://t.me/keplernetwork
-Twitter Network Project: @keplernetwork
-Reddit: https://www.reddit.com/r/keplernetwork
-Discord: 
 
-## Getting Started
+Twitter: https://twitter.com/keplernetwork1
 
-To learn more about the technology, read our introduction.
+# Getting Started
 
 To build and try out Kepler, see the build docs.
 
-## Philosophy
-
-Kepler believes in keeping it simple. Users will feel welcomed by Kepler's cool appeal. Kepler will redefine how apps using the MW protocol are seen, ease of use comes to mind.
-
-We believe in pull requests, data and scientific research. We do not believe in unfounded beliefs.
-
-## Credits
+# Credits
 
 Tom Elvis Jedusor for the first formulation of MimbleWimble.
 
@@ -62,6 +50,9 @@ John Tromp for the Cuckoo Cycle proof of work.
 
 Johannes Kepler for being so awesome.
 
-## License
+# License
 
 Apache License v2.0.
+
+
+
