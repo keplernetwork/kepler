@@ -1,5 +1,7 @@
 # Contracts
 
+_Read this in other languages: [简体中文](contracts_ZH-CN.md)_
+
 This document describes smart contracts that can be setup using Kepler even
 though the Kepler chain does not support scripting. All these contracts rely
 on a few basic features that are built in the chain and compose them in
@@ -28,9 +30,9 @@ on the same curve group.
 We suppose we have the SHA256 hash function and the same G curve as above. In
 its simplest form, an aggregate signature is built from:
 
-* the message `M` to sign, in our case the transaction fee
-* a private key `x`, with its matching public key `x*G`
-* a nonce `k` just used for the purpose of building the signature
+- the message `M` to sign, in our case the transaction fee
+- a private key `x`, with its matching public key `x*G`
+- a nonce `k` just used for the purpose of building the signature
 
 We build the challenge `e = SHA256(M | k*G | x*G)`, and the scalar
 `s = k + e * x`. The full aggregate signature is then the pair `(s, k*G)`.
@@ -60,11 +62,11 @@ Analogous to Bitcoin [nLockTime](https://en.bitcoin.it/wiki/Timelock#nLockTime).
 
 A transaction can be time-locked with a few simple modifications:
 
-* the message `M` to sign becomes the lock_height `h` at which the transaction
+- the message `M` to sign becomes the lock_height `h` at which the transaction
   becomes spendable appended to the fee
-  * `M = fee | h`
-* the lock height `h` is included in the transaction kernel
-* a block with a kernel that includes a lock height greater than the current
+  - `M = fee | h`
+- the lock height `h` is included in the transaction kernel
+- a block with a kernel that includes a lock height greater than the current
   block height is rejected
 
 ### (Relative) Timelocked Transactions
@@ -75,11 +77,11 @@ The lock_height would be relative to the block height where the referenced kerne
 
 Tx2 can then be restricted such that it would only be valid to include it in a block once `h` blocks have passed after first seeing Tx1 (via the referenced kernel commitment).
 
-* the message `M` to sign would need to include the following -
-  * the `fee` as before
-  * the lock_height `h` (as before but interpreted as a relative value)
-  * a referenced kernel commitment `C`
-  * M = `fee | h | C`
+- the message `M` to sign would need to include the following -
+  - the `fee` as before
+  - the lock_height `h` (as before but interpreted as a relative value)
+  - a referenced kernel commitment `C`
+  - M = `fee | h | C`
 
 For Tx2 to be accepted it would also need to include a Merkle proof identifying the block including `C` from Tx1. This proves the relative lock_height requirement has been met.
 
@@ -160,11 +162,11 @@ This contract is a building block for multiple other contracts. Here, Alice
 agrees to lock some funds to start a financial interaction with Bob and prove
 to Bob she has funds. The setup is the following:
 
-* Alice builds a a 2-of-2 multiparty transaction with an output she shares with
+- Alice builds a a 2-of-2 multiparty transaction with an output she shares with
   Bob, however she does not participate in building the kernel signature yet.
-* Bob builds a refund transaction with Alice that sends the funds back to Alice
+- Bob builds a refund transaction with Alice that sends the funds back to Alice
   using a timelock (for example 1440 blocks ahead, about 24h).
-* Alice and Bob finish the 2-of-2 transaction by building the corresponding
+- Alice and Bob finish the 2-of-2 transaction by building the corresponding
   kernel and broadcast it.
 
 Now Alice and Bob are free to build additional transactions distributing the
@@ -190,14 +192,14 @@ Given _unconditional locktimes on txs_ we can leverage these to give us _conditi
 
 We can construct two txs (Tx<sub>1</sub>, Tx<sub>2</sub>) with two entangled outputs Out<sub>1</sub> and Out<sub>2</sub> such that -
 
-* Out<sub>1</sub> (commitment C<sub>1</sub>) is from Tx<sub>1</sub> and built using Key<sub>1</sub>
-* Out<sub>2</sub> (commitment C<sub>2</sub>) is from Tx<sub>2</sub> and built using Key<sub>2</sub>
-* Tx<sub>2</sub> has an _unconditional_ lock_height on it
+- Out<sub>1</sub> (commitment C<sub>1</sub>) is from Tx<sub>1</sub> and built using Key<sub>1</sub>
+- Out<sub>2</sub> (commitment C<sub>2</sub>) is from Tx<sub>2</sub> and built using Key<sub>2</sub>
+- Tx<sub>2</sub> has an _unconditional_ lock_height on it
 
 If we do this (and we can manage the keys as necessary) -
 
-* Out<sub>1</sub> + Out<sub>2</sub> can _only_ be spent as a pair using Key<sub>3</sub>
-* They can _only_ be spent after lock_height from Tx<sub>2</sub>
+- Out<sub>1</sub> + Out<sub>2</sub> can _only_ be spent as a pair using Key<sub>3</sub>
+- They can _only_ be spent after lock_height from Tx<sub>2</sub>
 
 Tx<sub>1</sub> (containing Out<sub>1</sub>) can be broadcast, accepted and confirmed on-chain immediately.
 Tx<sub>2</sub> cannot be broadcast and accepted until lock_height has passed.
@@ -206,7 +208,7 @@ So if Alice only knows K<sub>3</sub> and does not know Key<sub>1</sub> or Key<su
 If Bob on the other hand knows Key<sub>2</sub> then Out<sub>1</sub> can be spent by Bob immediately.
 
 We have a _conditional_ timelock on Out<sub>1</sub> (confirmed, on-chain)
-where it can be spent either with Key<sub>3</sub> (after lock_height), _or_ Key<sub>2</sub> immediately.
+where it can be spent either with Key<sub>3</sub> (after lock*height), \_or* Key<sub>2</sub> immediately.
 
 ### (Relative) Conditional Output Timelocks
 
