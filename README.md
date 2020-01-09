@@ -38,7 +38,7 @@ Twitter: https://twitter.com/keplernetwork1
 
 # Getting Started
 
-To build and try out Kepler, see the build docs.
+To build and try out Kepler, see https://github.com/keplernetwork/kepler/wiki/How-to-Build-Kepler
 
 # Credits
 
