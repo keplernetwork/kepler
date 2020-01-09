@@ -44,7 +44,7 @@ Discord:
 
 To learn more about the technology, read our introduction.
 
-To build and try out Kepler, see the build docs.
+To build and try out Kepler, see https://github.com/keplernetwork/kepler/wiki/How-to-Build-Kepler
 
 ## Philosophy
 
