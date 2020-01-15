@@ -21,7 +21,6 @@ failure_derive = "0.1"
 
 kepler_core = { path = "../core", version = "3.1.0-beta.1" }
 kepler_keychain = { path = "../keychain", version = "3.1.0-beta.1" }
-kepler_store = { path = "../store", version = "3.1.0-beta.1" }
 kepler_util = { path = "../util", version = "3.1.0-beta.1" }
 
 [dev-dependencies]
