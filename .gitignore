@@ -13,3 +13,4 @@ wallet_data
 wallet/db
 .idea/
 .project
+/node*
