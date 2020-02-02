@@ -24,13 +24,15 @@ use crate::consensus::{
 };
 use crate::core::block::HeaderVersion;
 use crate::pow::{
-	self, new_cuckaroo_ctx, new_cuckarood_ctx, new_cuckatoo_ctx, EdgeType, PoWContext,
+	self, new_cuckaroo_ctx, new_cuckarood_ctx, new_cuckaroom_ctx, new_cuckatoo_ctx, EdgeType,
+	PoWContext,
 };
+use util::RwLock;
+
 /// An enum collecting sets of parameters used throughout the
 /// code wherever mining is needed. This should allow for
 /// different sets of parameters for different purposes,
 /// e.g. CI, User testing, production values
-use crate::util::RwLock;
 /// Define these here, as they should be developer-set, not really tweakable
 /// by users
 
@@ -172,13 +174,25 @@ where
 {
 	let chain_type = CHAIN_TYPE.read().clone();
 	match chain_type {
-		// Mainnet has Cuckaroo29 for AR and Cuckatoo30+ for AF
-		//ChainTypes::Mainnet if edge_bits == 29 => new_cuckaroo_ctx(edge_bits, proof_size),
-		ChainTypes::Mainnet => new_cuckatoo_ctx(edge_bits, proof_size, max_sols),
+		// Mainnet has Cuckaroo(d)29 for AR and Cuckatoo31+ for AF
+		ChainTypes::Mainnet if edge_bits >= 31 => new_cuckatoo_ctx(edge_bits, proof_size, max_sols),
+		ChainTypes::Mainnet => Err(pow::Error::from(pow::ErrorKind::EdgeAddition)),
+		/*
+		ChainTypes::Mainnet if valid_header_version(height, HeaderVersion(3)) => {
+			new_cuckaroom_ctx(edge_bits, proof_size)
+		}
+		ChainTypes::Mainnet if valid_header_version(height, HeaderVersion(2)) => {
+			new_cuckarood_ctx(edge_bits, proof_size)
+		}
+		ChainTypes::Mainnet => new_cuckaroo_ctx(edge_bits, proof_size),
+		*/
 
 		// Same for Floonet
 		ChainTypes::Floonet if edge_bits > 29 => new_cuckatoo_ctx(edge_bits, proof_size, max_sols),
-		ChainTypes::Floonet if valid_header_version(height, HeaderVersion::new(2)) => {
+		ChainTypes::Floonet if valid_header_version(height, HeaderVersion(3)) => {
+			new_cuckaroom_ctx(edge_bits, proof_size)
+		}
+		ChainTypes::Floonet if valid_header_version(height, HeaderVersion(2)) => {
 			new_cuckarood_ctx(edge_bits, proof_size)
 		}
 		ChainTypes::Floonet => new_cuckaroo_ctx(edge_bits, proof_size),
@@ -240,6 +254,7 @@ pub fn initial_block_difficulty() -> u64 {
 		ChainTypes::Mainnet => INITIAL_DIFFICULTY,
 	}
 }
+
 /// Initial mining secondary scale
 pub fn initial_graph_weight() -> u32 {
 	let param_ref = CHAIN_TYPE.read();

@@ -1,8 +1,8 @@
 [package]
 name = "kepler_keychain"
-version = "2.1.0-beta.3"
+version = "3.1.0-beta.1"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
-description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
+description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the Mimblewimble chain format."
 license = "Apache-2.0"
 repository = "https://github.com/keplernetwork/kepler"
 keywords = [ "crypto", "kepler", "keplernetwork" ]
@@ -27,4 +27,4 @@ ripemd160 = "0.7"
 sha2 = "0.7"
 pbkdf2 = "0.2"
 
-kepler_util = { path = "../util", version = "2.1.0-beta.3" }
+kepler_util = { path = "../util", version = "3.1.0-beta.1" }

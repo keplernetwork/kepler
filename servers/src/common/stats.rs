@@ -53,7 +53,7 @@ pub struct ServerStats {
 	/// Chain head
 	pub chain_stats: ChainStats,
 	/// sync header head
-	pub header_stats: ChainStats,
+	pub header_stats: Option<ChainStats>,
 	/// Whether we're currently syncing
 	pub sync_status: SyncStatus,
 	/// Handle to current stratum server stats
@@ -63,7 +63,7 @@ pub struct ServerStats {
 	/// Difficulty calculation statistics
 	pub diff_stats: DiffStats,
 	/// Transaction pool statistics
-	pub tx_stats: TxStats,
+	pub tx_stats: Option<TxStats>,
 	/// Disk usage in GB
 	pub disk_usage_gb: String,
 }
@@ -85,8 +85,12 @@ pub struct ChainStats {
 pub struct TxStats {
 	/// Number of transactions in the transaction pool
 	pub tx_pool_size: usize,
+	/// Number of transaction kernels in the transaction pool
+	pub tx_pool_kernels: usize,
 	/// Number of transactions in the stem pool
 	pub stem_pool_size: usize,
+	/// Number of transaction kernels in the stem pool
+	pub stem_pool_kernels: usize,
 }
 /// Struct to return relevant information about stratum workers
 #[derive(Clone, Serialize, Debug)]
@@ -187,6 +191,24 @@ pub struct PeerStats {
 	pub sent_bytes_per_sec: u64,
 	/// Number of bytes we've received from the peer.
 	pub received_bytes_per_sec: u64,
+}
+
+impl PartialEq for PeerStats {
+	fn eq(&self, other: &PeerStats) -> bool {
+		*self.addr == other.addr
+	}
+}
+
+impl PartialEq for WorkerStats {
+	fn eq(&self, other: &WorkerStats) -> bool {
+		*self.id == other.id
+	}
+}
+
+impl PartialEq for DiffBlock {
+	fn eq(&self, other: &DiffBlock) -> bool {
+		self.block_height == other.block_height
+	}
 }
 
 impl StratumStats {

@@ -18,8 +18,6 @@ use std::fs::File;
 use std::io::{self, Read};
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};
 use std::path::PathBuf;
-
-use std::sync::mpsc;
 use std::sync::Arc;
 
 use chrono::prelude::*;
@@ -80,6 +78,8 @@ pub enum Error {
 		peer: Hash,
 	},
 	Send(String),
+	PeerNotFound,
+	PeerNotBanned,
 	PeerException,
 	Internal,
 }
@@ -102,11 +102,6 @@ impl From<chain::Error> for Error {
 impl From<io::Error> for Error {
 	fn from(e: io::Error) -> Error {
 		Error::Connection(e)
-	}
-}
-impl<T> From<mpsc::TrySendError<T>> for Error {
-	fn from(e: mpsc::TrySendError<T>) -> Error {
-		Error::Send(e.to_string())
 	}
 }
 
@@ -527,7 +522,7 @@ pub trait ChainAdapter: Sync + Send {
 		&self,
 		b: core::Block,
 		peer_info: &PeerInfo,
-		was_requested: bool,
+		opts: chain::Options,
 	) -> Result<bool, chain::Error>;
 
 	fn compact_block_received(

@@ -42,7 +42,7 @@ To build and try out Kepler, see https://github.com/keplernetwork/kepler/wiki/Ho
 
 # Credits
 
-Tom Elvis Jedusor for the first formulation of MimbleWimble.
+Tom Elvis Jedusor for the first formulation of Mimblewimble.
 
 Andrew Poelstra for his related work and improvements.
 
@@ -53,6 +53,3 @@ Johannes Kepler for being so awesome.
 # License
 
 Apache License v2.0.
-
-
-

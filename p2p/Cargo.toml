@@ -1,8 +1,8 @@
 [package]
 name = "kepler_p2p"
-version = "2.1.0-beta.3"
+version = "3.1.0-beta.1"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
-description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the MimbleWimble chain format."
+description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the Mimblewimble chain format."
 license = "Apache-2.0"
 repository = "https://github.com/keplernetwork/kepler"
 keywords = [ "crypto", "kepler", "keplernetwork" ]
@@ -13,6 +13,7 @@ edition = "2018"
 bitflags = "1"
 bytes = "0.4"
 enum_primitive = "0.1"
+lru-cache = "0.1"
 net2 = "0.2"
 num = "0.1"
 rand = "0.6"
@@ -22,10 +23,10 @@ tempfile = "3.0.5"
 log = "0.4"
 chrono = { version = "0.4.4", features = ["serde"] }
 
-kepler_core = { path = "../core", version = "2.1.0-beta.3" }
-kepler_store = { path = "../store", version = "2.1.0-beta.3" }
-kepler_chain = { path = "../chain", version = "2.1.0-beta.3" }
-kepler_util = { path = "../util", version = "2.1.0-beta.3" }
+kepler_core = { path = "../core", version = "3.1.0-beta.1" }
+kepler_store = { path = "../store", version = "3.1.0-beta.1" }
+kepler_util = { path = "../util", version = "3.1.0-beta.1" }
+kepler_chain = { path = "../chain", version = "3.1.0-beta.1" }
 
 [dev-dependencies]
-kepler_pool = { path = "../pool", version = "2.1.0-beta.3" }
+kepler_pool = { path = "../pool", version = "3.1.0-beta.1" }

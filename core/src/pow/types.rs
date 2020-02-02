@@ -12,22 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use crate::consensus::{graph_weight, MIN_DIFFICULTY, SECOND_POW_EDGE_BITS};
+use crate::core::hash::{DefaultHashable, Hashed};
+use crate::global;
+use crate::pow::common::EdgeType;
+use crate::pow::error::Error;
+use crate::ser::{self, FixedLength, Readable, Reader, Writeable, Writer};
+use rand::{thread_rng, Rng};
+use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
 /// Types for a Cuck(at)oo proof of work and its encapsulation as a fully usable
 /// proof of work within a block header.
 use std::cmp::{max, min};
 use std::ops::{Add, Div, Mul, Sub};
 use std::{fmt, iter};
-
-use rand::{thread_rng, Rng};
-use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
-
-use crate::consensus::{graph_weight, MIN_DIFFICULTY, SECOND_POW_EDGE_BITS};
-use crate::core::hash::{DefaultHashable, Hashed};
-use crate::global;
-use crate::ser::{self, FixedLength, Readable, Reader, Writeable, Writer};
-
-use crate::pow::common::EdgeType;
-use crate::pow::error::Error;
 
 /// Generic trait for a solver/verifier providing common interface into Cuckoo-family PoW
 /// Mostly used for verification, but also for test mining if necessary
@@ -429,7 +426,7 @@ fn read_number(bits: &Vec<u8>, bit_start: usize, bit_count: usize) -> u64 {
 impl Readable for Proof {
 	fn read(reader: &mut dyn Reader) -> Result<Proof, ser::Error> {
 		let edge_bits = reader.read_u8()?;
-		if edge_bits == 0 || edge_bits > 64 {
+		if edge_bits == 0 || edge_bits > 63 {
 			return Err(ser::Error::CorruptedData);
 		}
 
@@ -509,7 +506,7 @@ mod tests {
 
 	#[test]
 	fn test_proof_rw() {
-		for edge_bits in 10..64 {
+		for edge_bits in 10..63 {
 			let mut proof = Proof::new(gen_proof(edge_bits as u32));
 			proof.edge_bits = edge_bits;
 			let mut buf = Cursor::new(Vec::new());
@@ -541,5 +538,4 @@ mod tests {
 		}
 		v
 	}
-
 }

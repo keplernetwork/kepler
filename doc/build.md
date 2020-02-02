@@ -1,6 +1,6 @@
 # Kepler - Build, Configuration, and Running
 
-*Read this in other languages: [Español](build_ES.md), [Korean](build_KR.md), [日本語](build_JP.md).*
+*Read this in other languages: [Español](build_ES.md), [Korean](build_KR.md), [日本語](build_JP.md), [简体中文](build_ZH-CN.md).*
 
 ## Supported Platforms
 
@@ -98,7 +98,7 @@ For help on kepler commands and their switches, try:
 
 ```sh
 kepler help
-kepler wallet --help
+kepler server --help
 kepler client --help
 ```
 
@@ -137,4 +137,4 @@ Please note that all mining functions for Kepler have moved into a separate, sta
 you can start mining by building and running kepler-miner against your running Kepler node.
 
 For kepler-miner to be able to communicate with your kepler node, make sure that you have `enable_stratum_server = true`
-in your `kepler-server.toml` configuration file and you have a wallet listener running (`kepler wallet listen`). 
+in your `kepler-server.toml` configuration file and you have a wallet listener running (`kepler-wallet listen`). 

@@ -18,10 +18,10 @@ use chrono::prelude::{DateTime, Utc};
 use std::sync::Arc;
 
 use crate::core::core::hash::{Hash, Hashed, ZERO_HASH};
-use crate::core::core::{Block, BlockHeader};
+use crate::core::core::{Block, BlockHeader, HeaderVersion};
 use crate::core::pow::Difficulty;
-use crate::core::ser;
-use crate::error::Error;
+use crate::core::ser::{self, PMMRIndexHashable};
+use crate::error::{Error, ErrorKind};
 use crate::util::RwLock;
 
 bitflags! {
@@ -65,12 +65,15 @@ pub enum SyncStatus {
 	},
 	/// Setting up before validation
 	TxHashsetSetup,
-	/// Validating the full state
-	TxHashsetValidation {
+	/// Validating the kernels
+	TxHashsetKernelsValidation {
 		kernels: u64,
-		kernel_total: u64,
+		kernels_total: u64,
+	},
+	/// Validating the range proofs
+	TxHashsetRangeProofsValidation {
 		rproofs: u64,
-		rproof_total: u64,
+		rproofs_total: u64,
 	},
 	/// Finalizing the new state
 	TxHashsetSave,
@@ -155,43 +158,18 @@ impl TxHashsetWriteStatus for SyncState {
 		self.update(SyncStatus::TxHashsetSetup);
 	}
 
-	fn on_validation(&self, vkernels: u64, vkernel_total: u64, vrproofs: u64, vrproof_total: u64) {
-		let mut status = self.current.write();
-		match *status {
-			SyncStatus::TxHashsetValidation {
-				kernels,
-				kernel_total,
-				rproofs,
-				rproof_total,
-			} => {
-				let ks = if vkernels > 0 { vkernels } else { kernels };
-				let kt = if vkernel_total > 0 {
-					vkernel_total
-				} else {
-					kernel_total
-				};
-				let rps = if vrproofs > 0 { vrproofs } else { rproofs };
-				let rpt = if vrproof_total > 0 {
-					vrproof_total
-				} else {
-					rproof_total
-				};
-				*status = SyncStatus::TxHashsetValidation {
-					kernels: ks,
-					kernel_total: kt,
-					rproofs: rps,
-					rproof_total: rpt,
-				};
-			}
-			_ => {
-				*status = SyncStatus::TxHashsetValidation {
-					kernels: 0,
-					kernel_total: 0,
-					rproofs: 0,
-					rproof_total: 0,
-				}
-			}
-		}
+	fn on_validation_kernels(&self, kernels: u64, kernels_total: u64) {
+		self.update(SyncStatus::TxHashsetKernelsValidation {
+			kernels,
+			kernels_total,
+		});
+	}
+
+	fn on_validation_rproofs(&self, rproofs: u64, rproofs_total: u64) {
+		self.update(SyncStatus::TxHashsetRangeProofsValidation {
+			rproofs,
+			rproofs_total,
+		});
 	}
 
 	fn on_save(&self) {
@@ -203,16 +181,82 @@ impl TxHashsetWriteStatus for SyncState {
 	}
 }
 
-/// A helper to hold the roots of the txhashset in order to keep them
-/// readable.
-#[derive(Debug, PartialEq)]
+/// A helper for the various txhashset MMR roots.
+#[derive(Debug)]
 pub struct TxHashSetRoots {
-	/// Output root
-	pub output_root: Hash,
+	/// Output roots
+	pub output_roots: OutputRoots,
 	/// Range Proof root
 	pub rproof_root: Hash,
 	/// Kernel root
 	pub kernel_root: Hash,
+}
+
+impl TxHashSetRoots {
+	/// Accessor for the output PMMR root (rules here are block height dependent).
+	/// We assume the header version is consistent with the block height, validated
+	/// as part of pipe::validate_header().
+	pub fn output_root(&self, header: &BlockHeader) -> Hash {
+		self.output_roots.root(header)
+	}
+
+	/// Validate roots against the provided block header.
+	pub fn validate(&self, header: &BlockHeader) -> Result<(), Error> {
+		debug!(
+			"validate roots: {} at {}, {} vs. {} (original: {}, merged: {})",
+			header.hash(),
+			header.height,
+			header.output_root,
+			self.output_root(header),
+			self.output_roots.pmmr_root,
+			self.output_roots.merged_root(header),
+		);
+
+		if header.output_root != self.output_root(header) {
+			Err(ErrorKind::InvalidRoot.into())
+		} else if header.range_proof_root != self.rproof_root {
+			Err(ErrorKind::InvalidRoot.into())
+		} else if header.kernel_root != self.kernel_root {
+			Err(ErrorKind::InvalidRoot.into())
+		} else {
+			Ok(())
+		}
+	}
+}
+
+/// A helper for the various output roots.
+#[derive(Debug)]
+pub struct OutputRoots {
+	/// The output PMMR root
+	pub pmmr_root: Hash,
+	/// The bitmap accumulator root
+	pub bitmap_root: Hash,
+}
+
+impl OutputRoots {
+	/// The root of our output PMMR. The rules here are block height specific.
+	/// We use the merged root here for header version 3 and later.
+	/// We assume the header version is consistent with the block height, validated
+	/// as part of pipe::validate_header().
+	pub fn root(&self, header: &BlockHeader) -> Hash {
+		if header.version < HeaderVersion(3) {
+			self.output_root()
+		} else {
+			self.merged_root(header)
+		}
+	}
+
+	/// The root of the underlying output PMMR.
+	fn output_root(&self) -> Hash {
+		self.pmmr_root
+	}
+
+	/// Hash the root of the output PMMR and the root of the bitmap accumulator
+	/// together with the size of the output PMMR (for consistency with existing PMMR impl).
+	/// H(pmmr_size | pmmr_root | bitmap_root)
+	fn merged_root(&self, header: &BlockHeader) -> Hash {
+		(self.pmmr_root, self.bitmap_root).hash_with_index(header.output_mmr_size)
+	}
 }
 
 /// A helper to hold the output pmmr position of the txhashset in order to keep them
@@ -315,8 +359,10 @@ pub trait ChainAdapter {
 pub trait TxHashsetWriteStatus {
 	/// First setup of the txhashset
 	fn on_setup(&self);
-	/// Starting validation
-	fn on_validation(&self, kernels: u64, kernel_total: u64, rproofs: u64, rproof_total: u64);
+	/// Starting kernel validation
+	fn on_validation_kernels(&self, kernels: u64, kernel_total: u64);
+	/// Starting rproof validation
+	fn on_validation_rproofs(&self, rproofs: u64, rproof_total: u64);
 	/// Starting to save the txhashset and related data
 	fn on_save(&self);
 	/// Done writing a new txhashset
@@ -328,7 +374,8 @@ pub struct NoStatus;
 
 impl TxHashsetWriteStatus for NoStatus {
 	fn on_setup(&self) {}
-	fn on_validation(&self, _ks: u64, _kts: u64, _rs: u64, _rt: u64) {}
+	fn on_validation_kernels(&self, _ks: u64, _kts: u64) {}
+	fn on_validation_rproofs(&self, _rs: u64, _rt: u64) {}
 	fn on_save(&self) {}
 	fn on_done(&self) {}
 }

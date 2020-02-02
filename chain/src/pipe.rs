@@ -25,8 +25,6 @@ use crate::store;
 use crate::txhashset;
 use crate::types::{Options, Tip};
 use crate::util::RwLock;
-use chrono::prelude::Utc;
-use chrono::Duration;
 use kepler_store;
 use std::sync::Arc;
 
@@ -56,16 +54,19 @@ fn check_known(header: &BlockHeader, ctx: &mut BlockContext<'_>) -> Result<(), E
 }
 
 // Validate only the proof of work in a block header.
-// Used to cheaply validate orphans in process_block before adding them to OrphanBlockPool.
+// Used to cheaply validate pow before checking if orphan or continuing block validation.
 fn validate_pow_only(header: &BlockHeader, ctx: &mut BlockContext<'_>) -> Result<(), Error> {
+	if ctx.opts.contains(Options::SKIP_POW) {
+		// Some of our tests require this check to be skipped (we should revisit this).
+		return Ok(());
+	}
 	if !header.pow.is_primary() && !header.pow.is_secondary() {
 		return Err(ErrorKind::LowEdgebits.into());
 	}
-	let edge_bits = header.pow.edge_bits();
 	if !(ctx.pow_verifier)(header).is_ok() {
 		error!(
 			"pipe: error validating header with cuckoo edge_bits {}",
-			edge_bits
+			header.pow.edge_bits(),
 		);
 		return Err(ErrorKind::InvalidPow.into());
 	}
@@ -88,20 +89,22 @@ pub fn process_block(b: &Block, ctx: &mut BlockContext<'_>) -> Result<Option<Tip
 	// Check if we have already processed this block previously.
 	check_known(&b.header, ctx)?;
 
-	let head = ctx.batch.head()?;
+	// Quick pow validation. No point proceeding if this is invalid.
+	// We want to do this before we add the block to the orphan pool so we
+	// want to do this now and not later during header validation.
+	validate_pow_only(&b.header, ctx)?;
 
-	let is_next = b.header.prev_hash == head.last_block_h;
+	let head = ctx.batch.head()?;
+	let prev = prev_header_store(&b.header, &mut ctx.batch)?;
 
 	// Block is an orphan if we do not know about the previous full block.
 	// Skip this check if we have just processed the previous block
 	// or the full txhashset state (fast sync) at the previous block height.
-	let prev = prev_header_store(&b.header, &mut ctx.batch)?;
-	if !is_next && !ctx.batch.block_exists(&prev.hash())? {
-		// Validate the proof of work of the orphan block to prevent adding
-		// invalid blocks to OrphanBlockPool.
-		validate_pow_only(&b.header, ctx)?;
-
-		return Err(ErrorKind::Orphan.into());
+	{
+		let is_next = b.header.prev_hash == head.last_block_h;
+		if !is_next && !ctx.batch.block_exists(&prev.hash())? {
+			return Err(ErrorKind::Orphan.into());
+		}
 	}
 
 	// Process the header for the block.
@@ -185,7 +188,12 @@ pub fn sync_block_headers(
 	// Check if we know about all these headers. If so we can accept them quickly.
 	// If they *do not* increase total work on the sync chain we are done.
 	// If they *do* increase total work then we should process them to update sync_head.
-	let sync_head = ctx.batch.get_sync_head()?;
+	let sync_head = {
+		let hash = ctx.header_pmmr.head_hash()?;
+		let header = ctx.batch.get_block_header(&hash)?;
+		Tip::from_header(&header)
+	};
+
 	if let Ok(existing) = ctx.batch.get_block_header(&last_header.hash()) {
 		if !has_more_work(&existing, &sync_head) {
 			return Ok(());
@@ -199,15 +207,11 @@ pub fn sync_block_headers(
 		add_block_header(header, &ctx.batch)?;
 	}
 
-	// Now apply this entire chunk of headers to the sync MMR.
-	txhashset::header_extending(&mut ctx.header_pmmr, &sync_head, &mut ctx.batch, |ext| {
+	// Now apply this entire chunk of headers to the sync MMR (ctx is sync MMR specific).
+	txhashset::header_extending(&mut ctx.header_pmmr, &mut ctx.batch, |ext| {
 		rewind_and_apply_header_fork(&last_header, ext)?;
 		Ok(())
 	})?;
-
-	if has_more_work(&last_header, &sync_head) {
-		update_sync_head(&Tip::from_header(&last_header), &mut ctx.batch)?;
-	}
 
 	Ok(())
 }
@@ -229,14 +233,19 @@ pub fn process_block_header(header: &BlockHeader, ctx: &mut BlockContext<'_>) ->
 	// If it does not increase total_difficulty beyond our current header_head
 	// then we can (re)accept this header and process the full block (or request it).
 	// This header is on a fork and we should still accept it as the fork may eventually win.
-	let header_head = ctx.batch.header_head()?;
+	let header_head = {
+		let hash = ctx.header_pmmr.head_hash()?;
+		let header = ctx.batch.get_block_header(&hash)?;
+		Tip::from_header(&header)
+	};
+
 	if let Ok(existing) = ctx.batch.get_block_header(&header.hash()) {
 		if !has_more_work(&existing, &header_head) {
 			return Ok(());
 		}
 	}
 
-	txhashset::header_extending(&mut ctx.header_pmmr, &header_head, &mut ctx.batch, |ext| {
+	txhashset::header_extending(&mut ctx.header_pmmr, &mut ctx.batch, |ext| {
 		rewind_and_apply_header_fork(&prev_header, ext)?;
 		ext.validate_root(header)?;
 		ext.apply_header(header)?;
@@ -248,15 +257,6 @@ pub fn process_block_header(header: &BlockHeader, ctx: &mut BlockContext<'_>) ->
 
 	validate_header(header, ctx)?;
 	add_block_header(header, &ctx.batch)?;
-
-	// Update header_head independently of chain head (full blocks).
-	// If/when we process the corresponding full block we will update the
-	// chain head to match. This allows our header chain to extend safely beyond
-	// the full chain in a fork scenario without needing excessive rewinds to handle
-	// the temporarily divergent chains.
-	if has_more_work(&header, &header_head) {
-		update_header_head(&Tip::from_header(&header), &mut ctx.batch)?;
-	}
 
 	Ok(())
 }
@@ -314,42 +314,17 @@ fn prev_header_store(
 /// to make it as cheap as possible. The different validations are also
 /// arranged by order of cost to have as little DoS surface as possible.
 fn validate_header(header: &BlockHeader, ctx: &mut BlockContext<'_>) -> Result<(), Error> {
-	// check version, enforces scheduled hard fork
-	if !consensus::valid_header_version(header.height, header.version) {
-		error!(
-			"Invalid block header version received ({:?}), maybe update Kepler?",
-			header.version
-		);
-		return Err(ErrorKind::InvalidBlockVersion(header.version).into());
-	}
-
-	if header.timestamp > Utc::now() + Duration::seconds(12 * (consensus::BLOCK_TIME_SEC as i64)) {
-		// refuse blocks more than 12 blocks intervals in future (as in bitcoin)
-		// TODO add warning in p2p code if local time is too different from peers
-		return Err(ErrorKind::InvalidBlockTime.into());
-	}
-
-	if !ctx.opts.contains(Options::SKIP_POW) {
-		if !header.pow.is_primary() && !header.pow.is_secondary() {
-			return Err(ErrorKind::LowEdgebits.into());
-		}
-		let edge_bits = header.pow.edge_bits();
-		if !(ctx.pow_verifier)(header).is_ok() {
-			error!(
-				"pipe: error validating header with cuckoo edge_bits {}",
-				edge_bits
-			);
-			return Err(ErrorKind::InvalidPow.into());
-		}
-	}
-
 	// First I/O cost, delayed as late as possible.
 	let prev = prev_header_store(header, &mut ctx.batch)?;
 
-	// make sure this header has a height exactly one higher than the previous
-	// header
+	// This header height must increase the height from the previous header by exactly 1.
 	if header.height != prev.height + 1 {
 		return Err(ErrorKind::InvalidBlockHeight.into());
+	}
+
+	// This header must have a valid header version for its height.
+	if !consensus::valid_header_version(header.height, header.version) {
+		return Err(ErrorKind::InvalidBlockVersion(header.version).into());
 	}
 
 	if header.timestamp <= prev.timestamp {
@@ -365,6 +340,10 @@ fn validate_header(header: &BlockHeader, ctx: &mut BlockContext<'_>) -> Result<(
 	// check the pow hash shows a difficulty at least as large
 	// as the target difficulty
 	if !ctx.opts.contains(Options::SKIP_POW) {
+		// Quick check of this header in isolation. No point proceeding if this fails.
+		// We can do this without needing to iterate over previous headers.
+		validate_pow_only(header, ctx)?;
+
 		if header.total_difficulty() <= prev.total_difficulty() {
 			return Err(ErrorKind::DifficultyTooLow.into());
 		}
@@ -499,30 +478,6 @@ fn update_head(head: &Tip, batch: &mut store::Batch<'_>) -> Result<(), Error> {
 // Whether the provided block totals more work than the chain tip
 fn has_more_work(header: &BlockHeader, head: &Tip) -> bool {
 	header.total_difficulty() > head.total_difficulty
-}
-
-/// Update the sync head so we can keep syncing from where we left off.
-fn update_sync_head(head: &Tip, batch: &mut store::Batch<'_>) -> Result<(), Error> {
-	batch
-		.save_sync_head(&head)
-		.map_err(|e| ErrorKind::StoreErr(e, "pipe save sync head".to_owned()))?;
-	debug!(
-		"sync_head updated to {} at {}",
-		head.last_block_h, head.height
-	);
-	Ok(())
-}
-
-/// Update the header_head.
-fn update_header_head(head: &Tip, batch: &mut store::Batch<'_>) -> Result<(), Error> {
-	batch
-		.save_header_head(&head)
-		.map_err(|e| ErrorKind::StoreErr(e, "pipe save header head".to_owned()))?;
-	debug!(
-		"header_head updated to {} at {}",
-		head.last_block_h, head.height
-	);
-	Ok(())
 }
 
 /// Rewind the header chain and reapply headers on a fork.

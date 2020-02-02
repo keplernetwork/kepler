@@ -69,7 +69,7 @@ pub struct StatusHandler {
 }
 
 impl StatusHandler {
-	fn get_status(&self) -> Result<Status, Error> {
+	pub fn get_status(&self) -> Result<Status, Error> {
 		let head = w(&self.chain)?
 			.head()
 			.map_err(|e| ErrorKind::Internal(format!("can't get head: {}", e)))?;
@@ -113,16 +113,19 @@ fn sync_status_to_api(sync_status: SyncStatus) -> (String, Option<serde_json::Va
 			"txhashset_download".to_string(),
 			Some(json!({ "downloaded_size": downloaded_size, "total_size": total_size })),
 		),
-		SyncStatus::TxHashsetValidation {
-			kernels,
-			kernel_total,
+		SyncStatus::TxHashsetRangeProofsValidation {
 			rproofs,
-			rproof_total,
+			rproofs_total,
 		} => (
-			"txhashset_validation".to_string(),
-			Some(
-				json!({ "kernels": kernels, "kernel_total": kernel_total ,"rproofs": rproofs, "rproof_total": rproof_total }),
-			),
+			"txhashset_rangeproofs_validation".to_string(),
+			Some(json!({ "rproofs": rproofs, "rproofs_total": rproofs_total })),
+		),
+		SyncStatus::TxHashsetKernelsValidation {
+			kernels,
+			kernels_total,
+		} => (
+			"txhashset_kernels_validation".to_string(),
+			Some(json!({ "kernels": kernels, "kernels_total": kernels_total })),
 		),
 		SyncStatus::BodySync {
 			current_height,

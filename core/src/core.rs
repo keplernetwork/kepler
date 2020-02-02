@@ -27,7 +27,7 @@ pub mod verifier_cache;
 
 use crate::consensus::KEPLER_BASE;
 
-use crate::util::secp::pedersen::Commitment;
+use util::secp::pedersen::Commitment;
 
 pub use self::block::*;
 pub use self::block_sums::*;
@@ -136,5 +136,4 @@ mod test {
 		assert!("5000000000.0" == amount_to_hr_string(5_000_000_000_000_000_000, true));
 		assert!("66.6" == amount_to_hr_string(66600000000, true));
 	}
-
 }

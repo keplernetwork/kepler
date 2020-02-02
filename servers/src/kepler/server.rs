@@ -20,10 +20,10 @@ use std::fs;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
-use std::sync::Arc;
+use std::sync::{mpsc, Arc};
 use std::{
 	thread::{self, JoinHandle},
-	time,
+	time::{self, Duration},
 };
 
 use fs2::FileExt;
@@ -52,6 +52,7 @@ use crate::p2p::types::PeerAddr;
 use crate::pool;
 use crate::util::file::get_first_line;
 use crate::util::{RwLock, StopState};
+use kepler_util::logger::LogEntry;
 
 /// Kepler server holding internal structures.
 pub struct Server {
@@ -62,12 +63,12 @@ pub struct Server {
 	/// data store access
 	pub chain: Arc<chain::Chain>,
 	/// in-memory transaction pool
-	tx_pool: Arc<RwLock<pool::TransactionPool>>,
+	pub tx_pool: Arc<RwLock<pool::TransactionPool>>,
 	/// Shared cache for verification results when
 	/// verifying rangeproof and kernel signatures.
 	verifier_cache: Arc<RwLock<dyn VerifierCache>>,
 	/// Whether we're currently syncing
-	sync_state: Arc<SyncState>,
+	pub sync_state: Arc<SyncState>,
 	/// To be passed around to collect stats and info
 	state_info: ServerStateInfo,
 	/// Stop flag
@@ -83,9 +84,13 @@ impl Server {
 	/// Instantiates and starts a new server. Optionally takes a callback
 	/// for the server to send an ARC copy of itself, to allow another process
 	/// to poll info about the server status
-	pub fn start<F>(config: ServerConfig, mut info_callback: F) -> Result<(), Error>
+	pub fn start<F>(
+		config: ServerConfig,
+		logs_rx: Option<mpsc::Receiver<LogEntry>>,
+		mut info_callback: F,
+	) -> Result<(), Error>
 	where
-		F: FnMut(Server),
+		F: FnMut(Server, Option<mpsc::Receiver<LogEntry>>),
 	{
 		let mining_config = config.stratum_mining_config.clone();
 		let enable_test_miner = config.run_test_miner;
@@ -111,7 +116,7 @@ impl Server {
 			}
 		}
 
-		info_callback(serv);
+		info_callback(serv, logs_rx);
 		Ok(())
 	}
 
@@ -269,7 +274,7 @@ impl Server {
 
 		info!("Starting rest apis at: {}", &config.api_http_addr);
 		let api_secret = get_first_line(config.api_secret_path.clone());
-
+		let foreign_api_secret = get_first_line(config.foreign_api_secret_path.clone());
 		let tls_conf = match config.tls_certificate_file.clone() {
 			None => None,
 			Some(file) => {
@@ -285,15 +290,16 @@ impl Server {
 		};
 
 		// TODO fix API shutdown and join this thread
-		api::start_rest_apis(
-			config.api_http_addr.clone(),
+		api::node_apis(
+			&config.api_http_addr,
 			shared_chain.clone(),
 			tx_pool.clone(),
 			p2p_server.peers.clone(),
 			sync_state.clone(),
-			api_secret,
-			tls_conf,
-		);
+			api_secret.clone(),
+			foreign_api_secret.clone(),
+			tls_conf.clone(),
+		)?;
 
 		info!("Starting dandelion monitor: {}", &config.api_http_addr);
 		let dandelion_thread = dandelion_monitor::monitor_transactions(
@@ -475,18 +481,16 @@ impl Server {
 			.map(|p| PeerStats::from_peer(&p))
 			.collect();
 
-		let (tx_pool_size, stem_pool_size) = {
-			let tx_pool_lock = self.tx_pool.try_read();
-			match tx_pool_lock {
-				Some(l) => (l.txpool.entries.len(), l.stempool.entries.len()),
-				None => (0, 0),
-			}
-		};
+		// Updating TUI stats should not block any other processing so only attempt to
+		// acquire various read locks with a timeout.
+		let read_timeout = Duration::from_millis(500);
 
-		let tx_stats = TxStats {
-			tx_pool_size,
-			stem_pool_size,
-		};
+		let tx_stats = self.tx_pool.try_read_for(read_timeout).map(|pool| TxStats {
+			tx_pool_size: pool.txpool.size(),
+			tx_pool_kernels: pool.txpool.kernel_count(),
+			stem_pool_size: pool.stempool.size(),
+			stem_pool_kernels: pool.stempool.kernel_count(),
+		});
 
 		let head = self.chain.head_header()?;
 		let head_stats = ChainStats {
@@ -496,13 +500,16 @@ impl Server {
 			total_difficulty: head.total_difficulty(),
 		};
 
-		let header_tip = self.chain.header_head()?;
-		let header = self.chain.get_block_header(&header_tip.hash())?;
-		let header_stats = ChainStats {
-			latest_timestamp: header.timestamp,
-			height: header.height,
-			last_block_h: header.prev_hash,
-			total_difficulty: header.total_difficulty(),
+		let header_stats = match self.chain.try_header_head(read_timeout)? {
+			Some(head) => self.chain.get_block_header(&head.hash()).map(|header| {
+				Some(ChainStats {
+					latest_timestamp: header.timestamp,
+					height: header.height,
+					last_block_h: header.prev_hash,
+					total_difficulty: header.total_difficulty(),
+				})
+			})?,
+			_ => None,
 		};
 
 		let disk_usage_bytes = WalkDir::new(&self.config.db_root)
@@ -555,9 +562,10 @@ impl Server {
 			}
 		}
 		// this call is blocking and makes sure all peers stop, however
-		// we can't be sure that we stoped a listener blocked on accept, so we don't join the p2p thread
+		// we can't be sure that we stopped a listener blocked on accept, so we don't join the p2p thread
 		self.p2p.stop();
 		let _ = self.lock_file.unlock();
+		warn!("Shutdown complete");
 	}
 
 	/// Pause the p2p server.
