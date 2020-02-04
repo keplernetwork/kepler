@@ -235,7 +235,7 @@ pub fn verify_partial_sig(
 /// let fees = 10_000;
 /// let value = reward(height, fees);
 /// let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
-/// let switch = &SwitchCommitmentType::Regular;
+/// let switch = SwitchCommitmentType::Regular;
 /// let commit = keychain.commit(value, &key_id, switch).unwrap();
 /// let builder = proof::ProofBuilder::new(&keychain);
 /// let rproof = proof::create(&keychain, &builder, value, &key_id, switch, commit, None).unwrap();
@@ -265,7 +265,7 @@ pub fn sign_from_key_id<K>(
 where
 	K: Keychain,
 {
-	let skey = k.derive_key(value, key_id, &SwitchCommitmentType::Regular)?; // TODO: proper support for different switch commitment schemes
+	let skey = k.derive_key(value, key_id, SwitchCommitmentType::Regular)?; // TODO: proper support for different switch commitment schemes
 	let sig = aggsig::sign_single(secp, &msg, &skey, s_nonce, None, None, blind_sum, None)?;
 	Ok(sig)
 }
@@ -302,7 +302,7 @@ where
 /// let fees = 10_000;
 /// let value = reward(height, fees);
 /// let key_id = ExtKeychain::derive_key_id(1, 1, 0, 0, 0);
-/// let switch = &SwitchCommitmentType::Regular;
+/// let switch = SwitchCommitmentType::Regular;
 /// let commit = keychain.commit(value, &key_id, switch).unwrap();
 /// let builder = proof::ProofBuilder::new(&keychain);
 /// let rproof = proof::create(&keychain, &builder, value, &key_id, switch, commit, None).unwrap();
