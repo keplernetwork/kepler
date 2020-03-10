@@ -19,7 +19,7 @@ use std::fs::File;
 use crate::core::core::pmmr::RewindablePMMR;
 use crate::core::core::{BlockHeader, TxKernel};
 use crate::error::{Error, ErrorKind};
-use grin_store::pmmr::PMMRBackend;
+use kepler_store::pmmr::PMMRBackend;
 
 /// Rewindable (but readonly) view of the kernel set (based on kernel MMR).
 pub struct RewindableKernelView<'a> {
