@@ -377,7 +377,7 @@ fn test_secondary_pow_scale() {
 	hi.is_secondary = true;
 	assert_eq!(
 		secondary_pow_scaling(1, &(0..window).map(|_| hi.clone()).collect::<Vec<_>>()),
-		99
+		50
 	);
 	// all secondary on 1%, factor should go down to bound (divide by 2)
 	assert_eq!(
@@ -385,7 +385,7 @@ fn test_secondary_pow_scale() {
 			2 * YEAR_HEIGHT * 83 / 90,
 			&(0..window).map(|_| hi.clone()).collect::<Vec<_>>()
 		),
-		50
+		13
 	);
 	// same as above, testing lowest bound
 	let mut low_hi = HeaderInfo::from_diff_scaling(Difficulty::from_num(10), MIN_AR_SCALE as u32);
@@ -408,7 +408,7 @@ fn test_secondary_pow_scale() {
 				.chain((0..(window * 9 / 10)).map(|_| hi.clone()))
 				.collect::<Vec<_>>()
 		),
-		95, // avg ar_scale of 10% * 50 + 90% * 100
+		47, // avg ar_scale of 10% * 50 + 90% * 100
 	);
 	// 95% secondary, should come down based on 97.5 average
 	assert_eq!(
@@ -419,7 +419,7 @@ fn test_secondary_pow_scale() {
 				.chain((0..(window * 95 / 100)).map(|_| hi.clone()))
 				.collect::<Vec<_>>()
 		),
-		97
+		48
 	);
 	// 40% secondary, should come up based on 70 average
 	assert_eq!(
@@ -430,8 +430,12 @@ fn test_secondary_pow_scale() {
 				.chain((0..(window * 4 / 10)).map(|_| hi.clone()))
 				.collect::<Vec<_>>()
 		),
-		73
+		45
 	);
+}
+
+fn hard_fork_adjust_height_valid_header_version(height: u64, version: HeaderVersion) -> bool {
+	valid_header_version(height - HARD_FORK_ADJUST_HEIGHT, version)
 }
 
 #[test]
@@ -441,24 +445,69 @@ fn hard_forks() {
 	assert!(valid_header_version(0, HeaderVersion(1)));
 	assert!(valid_header_version(10, HeaderVersion(1)));
 	assert!(!valid_header_version(10, HeaderVersion(2)));
-	assert!(valid_header_version(YEAR_HEIGHT / 2 - 1, HeaderVersion(1)));
-	assert!(valid_header_version(YEAR_HEIGHT / 2, HeaderVersion(2)));
-	assert!(valid_header_version(YEAR_HEIGHT / 2 + 1, HeaderVersion(2)));
-	assert!(!valid_header_version(YEAR_HEIGHT / 2, HeaderVersion(1)));
-	assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion(1)));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT / 2 - 1,
+		HeaderVersion(1)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT / 2,
+		HeaderVersion(2)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT / 2 + 1,
+		HeaderVersion(2)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT / 2,
+		HeaderVersion(1)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT,
+		HeaderVersion(1)
+	));
 
-	assert!(valid_header_version(YEAR_HEIGHT - 1, HeaderVersion(2)));
-	assert!(valid_header_version(YEAR_HEIGHT, HeaderVersion(3)));
-	assert!(valid_header_version(YEAR_HEIGHT + 1, HeaderVersion(3)));
-	assert!(!valid_header_version(YEAR_HEIGHT, HeaderVersion(2)));
-	assert!(!valid_header_version(YEAR_HEIGHT * 3 / 2, HeaderVersion(2)));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT - 1,
+		HeaderVersion(2)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT,
+		HeaderVersion(3)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT + 1,
+		HeaderVersion(3)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT,
+		HeaderVersion(2)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 3 / 2,
+		HeaderVersion(2)
+	));
 	// v4 not active yet
-	assert!(!valid_header_version(YEAR_HEIGHT * 3 / 2, HeaderVersion(4)));
-	assert!(!valid_header_version(YEAR_HEIGHT * 3 / 2, HeaderVersion(3)));
-	assert!(!valid_header_version(YEAR_HEIGHT * 3 / 2, HeaderVersion(2)));
-	assert!(!valid_header_version(YEAR_HEIGHT * 3 / 2, HeaderVersion(1)));
-	assert!(!valid_header_version(YEAR_HEIGHT * 2, HeaderVersion(3)));
-	assert!(!valid_header_version(
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 3 / 2,
+		HeaderVersion(4)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 3 / 2,
+		HeaderVersion(3)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 3 / 2,
+		HeaderVersion(2)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 3 / 2,
+		HeaderVersion(1)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		YEAR_HEIGHT * 2,
+		HeaderVersion(3)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
 		YEAR_HEIGHT * 3 / 2 + 1,
 		HeaderVersion(3)
 	));
