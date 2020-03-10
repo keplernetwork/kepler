@@ -1,6 +1,6 @@
 [package]
 name = "kepler_chain"
-version = "3.1.0-beta.1"
+version = "3.1.0"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Chain implementation for kepler, a simple, private and scalable cryptocurrency implementation based on the Mimblewimble chain format."
 license = "Apache-2.0"
@@ -23,10 +23,10 @@ chrono = "0.4.4"
 lru-cache = "0.1"
 lazy_static = "1"
 
-kepler_core = { path = "../core", version = "3.1.0-beta.1" }
-kepler_keychain = { path = "../keychain", version = "3.1.0-beta.1" }
-kepler_store = { path = "../store", version = "3.1.0-beta.1" }
-kepler_util = { path = "../util", version = "3.1.0-beta.1" }
+kepler_core = { path = "../core", version = "3.1.0" }
+kepler_keychain = { path = "../keychain", version = "3.1.0" }
+kepler_store = { path = "../store", version = "3.1.0" }
+kepler_util = { path = "../util", version = "3.1.0" }
 
 [dev-dependencies]
 env_logger = "0.5"
