@@ -1,4 +1,4 @@
-// Copyright 2019 The Kepler Developers
+// Copyright 2020 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -186,7 +186,6 @@ where
 		}
 		ChainTypes::Mainnet => new_cuckaroo_ctx(edge_bits, proof_size),
 		*/
-
 		// Same for Floonet
 		ChainTypes::Floonet if edge_bits > 29 => new_cuckatoo_ctx(edge_bits, proof_size, max_sols),
 		ChainTypes::Floonet if valid_header_version(height, HeaderVersion(3)) => {
