@@ -367,9 +367,9 @@ pub fn default_dns_seeds() -> Box<dyn Fn() -> Vec<PeerAddr> + Send> {
 				.map(|s| {
 					s.to_string()
 						+ if global::is_floonet() {
-							":13414"
+							":17414"
 						} else {
-							":3414"
+							":7414"
 						}
 				})
 				.collect(),

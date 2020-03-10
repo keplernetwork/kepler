@@ -138,7 +138,7 @@ pub const MAX_BLOCK_WEIGHT: usize = 40_000;
 pub const HARD_FORK_INTERVAL: u64 = YEAR_HEIGHT / 2;
 
 /// The adjust height for hard fork
-/// Kepler begins mining 50 days later after grin and now it 79days behind. Just keep this adjust is ok
+/// Kepler begins mining 50 days later after kepler and now it 79days behind. Just keep this adjust is ok
 pub const HARD_FORK_ADJUST_HEIGHT: u64 = 50 * DAY_HEIGHT + WEEK_HEIGHT;
 
 /// Floonet first hard fork height, set to happen around 2019-06-20

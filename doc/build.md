@@ -15,7 +15,7 @@ What's working so far?
 ## Requirements
 
 * rust: Install using rustup: https://rustup.rs
-  * Grin currently does not support a minimum version of Rust, it is recommended to build using the latest version.
+  * Kepler currently does not support a minimum version of Rust, it is recommended to build using the latest version.
   * If rust is already installed, you can update to the latest version by running `rustup update`.
 * clang
 * ncurses and libs (ncurses, ncursesw5)

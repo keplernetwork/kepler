@@ -1,5 +1,5 @@
-use grin_core::core::{Block, CompactBlock, Transaction};
-use grin_core::ser;
+use kepler_core::core::{Block, CompactBlock, Transaction};
+use kepler_core::ser;
 use std::fs::{self, File};
 use std::path::Path;
 

@@ -1,4 +1,4 @@
-// Copyright 2019 The Grin Developers
+// Copyright 2019 The Kepler Developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ use crate::util;
 
 /// Public definition used to generate Node jsonrpc api.
 /// * When running `kepler` with defaults, the V2 api is available at
-/// `localhost:3413/v2/foreign`
+/// `localhost:7413/v2/foreign`
 /// * The endpoint only supports POST operations, with the json-rpc request as the body
 #[easy_jsonrpc_mw::rpc]
 pub trait ForeignRpc: Sync + Send {
