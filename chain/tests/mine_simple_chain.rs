@@ -569,8 +569,14 @@ fn spend_rewind_spend() {
 		let tx1 = build::transaction(
 			KernelFeatures::Plain { fee: 20000 },
 			vec![
-				build::coinbase_input(consensus::REWARD, key_id_coinbase.clone()),
-				build::output(consensus::REWARD - 20000, key_id30.clone()),
+				build::coinbase_input(
+					consensus::reward(rewind_to.height, 0),
+					key_id_coinbase.clone(),
+				),
+				build::output(
+					consensus::reward(rewind_to.height, 0) - 20000,
+					key_id30.clone(),
+				),
 			],
 			&kc,
 			&pb,
