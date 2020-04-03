@@ -37,6 +37,9 @@ const MAINNET_DNS_SEEDS: &'static [&'static str] = &[
 	"seed1.kepler.network",
 	"seed2.kepler.network",
 	"seed3.kepler.network",
+	"seed4.kepler.network",
+        "seed5.kepler.network",
+        "seed6.kepler.network",
 ];
 const FLOONET_DNS_SEEDS: &'static [&'static str] = &["testseed1.kepler.network"];
 
