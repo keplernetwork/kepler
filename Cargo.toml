@@ -1,6 +1,6 @@
 [package]
 name = "kepler"
-version = "3.1.0"
+version = "3.1.1"
 authors = ["Kepler Developers <keplernetwork@lists.launchpad.net>"]
 description = "Simple, private and scalable cryptocurrency implementation based on the Mimblewimble chain format."
 license = "Apache-2.0"

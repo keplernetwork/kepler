@@ -1041,7 +1041,7 @@ dependencies = [
 
 [[package]]
 name = "kepler"
-version = "3.1.0"
+version = "3.1.1"
 dependencies = [
  "blake2-rfc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "built 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
