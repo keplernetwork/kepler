@@ -446,69 +446,75 @@ fn hard_forks() {
 	assert!(valid_header_version(10, HeaderVersion(1)));
 	assert!(!valid_header_version(10, HeaderVersion(2)));
 	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT / 2 - 1,
-		HeaderVersion(1)
-	));
-	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT / 2,
-		HeaderVersion(2)
-	));
-	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT / 2 + 1,
-		HeaderVersion(2)
-	));
-	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT / 2,
+		HARD_FORK_INTERVAL - 1,
 		HeaderVersion(1)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT,
+		HARD_FORK_INTERVAL,
 		HeaderVersion(1)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL,
+		HeaderVersion(2)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL + 1,
+		HeaderVersion(2)
 	));
 
 	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT - 1,
+		HARD_FORK_INTERVAL * 2 - 1,
+		HeaderVersion(2)
+	));
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL * 2,
 		HeaderVersion(2)
 	));
 	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT,
+		HARD_FORK_INTERVAL * 2,
 		HeaderVersion(3)
 	));
 	assert!(hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT + 1,
+		HARD_FORK_INTERVAL * 2 + 1,
+		HeaderVersion(3)
+	));
+
+	assert!(hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL * 3 - 1,
 		HeaderVersion(3)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT,
-		HeaderVersion(2)
+		HARD_FORK_INTERVAL * 3,
+		HeaderVersion(3)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL * 3,
+		HeaderVersion(4)
+	));
+	assert!(hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL * 3 + 1,
+		HeaderVersion(4)
+	));
+
+	// v5 not active yet
+	assert!(!hard_fork_adjust_height_valid_header_version(
+		HARD_FORK_INTERVAL * 4,
+		HeaderVersion(5)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2,
-		HeaderVersion(2)
-	));
-	// v4 not active yet
-	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2,
+		HARD_FORK_INTERVAL * 4,
 		HeaderVersion(4)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2,
+		HARD_FORK_INTERVAL * 4,
 		HeaderVersion(3)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2,
+		HARD_FORK_INTERVAL * 4,
 		HeaderVersion(2)
 	));
 	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2,
+		HARD_FORK_INTERVAL * 4,
 		HeaderVersion(1)
-	));
-	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 2,
-		HeaderVersion(3)
-	));
-	assert!(!hard_fork_adjust_height_valid_header_version(
-		YEAR_HEIGHT * 3 / 2 + 1,
-		HeaderVersion(3)
 	));
 }
